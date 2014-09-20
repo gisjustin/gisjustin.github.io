@@ -1,0 +1,35 @@
+<%@ Master Language="VB" CodeFile="MasterPage.master.vb" Inherits="MasterPage" %>
+<%@ Register Src="Header.ascx" TagName="Header" TagPrefix="uc1" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>State of Indiana Wireless Survey</title>
+   <link id="ssMain"   type="text/css"  href="Styles.css"  rel="Stylesheet"  />
+</head>
+<body background="Images/background_stripes.jpg">
+    <form id="form1" runat="server">
+    <div> 
+       <table border="0" cellpadding="0" cellspacing="0" width="100%" >
+         <tr>
+            <td>
+                <uc1:Header ID="Header1" runat="server" />
+            </td>
+         </tr>
+         <tr valign="top" style="background-color: beige;">
+             <td style="width: 100%">
+                   <asp:contentplaceholder id="MasterPageContentPlaceHolder" runat="server">
+                   </asp:contentplaceholder>
+            </td>
+         </tr>
+         <tr>
+            <td align="center" style="font-weight: bold; font-size: xx-small; vertical-align: middle; color: blue; font-family:Microsoft Sans Serif; background-color: #ffcc99; text-align: center; height: 15px;" >
+               &nbsp;
+            </td>
+         </tr>
+       </table>
+    </div>
+    </form>
+</body>
+</html>

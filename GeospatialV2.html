@@ -1,0 +1,441 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <!--The viewport meta tag is used to improve the presentation and behavior
+    of the samples on iOS devices-->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
+    <title>
+    S637: Infomation Visualization Project #4 Geospatial Substrate
+    </title>
+    <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.7/js/dojo/dijit/themes/claro/claro.css">
+    <style type="text/css">
+      html,body { height:100%; width:100%; margin:0; padding:0; }
+      body {
+        background:#dfe5d7;
+        overflow:hidden;
+        font-family:"Georgia,Verdana";
+      }
+      span{ font-weight:bold; color:#808080; text-align:left; }
+     .inset{
+        color: #d7decf;
+        text-shadow: 0px 2px 2px #808080;
+        font-weight:bold;
+      }
+      #header {
+        background: #fcfff4; /* old browsers */
+        background: -moz-linear-gradient(left, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%); /* firefox */
+        background: -webkit-gradient(linear, left top, right top, color-stop(0%,#fcfff4), color-stop(40%,#dfe5d7), color-stop(100%,#b3bead)); /* webkit */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=1 ); /* ie */
+        border:solid 1px #398235;
+        height:80px;
+      }
+      .maptitle{
+        padding-left:15px;
+        font-size:32px;
+      }
+      .roundedCorners{
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px; border-radius: 4px;
+      }
+      .subtitle {
+        font-size:14px;
+        padding-left:40px;
+        color:#462D44;
+      }
+      .claro .dijitContentPane{ padding:0px ; }
+      #map { border:solid 1px #398235;}
+      .shadow{
+        -webkit-box-shadow: 4px 4px 8px #562f32;
+        -moz-box-shadow: 4px 4px 8px #562f32;
+        box-shadow: 4px 4px 8px #562f32;
+      }
+      #footer {
+        border:none;
+        background:none;
+        color:#462D44;
+        font-size:10pt;
+        text-align:center;
+        height:100px;
+      }
+    </style>
+    <script type="text/javascript">
+      var djConfig = {
+        parseOnLoad: true
+      };
+    </script>
+    <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=2.7"></script>
+    <script type="text/javascript">
+      dojo.require("dijit.dijit"); // optimize: load dijit layer
+      dojo.require("dijit.layout.BorderContainer");
+      dojo.require("dijit.layout.ContentPane");
+      dojo.require("esri.map");
+      dojo.require("esri.dijit.TimeSlider");
+      dojo.require("esri.layers.FeatureLayer");
+      dojo.require("dijit.form.ComboBox");
+      dojo.require("dojo.data.ItemFileReadStore");
+      dojo.require("dojo.date.locale");
+                  dojo.require("esri.dijit.editing.TemplatePicker");
+        dojo.require("esri.dijit.InfoWindow");        
+      dojo.require("dijit.layout.ContentPane");
+      dojo.require("dijit.layout.AccordionContainer");
+     
+      dojo.require("esri.dijit.Legend");
+    
+      var map, featureLayer;
+                  
+                  var flUpdateEndConnectHandle;
+                  
+
+      function init() {
+                                  loading = dojo.byId("loadingImg");  //loading image. id
+        var startExtent = new esri.geometry.Extent({
+          "xmin": -91.49710623002797,
+          "ymin": 38.24357764106146,
+          "xmax": -83.04534306550282,
+          "ymax": 41.763020358938554,
+          "spatialReference": {
+            "wkid": 102100
+          }
+        });
+       
+                                
+                                 map = new esri.Map("map", {
+          logo:false, extent: esri.geometry.geographicToWebMercator(startExtent) 
+                                   });
+
+     // dojo.connect(map, "onLayersAddResult", initSlider);
+        dojo.connect(map,"onUpdateStart",showLoading);
+        dojo.connect(map,"onUpdateEnd",hideLoading);        
+        var layers = [];
+        var basemap = new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer");
+        //layers.push(basemap);
+map.addLayer(basemap);
+       
+        //populate dropdown list with unique orgs
+        var orgList = new esri.layers.FeatureLayer("http://bl-uits-soybean.ads.iu.edu/arcgis/rest/services/campus/MapServer/1", {
+          mode: esri.layers.FeatureLayer.MODE_SELECTION,
+          outFields: ["*"]
+
+        });
+       
+        var query = new esri.tasks.Query();
+       query.where = "1=1";
+
+        orgList.queryFeatures(query, function(featureSet) {
+        //Populate dropdown list with unique orgs
+          var values = dojo.map(featureSet.features, function(feature) {
+           return {
+              name: feature.attributes.ORGANIZATI
+             
+            };
+
+          });
+
+          var dataItems = {
+            identifier: 'name',
+            label: 'name',
+            items: values
+          };
+
+          var store = new dojo.data.ItemFileReadStore({
+            data: dataItems
+          });
+
+          dijit.byId("mySelect").store = store;
+
+        });
+
+        var template = new esri.InfoTemplate();
+        template.setTitle(getTitle);
+        template.setContent(getTextContent);
+       
+        featureLayer = new esri.layers.FeatureLayer("http://bl-uits-soybean.ads.iu.edu/arcgis/rest/services/campus/MapServer/0", {
+          mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
+          infoTemplate:template,
+          outFields: ["*"]
+
+        });
+
+        featureLayer.setDefinitionExpression("ORGANIZATI='SLIS'");
+        layers.push(featureLayer);
+                
+         // layerdef();                
+                                
+        map.addLayers(layers);
+                                dojo.connect(map,"onLayersAddResult",initSlider);
+                                                                                                                                
+                 var imageParameters = new esri.layers.ImageParameters();
+      
+imageParameters.layerIds = [0];
+        imageParameters.layerOption = esri.layers.ImageParameters.LAYER_OPTION_SHOW;
+                                
+                                
+                                var layerDefinitions = [];
+layerDefinitions[0] =  "ORGANIZATI='" + dojo.byId("mySelect").value + "'";
+
+
+        //imageParameters.transparent = true;
+
+        //construct ArcGISDynamicMapServiceLayer with imageParameters from above
+        var dynamicMapServiceLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://bl-uits-soybean.ads.iu.edu/arcgis/rest/services/campus2/MapServer", {"imageParameters":imageParameters});
+dynamicMapServiceLayer.setLayerDefinitions(layerDefinitions);
+//dynamicMapServiceLayer.id = "ags";
+map.addLayer(dynamicMapServiceLayer);                                                                                                                    
+                                
+                                
+     find = new esri.tasks.FindTask("http://bl-uits-soybean.ads.iu.edu/arcgis/rest/services/campus/MapServer/");
+        params = new esri.tasks.FindParameters();
+        params.layerIds = [0];
+        params.searchFields = ["ORGANIZATI"];
+                                
+                                doFind();
+      }
+
+      function doFind() {
+        params.searchText = dojo.byId("mySelect").value;
+        find.execute(params, showResults);
+                                dojo.byId("pane2").innerHTML = "";
+								   //laydef();
+      }
+
+      function showResults(results) {
+                                  
+                                 
+        var result, attribs;
+        var s = ["<table border=\"1\"><thead><tr style=\"background-color:#ccc;\"><td>YEAR</td><td>Organization</td><td>Campus</td><td>EMPLOYEES</td><td>AVG Salary</td></tr></thead><tbody id=\"states\">"];
+        dojo.forEach(results,function(result){
+          attribs = result.feature.attributes;
+           s.push("<tr><td>" + attribs.YEAR + "</td><td>" + attribs.ORGANIZATI + "</td><td>" + attribs.CAMPUS + "</td><td>" + attribs.EMPLOYEES + "</td><td>" + attribs.AVERAGESAL + "</td></tr>");
+        });
+        s.push("</tbody></table>");
+        dojo.byId("pane2").innerHTML = s.join("");
+      }
+     
+      function getTitle(graphic){
+        var attr = graphic.attributes.ORGANIZATI;
+        return  "Organization: " + attr;        
+      }
+                  
+                  
+                  function getTextContent(graphic) {
+         var attr1 = graphic.attributes.CAMPUS;
+                                var attr2 = graphic.attributes.EMPLOYEES;
+        var attr3 = graphic.attributes.AVERAGESAL;
+                                var attr4 = graphic.attributes.YEAR;
+        return "Campus: " + attr1 + "<br/> Employees: " + attr2 + "<br/> Average Salary: $" + attr3 + "<br/> Year: " + attr4;
+      }
+     
+      
+
+
+
+function laydef() {
+	
+	dojo.connect(map,"onUpdateStart",showLoading);
+        dojo.connect(map,"onUpdateEnd",hideLoading); 
+	var featureLayer;
+	
+	 var layers = [];
+	
+	var basemap = new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer");
+        //layers.push(basemap);
+map.addLayer(basemap);
+	
+	
+                          var imageParameters = new esri.layers.ImageParameters();
+      
+imageParameters.layerIds = [0];
+        imageParameters.layerOption = esri.layers.ImageParameters.LAYER_OPTION_SHOW;
+                                
+                                
+                                var layerDefinitions = [];
+layerDefinitions[0] =  "ORGANIZATI='" + dojo.byId("mySelect").value + "'";
+
+
+        //imageParameters.transparent = true;
+
+        //construct ArcGISDynamicMapServiceLayer with imageParameters from above
+        var dynamicMapServiceLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://bl-uits-soybean.ads.iu.edu/arcgis/rest/services/campus2/MapServer", {"imageParameters":imageParameters});
+dynamicMapServiceLayer.setLayerDefinitions(layerDefinitions);
+//dynamicMapServiceLayer.id = "ags";
+map.addLayer(dynamicMapServiceLayer);    
+       
+     var template = new esri.InfoTemplate();
+        template.setTitle(getTitle);
+        template.setContent(getTextContent);   
+        featureLayer = new esri.layers.FeatureLayer("http://bl-uits-soybean.ads.iu.edu/arcgis/rest/services/campus/MapServer/0", {
+          mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
+          infoTemplate:template,
+          outFields: ["*"]
+
+        });
+
+        featureLayer.setDefinitionExpression("ORGANIZATI='" + dojo.byId("mySelect").value + "'");
+        layers.push(featureLayer);
+                
+         // layerdef();                
+                                
+        map.addLayers(layers);
+		
+		hideLoading();
+
+}
+
+      function selectTree(item) {
+              
+            doFind(); 
+           
+       //apply a definition expression to the layer to only display org selected
+        var query = "ORGANIZATI='${name}'";
+        featureLayer.setDefinitionExpression(esri.substitute({
+          name: dojo.trim(item.value)
+        }, query));
+		
+                                
+                             
+            map.removeAllLayers();
+                         
+                laydef();                   //initSlider();
+      
+                             
+                                //initSlider();
+      }
+
+      function initSlider(results) {
+                                  
+                                  
+                                  var map = this;
+        var timeLayers = dojo.map(results, function(result) {
+          return result.layer;
+        });
+        //build a legend
+        var layerInfo = dojo.map(results, function(layer,index){
+            return {layer:layer.layer, title:"Employees Per Campus"};
+          });
+          if(layerInfo.length > 0){
+            var legendDijit = new esri.dijit.Legend({
+              map:map,
+              layerInfos:layerInfo
+            },"legendDiv");
+            legendDijit.startup();
+          }
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+        //var map = this;
+        var timeSlider = new esri.dijit.TimeSlider({style: "width: 1000px;"},dojo.byId("timeSliderDiv"));
+       map.setTimeSlider(timeSlider);
+       
+        var timeExtent = new esri.TimeExtent();
+        timeExtent.startTime = new Date("2/27/1995 UTC");
+        timeExtent.endTime = new Date("2/27/2007 UTC");
+        timeSlider.setThumbCount(1);
+        timeSlider.createTimeStopsByTimeInterval(timeExtent,1,'esriTimeUnitsYears');
+        timeSlider.setThumbIndexes([0]);
+        timeSlider.setThumbMovingRate(2000);
+		timeSlider.singleThumbAsTimeInstant(true);
+        timeSlider.startup();
+       
+        //add labels for every other time stop
+        var labels = dojo.map(timeSlider.timeStops, function(timeStop,i){
+          if(i%2 === 0){
+                                                
+            return timeStop.getUTCFullYear(); }
+          else{
+                                                  
+            return "";
+          }
+                                  
+        });      
+       
+        timeSlider.setLabels(labels);
+       
+        dojo.connect(timeSlider, "onTimeExtentChange", function(timeExtent) {
+          //map.removeLayer(opLayer);
+                                  map.infoWindow.hide();
+                                  timeExtent2();
+                                  var startValString = timeExtent.startTime.getUTCFullYear();
+                                  alert(timeExtent.startTime.getUTCFullYear());
+          var endValString = timeExtent.endTime.getUTCFullYear();
+          dojo.byId("daterange").innerHTML = "<i>" + startValString + " and " + endValString  + "<\/i>";
+        });
+                                
+                                
+                                
+      }
+                  function showLoading() {
+          esri.show(loading);
+          map.disableMapNavigation();
+          map.hideZoomSlider();
+        }
+
+        function hideLoading(error) {
+          esri.hide(loading);
+          map.enableMapNavigation();
+          map.showZoomSlider();
+       
+        }
+
+      
+
+      //show map on load
+      dojo.addOnLoad(init);
+    </script>
+  </head>
+
+  <body class="claro">
+  
+  
+  
+  
+    <div id="content" dojotype="dijit.layout.BorderContainer" design="headline" gutters="true" style="width: 100%; height: 100%; margin: 0;">
+    <div id="header" class="roundedCorners" dojotype="dijit.layout.ContentPane" region="top">
+        <span class="inset maptitle">
+          S637: Information Visualization
+        </span>
+        <br />
+        <span class="subtitle">
+          Assignment #4  Viewing Data from Multiple Perspectives: Geospatial Substrate</br>
+                Total Employees Per Campus Over Time.  Filter by Organization below (Default is SLIS)
+        </span>
+    </div>
+      <div id="rightPane" dojotype="dijit.layout.ContentPane" region="right">
+        <div dojoType="dijit.layout.AccordionContainer" style="width:500px">
+          <div dojoType="dijit.layout.ContentPane" id="legendPane" title="Legend" selected="true" >
+            <div id="legendDiv"></div>
+          </div>
+          <div dojoType="dijit.layout.ContentPane" title="Raw Data" id="pane2">
+            This pane contains Raw Data after a filter is applied via the drop-down box.
+          </div>
+        </div>
+      </div>
+      <div id="map" dojotype="dijit.layout.ContentPane" region="center" style="overflow:hidden;" class="roundedCorners shadow">
+      <img id="loadingImg" src="./images/loading.gif" style="position:absolute; right:512px; top:256px; z-index:100;" />
+      </div>
+      <div id="footer" dojoType="dijit.layout.ContentPane" region="bottom" style="height:100px;width:90%;">
+        <div style="height:24px;padding-bottom 4px;text-align:center;">
+          <div id="daterange" >
+          </div>
+          <select id="mySelect" dojotype="dijit.form.ComboBox" style="width:200px;font-size:16px;"
+          value="SLIS" onchange="selectTree(this)" fetchProperties="{sort:[{attribute:'name', descending:false}]}">
+          </select>
+        </div>
+        <br />
+        <center>
+          <div id="timeSliderDiv">
+          </div>
+        </center>
+      </div>
+    </div>
+  </body>
+  
+  
+  
+  
+
+</html>

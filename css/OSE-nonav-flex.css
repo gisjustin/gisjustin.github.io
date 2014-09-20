@@ -1,0 +1,105 @@
+/* CSS Document */
+body {
+	background-color: #7D110C;
+	margin:0;
+	padding: 0;
+	}
+#wrapper {
+	width: 96%;
+	margin-right:auto;
+	margin-left:auto;
+	}
+#IUbanner {
+	background-color:#7d110c;
+	clear:both;
+	}
+#IUbanner img {
+	border:none;
+	}
+#header {
+	background-color:#7d110c;
+	padding: 4px 0;
+	}
+#header img {
+	margin:0;
+	padding:0;
+	border:0;
+	}
+h1#subheader {
+	padding:12px 8px;
+	background-color:#F8F3D2;
+	margin:0;
+	}
+
+#content {
+	width:auto;
+	margin:0;
+	padding:7px;
+	background-color:#fff;
+	border-top:1px solid #600;
+	}
+
+#content pre {padding-left:20px;}
+
+#content h2 {
+	margin: 0;
+	padding:0;
+	}
+	
+#footer {
+	background-color:#7d110c;
+	color:#fff;
+	font-size:x-small;
+	text-align:left;
+	margin:0;
+	padding:4px 0;
+	clear:both;
+	}
+#footer a {
+	color:#fff;
+	}
+#footer a:visited {
+	color:#fff;
+	}
+#footer img#blockIU {
+	float:left;
+	border:none;
+	}
+#lowernav {
+	margin: 0;
+	padding:0;
+	margin-left:35px;
+	line-height:1.5em;
+	}
+#lowernav ul {
+	margin: 2px 0 0 0;
+	padding: 0;
+	display:inline;
+	}
+#lowernav ul li {
+	display:inline;
+	margin:0;
+	padding: 0 5px;
+	list-style: none;
+	/*IE Mac doesn't render the border correctly, so hide it from that browser*/
+	/* Hides from IE-mac \*/
+	border-left: 1px solid #fff;
+	/* End hide from IE-mac */
+	}
+#lowernav ul li.first {
+	margin-left: 0;
+	padding-left:0;
+	border-left:none;
+	list-style: none;
+	display: inline;
+	}
+
+@media print {
+	#wrapper {width: 100%;}
+	#content {
+		float:none;
+		width: 95%;
+		}
+	#lowernav {display:none}
+	body, #wrapper, #header, #subheader, #footer {background:#fff;}
+	}

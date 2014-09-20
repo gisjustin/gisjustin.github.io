@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
+<html> 
+  <head> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <!--The viewport meta tag is used to improve the presentation and behavior of the samples 
+      on iOS devices-->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
+    <title>Updating the legend to display visible layers</title> 
+    <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.0/js/dojo/dijit/themes/claro/claro.css"> 
+    <style> 
+      html, body { height: 98%; width: 98%; margin: 0; padding: 5px; }
+      #rightPane{
+        width:20%;
+      }
+      #legendPane{
+        border: solid #97DCF2 1px;
+      }
+     
+    </style> 
+    <script type="text/javascript">var djConfig = {parseOnLoad: true};</script> 
+    <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=3.0"></script> 
+    <script type="text/javascript"> 
+      dojo.require("dijit.layout.BorderContainer");
+      dojo.require("dijit.layout.ContentPane");
+      dojo.require("dijit.layout.AccordionContainer");
+      dojo.require("esri.map");
+      dojo.require("esri.dijit.Legend");
+      dojo.require("esri.arcgis.utils");
+      dojo.require("dijit.form.CheckBox");
+      
+      var map;
+      var legendLayers = [];
+ 
+      function init() {
+        var initialExtent = new esri.geometry.Extent({"xmin":-88.2,"ymin":37.5,"xmax":-84.6,"ymax":41.9,"spatialReference":{"wkid":4326}});
+        map = new esri.Map("map", { extent: esri.geometry.geographicToWebMercator(initialExtent)});
+        
+        //Add the terrain service to the map. View the ArcGIS Online site for services http://arcgisonline/home/search.html?t=content&f=typekeywords:service    
+        var basemap = new esri.layers.ArcGISTiledMapServiceLayer("http://gis.uits.iu.edu/ArcGIS/rest/services/Imagery_Basemap/MapServer");
+        map.addLayer(basemap);
+
+        var quakeLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Earthquakes/EarthquakesFromLastSevenDays/MapServer",{id:'quakes'});
+
+        legendLayers.push({layer:quakeLayer,title:'Earthquakes'});
+        
+        var fireLayer = new esri.layers.ArcGISDynamicMapServiceLayer("http://gis.srh.noaa.gov/ArcGIS/rest/services/Radar_warnings/MapServer",{id:'fire'});
+
+        legendLayers.push({layer:fireLayer,title:"Radar"});
+        dojo.connect(map,'onLayersAddResult',function(results){
+          var legend = new esri.dijit.Legend({
+            map:map,
+            layerInfos:legendLayers
+          },"legendDiv");
+          legend.startup();
+        });
+        map.addLayers([fireLayer,quakeLayer]);
+
+       dojo.connect(map,'onLayersAddResult',function(results){
+
+        
+        //add check boxes 
+        dojo.forEach(legendLayers,function(layer){         
+         var layerName = layer.title;
+         var checkBox = new dijit.form.CheckBox({
+            name: "checkBox" + layer.layer.id,
+            value: layer.layer.id,
+            checked: layer.layer.visible,
+            onChange: function(evt) {
+              var clayer = map.getLayer(this.value);
+              clayer.setVisibility(!clayer.visible);
+              this.checked = clayer.visible;
+            }
+          });
+
+          //add the check box and label to the toc
+          dojo.place(checkBox.domNode,dojo.byId("toggle"),"after");
+          var checkLabel = dojo.create('label',{'for':checkBox.name, innerHTML:layerName},checkBox.domNode,"after");
+           dojo.place("<br />",checkLabel,"after");
+        });
+
+        });
+       
+        dojo.connect(map, 'onLoad', function(theMap) {
+          //resize the map when the browser resizes
+          dojo.connect(dijit.byId('map'), 'resize', map,map.resize);
+        });
+      }
+ 
+
+ 
+      dojo.addOnLoad(init);
+    </script> 
+  </head> 
+  
+  <body class="claro"> 
+    <div id="content" dojotype="dijit.layout.BorderContainer" design="headline" gutters="true" style="width: 100%; height: 100%; margin: 0;"> 
+      <div id="rightPane" dojotype="dijit.layout.ContentPane" region="right">
+        <div dojoType="dijit.layout.AccordionContainer">
+          <div dojoType="dijit.layout.ContentPane" id="legendPane" title="Legend"  selected="true">
+            <div id="legendDiv"></div>
+          </div>
+          <div dojoType="dijit.layout.ContentPane" title="Natural Disasters" >
+            <span style="padding:10px 0;">Click to toggle the visibilty of the various natural disasters</span>
+            <div id="toggle" style="padding: 2px 2px;"></div>
+          </div>
+        </div>
+      </div>
+      <div id="map" dojotype="dijit.layout.ContentPane" region="center" style="overflow:hidden;"> 
+      </div> 
+    </div> 
+  </body> 
+ 
+</html>
+

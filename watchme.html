@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Walk With Friends Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <style>
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { height: 100% }
+    </style>
+    <script src="http://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyBDUa3s5RIchPF3CInIcyIl3jSm1xJ0IOc&sensor=true"></script>
+    <script>
+      var map = null, markers, task, errors = [], path, polyline; 
+
+      function init() { 
+          var indiana = new google.maps.LatLng(39.1668, -86.52339); 
+          markers = new google.maps.MVCArray; 
+          path = new google.maps.MVCArray; 
+
+          var myOptions = {
+              center: indiana, 
+              zoom: 16,
+              mapTypeId: google.maps.MapTypeId.SATELLITE
+          };
+          map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+          polyline = new google.maps.Polyline({ 
+              strokeWeight: 4, 
+              strokeColor: 'Pink'
+          }); 
+          polyline.setMap(map); 
+          polyline.setPath(new google.maps.MVCArray([path])); 
+
+          if (navigator.geolocation)  { 
+              navigator.geolocation.getCurrentPosition(processStartLocation, locationError); 
+              navigator.geolocation.watchPosition(processCurrentLocation, locationError); 
+          } else { 
+              errors.push("no navigator"); 
+          }
+      }
+
+      function locationError(error) { 
+          /****  
+           * @TODO: Expect this error to happen. 
+           * aggregate to error array, with time? 
+           */
+          if (error.code === error.PERMISSION_DENIED) { 
+              errors.push("No permission"); 
+
+          } else if (error.code === error.PERMISSION_UNAVAILABLE) { 
+              errors.push("Permission Unavailable"); 
+
+          } else if (error.code === error.TIMEOUT) {
+              errors.push("Timeout"); 
+
+          } else { 
+              errors.push("Unkown"); 
+          }
+      }
+
+      function processStartLocation(location) { 
+          /***
+           *  Zoom to start
+           *  @TODO Assume we start route and end route at current location
+           */
+          var pt = new google.maps.LatLng(location.coords.latitude, location.coords.longitude); 
+          map.panTo(pt); 
+          map.setZoom(16); 
+
+          // @TODO push pt to path, do end point at completion
+          path.insertAt(path.length, pt);  
+
+      }
+
+      function addMarkerAtPoint(pt) { 
+
+          var marker = new google.mapsMarker({ 
+              position: pt,
+              map: map, 
+              draggable: true  
+          }); 
+          markers.push(marker); 
+          marker.setTitle("#" + path.length); 
+ 
+          google.maps.event.addListener(marker, 'click', function() { 
+              marker.setMap(null); 
+              // neat for loop
+              for (var i = 0, I = markers.length; i < I && markers[i] != marker; ++i) {}
+              markers.splice(i, 1);  
+              path.removeAt(i); 
+          }); 
+
+          google.maps.event.addListener(marker, 'draggable', function() { 
+              marker.setMap(null); 
+              // neat for loop
+              for (var i = 0, I = markers.length; i < I && markers[i] != marker; ++i) {}
+              path.setAt(i, marker.getPosition()); 
+          }); 
+      }
+
+      function processCurrentLocation(location) { 
+          /*** 
+           *  push onto path array, update polyine
+           */
+          if (location.coords.accuracy <= 500) { 
+              // @TODO push pt to path 
+              var now = new Date(),  
+                   pt = new google.maps.LatLng(location.coords.latitude, location.coords.longitude); 
+              path.insertAt(path.length, pt); 
+
+          } else { 
+              errors.push("Inaccurate Point:: " + location.coords.accuracy); 
+          } 
+      }
+
+      google.maps.event.addDomListener(window, 'load', init);
+    </script>
+  </head>
+  <body>
+   <div id="map_canvas"></div>
+ </body>
+</html>

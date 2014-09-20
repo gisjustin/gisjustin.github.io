@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Morgan County Indiana Land Ownership</title>
+    <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/1.3/js/dojo/dijit/themes/tundra/tundra.css">
+    <script type="text/javascript">djConfig = { parseOnLoad:true }</script>
+
+    <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=1.3"></script>
+    <script type="text/javascript">
+      dojo.require("esri.map");
+      dojo.require("esri.tasks.identify");
+      dojo.require("dijit.layout.ContentPane");
+      dojo.require("dijit.layout.TabContainer");
+      dojo.require("dijit.form.Button");
+
+      var map, identifyTask, identifyParams, symbol;
+      var layer38results
+
+      function init() {
+        
+    
+
+        map = new esri.Map("mapDiv");
+        dojo.connect(map, "onLoad", initFunctionality);
+     var imageryPrime = new esri.layers.ArcGISDynamicMapServiceLayer("http://arcims.idem.in.gov/arcgis/rest/services/BaseMap/AerialPhotography/MapServer");
+       var imageryPrime = new esri.layers.ArcGISDynamicMapServiceLayer("http://arcims.idem.in.gov/arcgis/rest/services/BaseMap/AerialPhotography/MapServer");
+        
+        map.addLayer(imageryPrime);
+
+var slo = new esri.layers.ArcGISDynamicMapServiceLayer("http://idoamaps.idoa.in.gov/ArcGIS/rest/services/SLO_Parcels/MapServer");
+        
+        map.addLayer(slo);
+
+        var portlandLandBase = new esri.layers.ArcGISDynamicMapServiceLayer("http://idoamaps.idoa.in.gov/ArcGIS/rest/services/Morgan/MapServer");
+        
+        map.addLayer(portlandLandBase);
+
+        dojo.connect(map.infoWindow, "onShow", function() {
+          dijit.byId("tabs").resize();
+        });
+
+      }
+      
+     
+
+
+      function initFunctionality(map) {
+        dojo.connect(map, "onClick", doIdentify);
+
+        identifyTask = new esri.tasks.IdentifyTask("http://idoamaps.idoa.in.gov/ArcGIS/rest/services/Morgan/MapServer");
+
+        identifyParams = new esri.tasks.IdentifyParameters();
+        identifyParams.tolerance = 10;
+        identifyParams.returnGeometry = true;
+        identifyParams.layerIds = [38];
+        identifyParams.layerOption = esri.tasks.IdentifyParameters.LAYER_OPTION_ALL;
+
+        map.infoWindow.resize(415, 200);
+        map.infoWindow.setContent(dijit.byId("tabs").domNode);
+        map.infoWindow.setTitle("Current Leases");
+
+        symbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255,0,0]), 2), new dojo.Color([255,255,0,0.5]));
+      }
+
+      function doIdentify(evt) {
+        map.graphics.clear();
+        identifyParams.geometry = evt.mapPoint;
+        identifyParams.mapExtent = map.extent;
+        identifyTask.execute(identifyParams, function(idResults) { addToMap(idResults, evt); });
+      }
+
+      function addToMap(idResults, evt) {
+        layer38results = {displayFieldName:null,features:[]};
+       
+        
+        for (var i=0, il=idResults.length; i<il; i++) {
+          var idResult = idResults[i];
+          if (idResult.layerId === 38) {
+            if (!layer38results.displayFieldName) {layer38results.displayFieldName = idResult.displayFieldName};
+            layer38results.features.push(idResult.feature);
+          
+          } 
+        }
+        dijit.byId("layer38Tab").setContent(layerTabContent(layer38results,"layer38results"));
+       
+        map.infoWindow.show(evt.screenPoint, map.getInfoWindowAnchor(evt.screenPoint));
+      }
+
+      function layerTabContent(layerResults, layerName) {
+        var content = "";
+        switch (layerName) {
+          case "layer38results":
+            content = "<i>Total features returned: " + layerResults.features.length + "</i>";
+            content += "<table border='1'><tr><th>Owner Name</th><th>Assessed Value</th></tr>";
+            for (var i=0, il=layerResults.features.length; i<il; i++) {
+              content+="<tr><td>"+layerResults.features[i].attributes['OwnerName']+"</td>";
+              content+="<td>"+layerResults.features[i].attributes['TotalAssessedValue']+"</td>";
+            }
+            content+="</tr></table>";
+            break;
+      
+          
+        }
+        return content;
+      }
+
+      function showFeature(feature) {
+        map.graphics.clear();
+        feature.setSymbol(symbol);
+        map.graphics.add(feature);
+      }
+
+      dojo.addOnLoad(init);
+    </script>
+
+  </head>
+  <body class="tundra">
+    Click a point on the map to identify parcel ownership information for Morgan County Indiana.  Parcel boundaries display when zoomed in close.
+    <div id="mapDiv" style="width:800px; height:600px; border:1px solid #000;"></div>
+    <!-- info window tabs -->
+    <div id="tabs" dojoType="dijit.layout.TabContainer" style="width:385px;height:150px;">
+
+      <div id="layer38Tab" dojoType="dijit.layout.ContentPane" title="Ownership"></div>
+      
+    </div>
+  </body>
+</html>
+
+

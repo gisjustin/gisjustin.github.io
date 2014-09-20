@@ -1,0 +1,92 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8">
+<title>IGIC Conference Mobile App</title>
+<link href="jquery.mobile-1.0a3.min.css" rel="stylesheet" type="text/css"/>
+<script src="jquery-1.5.min.js" type="text/javascript"></script>
+<script src="jquery.mobile-1.0a3.min.js" type="text/javascript"></script>
+<!-- This reference to phonegap.js will allow for code hints as long as the current site has been configured as a mobile application. 
+	 To configure the site as a mobile application, go to Site -> Mobile Applications -> Configure Application Framework... -->
+<script src="/phonegap.js" type="text/javascript"></script>
+</head> 
+<body> 
+
+<div data-role="page" id="page">
+	<div data-role="header">
+		<h1>IGIC Conference</h1>
+	</div>
+	<div data-role="content">	
+		<ul data-role="listview">
+			<li><a href="#page2">Tuesday May 8th</a></li>
+            <ul data-role="listview">
+			<li><a href="#page4">10:00-11:15</a></li>
+            <li><a href="#page5">Luncheon and Awards</a></li>
+			<li><a href="https://m.iu.edu/kme-prd/campus/select?toolName=maps&campus=BL">Bar crawl/orienteering map</a></li>	
+		</ul>
+            <li><a href="#page3">Wednesday May 9th</a></li>
+			 <ul data-role="listview">
+			<li><a href="#page4">Speaker 1</a></li>
+            <li><a href="#page5">Presentation 2</a></li>
+			<li><a href="https://m.iu.edu/kme-prd/campus/select?toolName=maps&campus=BL">Bar crawl/orienteering map</a></li>	
+		</ul>
+		</ul>		
+	</div>
+	<div data-role="footer">
+		<h4><a href="http://igic.org">IGIC</a></h4>
+	</div>
+</div>
+
+<div data-role="page" id="page2">
+	<div data-role="header">
+		<h1>Tuesday May 8th</h1>
+	</div>
+	<div data-role="content">	
+		<li><a href="#page4">Speaker 1</a></li>
+            <li><a href="#page5">Presentation 2</a></li>
+			<li><a href="https://m.iu.edu/kme-prd/campus/select?toolName=maps&campus=BL">Bar crawl/orienteering map</a></li>	
+	</div>
+	<div data-role="footer">
+		<h4><a href="http://igic.org">IGIC</a></h4>
+	</div>
+</div>
+
+<div data-role="page" id="page3">
+	<div data-role="header">
+		<h1>Wednesday May 9th</h1>
+	</div>
+	<div data-role="content">	
+		<li><a href="#page4">Speaker 1</a></li>
+            <li><a href="#page5">Presentation 2</a></li>
+			<li><a href="https://m.iu.edu/kme-prd/campus/select?toolName=maps&campus=BL">Bar crawl/orienteering map</a></li>		
+	</div>
+	<div data-role="footer">
+		<h4><a href="http://igic.org">IGIC</a></h4>
+	</div>
+</div>
+
+<div data-role="page" id="page4">
+	<div data-role="header">
+		<h1>Speaker 1 Details</h1>
+	</div>
+	<div data-role="content">	
+		Speaker 1 Details	
+	</div>
+	<div data-role="footer">
+		<h4><a href="http://igic.org">IGIC</a></h4>
+	</div>
+</div>
+
+<div data-role="page" id="page5">
+	<div data-role="header">
+		<h1>Awards Presentation</h1>
+	</div>
+	<div data-role="content">	
+		Presentation Details	
+	</div>
+	<div data-role="footer">
+		<h4><a href="http://igic.org">IGIC</a></h4>
+	</div>
+</div>
+</body>
+</html>

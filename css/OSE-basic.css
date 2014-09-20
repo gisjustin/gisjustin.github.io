@@ -1,0 +1,35 @@
+/* Basic text styling. All layout-related styles in stylesheet called by @import */
+
+h1, h2, h3, h4, h5 {
+	color: #000000;
+	font-weight: normal;
+	}
+h6 {font-weight: normal;}
+hr {
+	height: 1px;
+	color: #CCCCCC;
+	}
+a {
+	text-decoration: none;
+	color:#990000;
+	}
+a:hover {text-decoration: underline;}
+a:visited {color:#666;}
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	color: black;
+	}
+#content {font-size:small;}
+#content pre, code {
+	font-size:small;
+	white-space:normal;
+	}
+#content a {text-decoration:underline;}
+#content h1, h2, h3, h4, h5 {font-weight:normal;}
+#content h1 {font-size:xx-large;}
+#content h2 {font-size:x-large;}
+#content h3 {font-size:large;}
+#content h4 {font-size:medium;}
+#content h5 {font-size:small;}
+#leftnav a {color:#000;}
+h1#subheader {font-size:x-large;}
