@@ -1,0 +1,80 @@
+<!DOCTYPE html> 
+<!--
+	Map viewer created by Michael Storm Daniels and Justin Peters
+-->
+
+<html>
+<head>
+	<title>IndianaMAP</title>
+    
+  <meta http-equiv="content-script-type" content="text/javascript">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="refresh" content="10; url=/">
+  <link rel="icon" type="image/png" href="/images/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="green.css" />
+  
+  <script>
+		var count=10;
+		var counter=setInterval(timer, 1000); //1000 will  run it every 1 second
+		
+		function timer()
+		{
+			count=count-1;
+			if (count <= 0)
+			{
+				 clearInterval(counter);
+				 return;
+			}		
+			document.getElementById("timer").innerHTML=count + " secs";
+		}
+	</script>  
+    
+  <!-- Google Analytics Code -->
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2384291-6']);
+		_gaq.push(['_trackPageview']);
+	
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+</head>
+
+<body class="nihilo">	
+  <div id="topper">
+    <div id="header_05">
+      <div id="dev_05"><a href="/"><img id="IndianaMapLogo" src='http://www.indianamap.org/images/LogoLong2.png' border='0'></a></div>  
+      
+      <div id="contactContainer_05">
+        <div id="contactText_05">
+          <a href="http://www.indianamap.org/about.php" target="_blank">About</a>&nbsp; | 
+          <a href="http://www.indianamap.org/news.php" target="_blank">News</a>&nbsp; | 
+          <a href="http://www.indianamap.org/mapinfo.php" target="_blank">Help</a>&nbsp; |
+          <a href="http://www.indianamap.org/contact.php" target="_blank">Contact</a>
+        </div>
+      </div>
+        
+      <div id="extraLinks">
+        <ul>
+          <li style="background:rgba(151, 168, 151, 1.0);"><a href="/index.html" style="color:#FFF;">Map Viewer</a></li>
+          <li><a href="MapGallery.html">Map Gallery</a></li>
+          <li><a href="LayerGallery.html">Layer Gallery</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div align="center" style="margin-top:200px;">      
+    <h3>The IndianaMAP has made improvements and by default supports tablets!</h3>
+    <p>
+      If you have navigated here via a bookmark or link from an outside Web site, please note that this page has moved. <br />
+      Please visit the upgraded map from our <a href="/">home page</a>.
+    </p>
+    <br /><br />
+    <h4>You will be redirected to the IndianaMAP home page in <span id="timer">10</span> seconds.</h4>
+  </div>
+</body>
+</html>

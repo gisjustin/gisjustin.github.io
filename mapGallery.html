@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="/images/favicon.ico">
+    <title>Map Gallery, Indiana Map</title>
+    <meta name="description" 
+    	content="GIS Layers found on the IndianaMap. Including Demographic, Environment, Geology, Hydrology, Imagery, Infrastructure, 
+      Reference. A complete list includes:  Demographics, Census, Ethnicity, Population, Environment, Agribusiness, Agriculture, 
+      Crops, Ecology, Land Cover, Managed Lands, Monitoring, Remediation, Soils, Storage Tanks, Waste, Wind, Geology, Bedrock, 
+      Coal Data, Coal Depth, Coal Elevation, Coal Mines, Coal Thickness, Glacial, Industrial Minerals, Petroleum, Physiography, 
+      Seismic, Silurian, Surficial, Government, Boundaries, Congress, General Assembly, Local Boundaries, Redistricted, Voting, 
+      Hydrology, Aquifers, Canals, Floodplains, Hydrologic, Karst, Monitoring, Water Bodies, Water Quality, Water Wells, Watersheds, 
+      Wetlands, Imagery, Best Available, Imagery, NAIP, Topo, Infrastructure, Airports, Bridges, Communications, Critical, Dams, 
+      Energy, Facilities, Interstates, Railroads, Recreation, Schools, Streets, Reference, Benchmarks, Elevation, Land, Places, 
+      PLSS, Quadrangle, Time Zones, Zip Codes">
+    <meta name="author" content="IndianaMap">
+    <link rel="stylesheet" href="green.css" />
+    <link rel="stylesheet" href="layerGallery.css" /> 
+  <!-- Google Analytics Code -->
+	<script type="text/javascript">
+   // dojo.addOnLoad(init); 
+	 
+		/*	
+		
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+		try{
+			var pageTracker = _gat._getTracker("UA-2384291-6");
+			pageTracker._trackPageview();
+		} catch(err) {}
+		*/
+
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2384291-6']);
+		_gaq.push(['_trackPageview']);
+	
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+
+		
+	</script>
+    
+    <script language="javascript">				
+			var doLayers = function(sLayerList,legType,legNum){
+				
+				var lyrs = [];
+				 
+				var tokens = sLayerList.split(","); 
+				for (var i = 0; i < tokens.length; i++) {
+				 lyrs.push(tokens[i]); 
+				}
+         
+				window.localStorage.setItem("layerGallery", lyrs); //Set the local storage variable of the web browser. This is used everywhere.
+				window.location.href = 'index.html?'+legType+'='+legNum;
+ 			}
+			
+			var navLegi = function(typ,idNum){
+				window.location.href = 'http://dev2.maps.indiana.edu/?'+typ+'='+idNum;
+			}
+	</script>
+	<style>
+		body{padding:0 !important;}	
+	
+	</style>
+  </head>
+
+  <body>
+  	<div id="wrapper">
+      <!-- Begin Header Section -->
+      <div id="topper">
+        <div id="header_05">
+          <div id="logo_05">
+            <a href="index.html"><img src='http://www.indianamap.org/images/LogoLong2.png' border='0'></a>
+          </div>
+          <div id="contactContainer_05">
+            <div id="contactText_05">
+              <a href="about.php">About</a>&nbsp; | 
+              <a href="news.php">News</a>&nbsp; | 
+              <a href="mapinfo.php">Help</a>&nbsp; |
+              <a href="contact.php">Contact</a>
+            </div>
+            <div id="searchBox_05">
+              <form action="" id="search-form">
+                <input id="filter-by" type="text" placeholder="Search for layers"><input type="button" id="searchButton_05" value="Search" onClick="doSearch_05();">
+              </form> 
+            </div>
+          </div>
+          <div id="extraLinks">
+            <ul>
+              <li><a href="index.html">Map Viewer</a></li>
+              <li style="background:rgba(151, 168, 151, 1.0);"><a href="mapGallery.html" style="color:#FFF;">Map Gallery</a></li>
+              <li><a href="layerGallery.html">Layer Gallery</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>    
+      
+      <div id="toolContainer" class="shadowed">
+        <div id="toolbar"></div>
+      </div>
+      <!-- End Header Section -->    
+      
+      <div id="mainContainer" style="padding-top:155px;">
+        
+        <!-- Start Title Section-->
+        <div id="splashPage">
+          <div id="splashText" class="hero-unit">
+            <h1>Thematic Map Gallery</h1>
+            <p>IndianaMap is the public source for Indiana map data. The Thematic Map Gallery helps people find commonly used maps for a better understanding of Indiana issues and trends.</p>
+          </div>
+        </div>
+        <!-- End Title Section-->
+        
+        <!-- Indiana General Assembly House -->
+        <ul class="mapsGrid">
+        	<li class="item" style="cursor:default !important;">
+          	<table cellpadding="0" cellspacing="0" border="1">
+            	<tr>
+              	<td>
+                	<span style="position:relative !important; padding-top:3px !important;">House Districts <br />(118th Gen. Assembly)</span>
+			            <img src="/images/mapGallery/houseDistrict.png" style="margin-top:0px !important;" alt="Map showing Indiana US Congressional districts, Indiana General Assembly Congressional and Senate districts, redistricted districts, and voting districts.">            
+      					</td>
+                <td> 
+                  <div style="height:100px;">
+                    Shows the legislative district boundaries for the House of Representatives, 118th General Assembly of Indiana.<br /><br /> 
+                    The boundaries were redistricted and adopted in 2011 (current until 2021), and were provided by personnel 
+                    of the Indiana Election Division.<br /><br />
+                    Please select a district number of interest from the dropdown menu to launch the customized IndianaMap viewer 
+                    showing the district. Click inside the district boundary to find the name and contact information of the 
+                    representative, or add other layers of interest from the “Add Content” menu.	
+                  </div>    
+                  <div style="width:auto !important; height:25px !important; padding-right:15px;">
+                    Disctrict Number: 
+                    <select onChange="doLayers('Government_General_Assembly_118th_House','HID',this.value)">
+                    	<option>Select</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                      <option value="13">13</option>
+                      <option value="14">14</option>
+                      <option value="15">15</option>
+                      <option value="16">16</option>
+                      <option value="17">17</option>
+                      <option value="18">18</option>
+                      <option value="19">19</option>
+                      <option value="20">20</option>
+                      <option value="21">21</option>
+                      <option value="22">22</option>
+                      <option value="23">23</option>
+                      <option value="24">24</option>
+                      <option value="25">25</option>
+                      <option value="26">26</option>
+                      <option value="27">27</option>
+                      <option value="28">28</option>
+                      <option value="29">29</option>
+                      <option value="30">30</option>
+                      <option value="31">31</option>
+                      <option value="32">32</option>
+                      <option value="33">33</option>
+                      <option value="34">34</option>
+                      <option value="35">35</option>
+                      <option value="36">36</option>
+                      <option value="37">37</option>
+                      <option value="38">38</option>
+                      <option value="39">39</option>
+                      <option value="40">40</option>
+                      <option value="41">41</option>
+                      <option value="42">42</option>
+                      <option value="43">43</option>
+                      <option value="44">44</option>
+                      <option value="45">45</option>
+                      <option value="46">46</option>
+                      <option value="47">47</option>
+                      <option value="48">48</option>
+                      <option value="49">49</option>
+                      <option value="50">50</option>
+                      <option value="51">51</option>
+                      <option value="52">52</option>
+                      <option value="53">53</option>
+                      <option value="54">54</option>
+                      <option value="55">55</option>
+                      <option value="56">56</option>
+                      <option value="57">57</option>
+                      <option value="58">58</option>
+                      <option value="59">59</option>
+                      <option value="60">60</option>
+                      <option value="61">61</option>
+                      <option value="62">62</option>
+                      <option value="63">63</option>
+                      <option value="64">64</option>
+                      <option value="65">65</option>
+                      <option value="66">66</option>
+                      <option value="67">67</option>
+                      <option value="68">68</option>
+                      <option value="69">69</option>
+                      <option value="70">70</option>
+                      <option value="71">71</option>
+                      <option value="72">72</option>
+                      <option value="73">73</option>
+                      <option value="74">74</option>
+                      <option value="75">75</option>
+                      <option value="76">76</option>
+                      <option value="77">77</option>
+                      <option value="78">78</option>
+                      <option value="79">79</option>
+                      <option value="80">80</option>
+                      <option value="81">81</option>
+                      <option value="82">82</option>
+                      <option value="83">83</option>
+                      <option value="84">84</option>
+                      <option value="85">85</option>
+                      <option value="86">86</option>
+                      <option value="87">87</option>
+                      <option value="88">88</option>
+                      <option value="89">89</option>
+                      <option value="90">90</option>
+                      <option value="91">91</option>
+                      <option value="92">92</option>
+                      <option value="93">93</option>
+                      <option value="94">94</option>
+                      <option value="95">95</option>
+                      <option value="96">96</option>
+                      <option value="97">97</option>
+                      <option value="98">98</option>
+                      <option value="99">99</option>
+                      <option value="100">100</option>
+                    </select>
+                  </div>
+								</td>
+              </tr>
+            </table>
+          </li>
+        </ul>
+        
+        
+        <!-- Congressional -->
+        <!--<ul class="mapsGrid" onClick="doLayers('Government_Voting_Districts_USCB,Government_Local_Boundaries_Minor_Civil_Divisions,Government_Boundaries_Miscellaneous_IDHS,Government_General_Assembly_117th_House,Government_General_Assembly_117th_Senate,Government_Congress_112th_Districts,Government_Redistricted_General_Assembly_House_Districts,Government_Redistricted_General_Assembly_Senate_Districts,Government_Redistricted_Congressional_Districts')">-->
+         <ul class="mapsGrid">
+          <li class="item" style="cursor:default !important;">
+          	<table cellpadding="0" cellspacing="0" border="1">
+            	<tr>
+              	<td>
+                	<span style="position:relative !important; padding-top:3px !important;">Senate Districts <br />(118th Gen. Assembly)</span>
+			            <img src="/images/mapGallery/senateDistrict.png" style="margin-top:0px !important;" alt="Map showing Indiana US Congressional districts, Indiana General Assembly Congressional and Senate districts, redistricted districts, and voting districts.">            
+      					</td>
+                <td>  
+                  <div style="height:100px; display:inline-block;">
+                    Shows the legislative district boundaries for the Senate, 118th General Assembly of Indiana. <br /><br />
+                    The boundaries were redistricted and adopted in 2011 (current until 2021), and were provided by personnel of the Indiana 
+                    Election Division.<br /><br />
+                    Please select a district number of interest from the dropdown menu to launch the customized IndianaMap viewer showing the 
+                    district. Click inside the district boundary to find the name and contact information of the representative, or add other 
+                    layers of interest from the “Add Content” menu.	
+                  </div>   
+                  <div style="width:auto !important; height:25px !important; padding-right:15px;">
+                    Disctrict Number: 
+                    <select onChange="doLayers('Government_General_Assembly_118th_Senate','SID',this.value)">
+                    	<option>Select</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                      <option value="13">13</option>
+                      <option value="14">14</option>
+                      <option value="15">15</option>
+                      <option value="16">16</option>
+                      <option value="17">17</option>
+                      <option value="18">18</option>
+                      <option value="19">19</option>
+                      <option value="20">20</option>
+                      <option value="21">21</option>
+                      <option value="22">22</option>
+                      <option value="23">23</option>
+                      <option value="24">24</option>
+                      <option value="25">25</option>
+                      <option value="26">26</option>
+                      <option value="27">27</option>
+                      <option value="28">28</option>
+                      <option value="29">29</option>
+                      <option value="30">30</option>
+                      <option value="31">31</option>
+                      <option value="32">32</option>
+                      <option value="33">33</option>
+                      <option value="34">34</option>
+                      <option value="35">35</option>
+                      <option value="36">36</option>
+                      <option value="37">37</option>
+                      <option value="38">38</option>
+                      <option value="39">39</option>
+                      <option value="40">40</option>
+                      <option value="41">41</option>
+                      <option value="42">42</option>
+                      <option value="43">43</option>
+                      <option value="44">44</option>
+                      <option value="45">45</option>
+                      <option value="46">46</option>
+                      <option value="47">47</option>
+                      <option value="48">48</option>
+                      <option value="49">49</option>
+                      <option value="50">50</option>
+                    </select>
+                  </div>
+								</td>
+              </tr>
+            </table>
+          </li>
+        </ul>
+        
+        <!-- Congressional -->
+        <!--<ul class="mapsGrid" onClick="doLayers('Government_Voting_Districts_USCB,Government_Local_Boundaries_Minor_Civil_Divisions,Government_Boundaries_Miscellaneous_IDHS,Government_General_Assembly_117th_House,Government_General_Assembly_117th_Senate,Government_Congress_112th_Districts,Government_Redistricted_General_Assembly_House_Districts,Government_Redistricted_General_Assembly_Senate_Districts,Government_Redistricted_Congressional_Districts')">-->
+         <ul class="mapsGrid">
+          <li class="item" style="cursor:default !important;">
+          	<table cellpadding="0" cellspacing="0" border="1">
+            	<tr>
+              	<td>
+                	<span style="position:relative !important; padding-top:3px !important;">Congressional Districts (113th Congress)</span>
+			            <img src="/images/mapGallery/congressDistrict.png" style="margin-top:0px !important;" alt="Map showing Indiana US Congressional districts, Indiana General Assembly Congressional and Senate districts, redistricted districts, and voting districts.">            
+      					</td>
+                <td> 
+                  <div style="height:100px; display:inline-block; vertical-align:top;">
+                    Shows the legislative district boundaries in Indiana for the 113th U.S. Congress.<br /><br />
+                    The boundaries were redistricted and adopted in 2011 (current until 2021), and were provided by personnel of the Indiana 
+                    Election Division. <br /><br />
+                    Please select a district number of interest from the dropdown menu to launch the customized IndianaMap viewer showing 
+                    the district. Click inside the district boundary to find the name and contact information of the representative, or add 
+                    other layers of interest from the “Add Content” menu.
+                  </div>    
+                  <div style="width:auto !important; height:25px !important; padding-right:15px; white-space:nowrap;">
+                    Disctrict Number: 
+                    <select onChange="doLayers('Government_Congress_113th_Districts','CID',this.value)">
+                    	<option>Select</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                    </select>
+                  </div>
+								</td>
+              </tr>
+            </table>
+          </li>
+        </ul>
+        
+
+        <!-- Hydrography NHD LocalRes -->
+        <ul class="mapsGrid" onClick="doLayers('Hydrology_Watersheds_HUC08_2009,Hydrology_Water_Bodies_Streams_LocalRes,Hydrology_Water_Bodies_Lakes_LocalRes,Hydrology_Water_Bodies_Rivers_LocalRes')">
+          <li class="item">
+          	<span>National Hydrography Data (NHD) (1:2400)</span>
+            <img  src="/images/mapGallery/NHDLocalRes.png" alt="Map showing the local resolution National Hydrography Data (NHD).">
+            <div>
+            	Provides access to the local-resolution version of the National Hydrography Dataset (NHD) for Indiana, showing the currently available data 
+              as of March 27, 2014. The map contains rivers, streams, and lakes mapped at a scale of 1:2400 along with the 2009 HUC08 watershed boundary layer 
+              for reference. The NHD dataset is currently incomplete but includes data for the following twelve HUC08 subbasins in Indiana: 
+              05140104 (Blue-Sinking), 05120204 (Driftwood), 05120104 (Upper Eel), 05120205 (Flatrock-Haw), 0712002 (Iroquois), 
+              05120113 (Lower Wabash), 05120111 (Middle Wabash-Busseron), 05120105 (Middle Wabash-Deer), 05120207 (Muscatatuck),
+              05120110 (Sugar), 05120206 (Upper East Fork White), and 05120107 (Wildcat).   
+            </div>
+          </li>
+        </ul>
+        
+        <!-- Wind Speed -->
+        <ul class="mapsGrid" onClick="doLayers('Environment_Wind_Power_100m,Environment_Wind_Power_50m,Environment_Wind_Speed_100m,Environment_Wind_Speed_50m,Reference_Elevation_Contours_24k_USGS')">
+          <li class="item">
+          	<span>Wind Speed and Elevation Contours</span>
+            <img  src="/images/mapGallery/wind.png" alt="Map showing elevation contours and wind speed and power at 50 and 100 meters above the ground.">
+            <div>
+            	Provides access to wind resource of Indiana and finding suitable sites for wind energy projects. Conventional field techniques of 
+              wind resource assessment can be time consuming, however, and often depend heavily on local meteorological expertise as well as the availability of reliable and 
+              representative wind measurements. 
+            </div>
+          </li>
+        </ul>
+        
+        <!-- Indiana Oil and Gas Well -->
+        <ul class="mapsGrid" onClick="doLayers('Geology_Petroleum_Fields,Geology_Silurian_Reefs_Polygons,Geology_Petroleum_Wells,Geology_Silurian_Reefs_Points')">
+          <li class="item">
+          	<span>Oil and Gas Wells</span>
+            <img src="/images/mapGallery/OilGasMap.png" alt="Indiana Oil and Gas wells.">
+            <div>
+            	Provides access to petroleum well data created from data in the Indiana Geological Survey (IGS) Petroleum Well Database, which is a 
+              component of the IGS Petroleum Database Management System (PDMS). The petroleum field dataset was created by comparing digital lines from Indiana Geological Survey 
+              Miscellaneous Map 58 (MM58) with one quarter mile buffers of productive petroleum wells. New petroleum field outlines were then manually digitized on screen using 
+              the shape information from MM58 and the buffer extents. The Silurian reef points and polygons were derived and modified from a preexisting published paper Map of 
+              Indiana Showing Thickness of Silurian Rocks and Location of Reefs, Indiana Geological Survey Miscellaneous Map 54. 
+            </div>
+          </li>
+        </ul>
+        
+        <!-- Indiana Industrial -->
+        <ul class="mapsGrid" onClick="doLayers('Geology_Industrial_Minerals_Sand_Gravel_Resources,Geology_Industrial_Minerals_Quarries_Abandoned,Geology_Industrial_Minerals_Sand_Gravel_Pits_Abandoned,Geology_Industrial_Minerals_Sites_2001,Geology_Industrial_Minerals_Data')">
+          <li class="item">
+          	<span>Industrial Mineral Sites</span>
+            <img src="/images/mapGallery/IndustMinerals.png" alt="">
+            <div>
+            	The distribution of stratigraphic data for various industrial minerals and industrial mineral sites in Indiana. Data 
+              were derived from cores, measured samples, mine samples, outcrops, quarries, and well logs. The abandoned quarries, 1998 shows abandoned quarry locations that have 
+              locational information that is adequate to determine coordinate values and were derived from information in Indiana Geological Survey Computer Database 2. The Abandoned 
+              Sand and Gravel Pits shows the locations of abandoned sand and gravel pits, including 2,275 of 2,515 sand and gravel pit locations from the 'Abandoned Sand and Gravel 
+              Pit Database' of the Indiana Geological Survey. The active industrial mineral operations show the locations of industrial mineral operations that were active in 2001 
+              in Indiana.
+            </div>
+          </li>
+        </ul>
+        
+        <!-- Indiana Karst Map -->
+        <ul class="mapsGrid" onClick="doLayers('Hydrology_Karst_Dye_Lines,Hydrology_Karst_Dye_Points,Hydrology_Karst_Springs,Hydrology_Karst_Cave_Density,Hydrology_Karst_Sinkhole_Areas')">
+          <li class="item">
+          	<span>Karst Features</span>
+            <img src="/images/mapGallery/Karst.png" alt="Karst Features in Indiana.">            
+            <div>
+            	Sinkhole areas (SHA) and sinking-stream basins (SSB) associated with rocks of Silurian, Devonian, and Mississippian age in southern Indiana.  It shows sinkhole areas 
+              larger than 80 acres. Cave entrances per square kilometer shows the density (i.e., number of entrances per square kilometer) of mapped cave entrances in Silurian, 
+              Devonian, and Mississippian rocks in southern Indiana. Locations of individual cave entrances are not shown. Input and Detection Points for Selected Subsurface Dye 
+              Traces, 1999 (1:24,000) - Shows the locations of input and detection points that were used for selected subsurface dye-trace investigations in southern Indiana. 
+              Springs in South-Central Indiana, 1997 (1:126,720) - Shows the locations of springs in and around the karst region of south-central Indiana. The data should not be 
+              used for site-specific data analysis.
+            </div>
+          </li>
+        </ul>
+        
+        <!-- Demographics -->
+        <ul class="mapsGrid" onClick="doLayers('Demographics_Population_Family_Size,Demographics_Population_Density_Blockgroups,Demographics_Population_Children_Poverty,Demographics_Population_Change_1990_2000,Demographics_Population_Census_Data_Historical,Demographics_Population_Age_Median,Demographics_Ethnicity_White,Demographics_Ethnicity_Hispanic,Demographics_Ethnicity_Black,Demographics_Ethnicity_Asian,Demographics_Ethnicity_American_Indian,Demographics_Census_Tracts,Demographics_Census_Counties,Demographics_Census_Blockgroups,Demographics_Census_Blocks')">
+          <li class="item">
+          	<span>Demographics</span>
+            <img src="/images/mapGallery/Demographic.png" alt="Map of Indiana Showing census blocks, ethnicity, and population.">            
+            <div>
+            	The Indiana Demographic Map uses various IndianaMap services including:<br /><br />
+              Census Blocks, 2000 (1:500,000) <br /><br />
+              Census Blockgroups, 2000 (1:100,000)<br /><br />
+              County Census Data, 2000 (1:24,000)<br /><br />
+              Census Tracts, 2000 (1:100,000)<br /><br />
+              American Indian Ethnicity, 2000 (1:500,000)<br /><br />
+              Asian Ethnicity, 2000 (1:500,000)<br /><br />
+              Black Ethnicity, 2000 (1:500,000)<br /><br />
+              Hispanic Ethnicity, 2000 (1:500,000)<br /><br />
+              White Ethnicity, 2000 (1:500,000)<br /><br />
+              Age (Median) from Census Blockgroups, 2000 (1:100,000)<br /><br />
+              Historical Populations and Population Densities, 2000 (1:500,000)<br /><br />
+              Historical Changes of Population Densities, 2000<br /><br />
+              Children in Poverty, by School District, 2000<br /><br />
+              Population Density of Blockgroups, 2000<br /><br />
+              Family Size (Average) by Census Blockgroups, 2000
+            </div>
+          </li>
+        </ul>
+        
+        <!-- Bedrock -->
+        <ul class="mapsGrid" onClick="doLayers('Geology_Bedrock_Structural_Features,Geology_Bedrock_Elevation,Geology_Bedrock_Geology')">
+          <li class="item">
+          	<span>Indiana Bedrock Geology</span>
+            <img src="/images/mapGallery/bedrock.png" alt="Indiana map showing bedrock geology, elevations, and structural features.">            
+            <div>
+            The Indiana Bedrock Map uses services from IndianaMap including:<br /><br />
+            Geologic Faults, 2002 - Shows the locations of geological fault traces in Indiana. Source data scales range from 1:12,000 to 1:500,000 with the majority being 
+            taken from sources with a scale of 1:63,360 or larger.<br /><br />
+            Bedrock Topography, 1982 (1:500,000) - Shows contours that define the elevation (feet above sea level) of the bedrock surface in Indiana. Contour interval is 
+            50 feet. Digitized and modified from the following published paper map: Indiana Geological Survey Miscellaneous Map 36.<br /><br />
+            Bedrock Geology, 1987 (1:500,000) - Shows systems and selected groups, formations, and other stratigraphic units. Generalized lithologic characterizations are 
+            also provided, as well as hyperlinks to the Compendium of Paleozoic Rock-Unit Stratigraphy in Indiana. Digitized from the following published paper map: Indiana 
+            Geological Survey Miscellaneous Map 48.
+
+            </div>
+          </li>
+        </ul>
+        
+        <!-- Airports -->
+        <ul class="mapsGrid" onClick="doLayers('Infrastructure_Airports_Public_Use_NTAD,Infrastructure_Airports_Public_Use_INDOT,Infrastructure_Airports_Boundaries_ESRI')">
+          <li class="item">
+          	<span>Airports</span>
+            <img src="/images/mapGallery/airports.png" alt="Map showing elevation contours and wind speed and power at 50 and 100 meters above the ground.">  
+            <div>
+            	The Indiana Airports Map uses IndianaMap services including:<br /><br />
+              Public-Use Airports, 1998 - Shows 642 aircraft landing facilities in Indiana, obtained from National Transportation Atlas Database (NTAD), Bureau of 
+              Transportation Statistics (BTS). Attributes include the physical and operational characteristics of the landing facility, current usage ncluding enplanements 
+              and aircraft operations, congestion levels and usage categories.<br /><br />
+              Public-use Airports, 2005 - Shows locations of 109 public-use airports in Indiana, derived from data provided by personnel of the Indiana Department of 
+              Transportation (INDOT), Aeronautics Section. Personnel of INDOT obtained the data from the airport application/ FAA Master Record on file at the Indiana 
+              Department of Transportation, Aeronautics Section. The data is collected as part of the application for an airport site.<br /><br />
+              Airport Boundaries and Runways, 2006 (1:100,000) - Shows boundaries and runways for 143 airports in Indiana (provided by ESRI). All airports have a boundary 
+              and most have at least one runway. Provides names and feature classification codes, as well as information regarding use, elevation, congestion level, service 
+              level, hub size, and tower type.
+            </div>
+          </li>
+        </ul>
+        
+        <!-- Critical Facilities Data -->
+        <ul class="mapsGrid" onClick="doLayers('Infrastructure_Critical_Facilities_MHMP_Fire_Stations,Infrastructure_Critical_Facilities_MHMP_Police_Stations,Infrastructure_Critical_Facilities_MHMP_Medical_Care,Infrastructure_Critical_Facilities_MHMP_Schools,Infrastructure_Best_Available_Imagery_Hybrid')">
+          <li class="item">
+          	<span>Critical Facilities Data</span>
+            <img src="/images/mapGallery/CritFacils_ICON_ArcGISdotCOM_THUMB.png" alt="These layers were derived by The Polis Center as part of several ‘DMA2000 Multi-Hazard Mitigation Planning’ (MHMP) projects, from data of the ‘Hazards U.S. Multi-Hazards’ (Hazus-MH MR1, v 1.1) program (data from 2003) developed by the Federal Emergen.">
+            <div>
+            	The Critical Facilities Data – Multi-Hazards Mitigation Map uses IndianaMap services includeing:<br /><br />
+              Fire Station Facilities in Indiana (MHMP), 2011 - Shows locations of fire station facilities in Indiana, derived by The Polis Center as part of several 
+              'DMA2000 Multi-Hazard Mitigation Planning' (MHMP) projects, from data of the 'Hazards U.S. Multi-Hazards' (Hazus-MH MR1, v 1.1) program (data from 2003) 
+              developed by the Federal Emergency Management Agency (FEMA).<br /><br />
+              Police Station Facilities in Indiana (MHMP), 2011 - Shows locations of police station facilities in Indiana, derived by The Polis Center as part of several 
+              'DMA2000 Multi-Hazard Mitigation Planning' (MHMP) projects, from data of the 'Hazards U.S. Multi-Hazards' (Hazus-MH MR1, v 1.1) program (data from 2003) 
+              developed by the Federal Emergency Management Agency (FEMA).<br /><br />
+              Medical Care Facilities in Indiana (MHMP), 2011 - Shows locations of medical care facilities in Indiana, derived by The Polis Center as part of several 
+              'DMA2000 Multi-Hazard Mitigation Planning' (MHMP) projects, from data of the 'Hazards U.S. Multi-Hazards' (Hazus-MH MR1, v 1.1) program (data from 2003) 
+              developed by the Federal Emergency Management Agency (FEMA).<br /><br />
+              School Facilities in Indiana (MHMP), 2011 - Shows locations of school facilities in Indiana, with the exception of some universities. Derived by The Polis 
+              Center as part of several 'DMA2000 Multi-Hazard Mitigation Planning' (MHMP) projects, from data of the 'Hazards U.S. Multi-Hazards' (Hazus-MH MR1, v 1.1) 
+              program (data from 2003) developed by the Federal Emergency Management Agency (FEMA).<br /><br />
+            </div>
+          </li>
+        </ul>
+        
+        <!-- IndianaMap Data Sharing -->
+        <ul class="mapsGrid" onClick="doLayers('Reference_Land_Parcels_County_IDHS,Infrastructure_Streets_Centerlines_IDHS,Infrastructure_Streets_Address_Points_IDHS,Government_Boundaries_Miscellaneous_IDHS')">
+          <li class="item">
+          	<span>Data Sharing Initiative Layers</span>
+            <img src="/images/mapGallery/DataSharingInitiative.png" alt="Shows the Four GIS data layers that are regularly collected from local and county GIS offices and combined into a seamless statewide dataset (IDSI was started in 2008 by IGIC, IDHS, IOT, and others).">
+            <div>
+            	Shows the IndianaMap Data Sharing Initiative (DSI) layers provided by the Indiana Department of Homeland Security (Data were last harvested 
+              on November 22, 2013). These data overlay an IndianaMap "Dark Color Hillshaded Relief" Base Map and "Best Available Imagery" for Indiana (set 
+              with transparency). <br /><br />
+              These data sets were compiled as part of the 'IndianaMap Data Sharing Initiative'  between IGIC, Indiana Office of Technology (IOT), Indiana 
+              Geographic Information Office (GIO), Indiana Department of Homeland Security (IDHS), Indiana Geological Survey (IGS) and participating 
+              Indiana counties to provide the most accurate framework data (including address points, street centerlines, land parcels, and governmental 
+              boundaries) for the citizens of Indiana.<br /><br />              
+              Data are current as of November 22, 2013. Updates are posted periodically.
+            </div>
+          </li>
+        </ul>
+        
+      </div>
+		</div>
+		<div id="footer_05" style="margin-top:0px;">
+    	<div id="footerText_05">
+        Indiana Geographic Information Council<br />
+        777 Indiana Ave, Suite 210, Indianapolis, IN 46202<br />    
+        phone: 317.504.4389  |  email: <a href="mailto:info@indianamap.org">info@indianamap.org</a><br />
+        Designed by Michael Daniels and the Indiana Geological Survey
+			</div>
+    </div>
+
+  </body>
+    
+    
+</html>

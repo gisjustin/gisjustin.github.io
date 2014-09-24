@@ -1,0 +1,249 @@
+<html>
+<head>
+<title>IndianaMAP</title>
+<meta http-equiv="content-script-type" content="text/javascript">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="icon" type="image/png" href="/images/favicon.ico">
+<link rel="stylesheet" type="text/css" href="green.css" />
+</head>
+
+<body class="nihilo">
+<!-- Do not remove div#mask, because you'll need it to fill the whole screen -->
+<div id="mask"></div>
+<div id="topper" style="position:relative;">
+  <div id="header_05">
+    <div id="dev_05"><a href="/"><img id="IndianaMapLogo" src='http://www.indianamap.org/images/LogoLong2.png' border='0'></a></div>
+    <div id="contactContainer_05">
+      <div id="contactText_05"> <a href="http://www.indianamap.org/about.php" target="_blank">About</a>&nbsp; | <a href="http://www.indianamap.org/news.php" target="_blank">News</a>&nbsp; | <a href="http://www.indianamap.org/mapinfo.php" target="_blank">Help</a>&nbsp; | <a href="http://www.indianamap.org/contact.php" target="_blank">Contact</a> 
+        <!-- &nbsp; | <a href="javascript:null(0)" class="printButton">Print</a> Another print link removed per request from Rick Hill. Uncomment to reactivate. --> 
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+	#helpMainDiv strong{
+		font-weight:bold;}
+
+</style>
+<div id="helpMainDiv" style="padding:0px 25px 25px 25px;">
+  <a name="basemap" ></a>
+  <p>
+  	<h3>Basemaps</h3>
+    <strong>A basemap is a reference layer that displays underneath all other  layers. More details are displayed as the map is zoomed in. The identify tool  will not identify features on a basemap layer. </strong>
+  </p>
+  <p>To change the basemap:</p>
+  <ul>
+    <li>Click on a basemap icon and the map will update  immediately to the new basemap</li>
+    <li>The basemap can be changed at any time.</li>
+  </ul>
+  
+  
+  
+  
+  <br /><br /><br />
+  <a name="addlayer" ></a>
+  <p><h3>Add Layers</h3>
+    <strong>Select layers of interest to add to the map. The map layers are  organized thematically into groups. </strong></p>
+  <ul>
+    <li>Click a group name to expand or collapse its  layer list</li>
+    <li>Check the box next to the layer&rsquo;s name to add it  to the map (uncheck the box to remove the layer)</li>
+    <li>Click a layer name to view a short description  and access metadata and download links. </li>
+  </ul>
+  <p>&nbsp;</p>
+  
+  
+  
+  
+  <br /><br /><br />
+  <a name="active" ></a>
+  <p>
+  	<h3>Active layers</h3>
+    <strong>Provides tools to  manage the active layers in the map</strong>
+  </p>
+  <ul>
+    <li>Click the &ldquo;X&rdquo; to the left of the checkbox to  remove the layer from the list.  </li>
+    <li>Check/uncheck the box for layer visibility. </li>
+    <li>Use the slide bar to adjust the layer opacity. </li>
+    <li>Use the up/down arrows to control the layer  stacking order in the map. </li>
+    <li>Click a layer name to view a short description  and access metadata and download links.</li>
+  </ul>
+  
+  
+  
+  
+  <br /><br /><br />
+  <a name="reset" ></a>
+  <p>
+  	<h3>Reset Map</h3>
+  	<strong>It resets the map  back to the default settings for the user to create a new map. It clears all  layers, zoom scale, and basemap.</strong>
+  </p>
+  <ul><li>Click the tab to reset the map</li></ul>
+  
+  
+  <br /><br /><br />
+  <a name="identify" ></a>
+  <p>
+  	<h3>Identify</h3>
+  	<strong>Identify features  on the map. The identify tool will not identify features on a basemap layer.</strong>
+  </p>
+  <ul>
+    <li>Click a feature in the map to identify its  attributes.</li>
+  </ul>
+  
+  
+  
+  
+  <br /><br /><br />
+  <a name="draw" ></a>
+  <p>
+  	<h3>Draw Tool</h3>  
+  	<strong>Use the draw tool to  add basic shapes, buffer circles, and add text to the map. Once added, graphics  can be selected to move, edit, or delete. </strong>
+  </p>
+  <p>
+  	To add a Shape: 
+    <ul>
+      <li>Select the graphic color</li>
+      <li>Select one of the basic shapes from the dropdown  menus</li>
+      <li>Hover the mouse over the map and follow the tool  tip instructions to place the graphic.  </li>
+    </ul>
+    <p>To add Text:  </p>
+    <ul>
+      <li>Select the graphic color</li>
+      <li>Enter custom text in the dialog box</li>
+      <li>Click the &ldquo;Add Text&rdquo; button</li>
+      <li>Click on the map to place the text. </li>
+    </ul>
+    <p>Add a Buffer: </p>
+    <ul>
+      <li>Select the graphic color</li>
+      <li>Enter the buffer distance (radius) and select  the units</li>
+      <li>Click the &ldquo;Buffer&rdquo; button</li>
+      <li>Click on the map to place the graphic.</li>
+    </ul>
+    <p>Move a graphic object:</p>
+    <ul>
+      <li>Click on the graphic object in the map</li>
+      <li>Click and Drag the object to a new location</li>
+    </ul>
+    <p>Edit the shape/size of a graphic object (excluding text):</p>
+    <ul>
+      <li>Click on the graphic object in the map</li>
+      <li>Click and Drag the objects handles</li>
+      <li>To deselect the graphic object click in the map  away from a graphic object</li>
+    </ul>
+  </p>
+  
+  
+  
+  <br /><br /><br />
+  <a name="measure" ></a>
+  <p>
+  	<h3>Measurement Tool</h3>
+    <strong>Use to measure areas,  distances, or point locations in a variety of units.</strong>
+  </p>  
+  <p>
+  	Measure Area:<br />
+    <ul>
+      <li>Click the &ldquo;Area&rdquo; button</li>
+      <li>Click the map to begin</li>
+      <li>Continue clicking on the map to outline an area  and double click to finish</li>
+      <li>Results are given in acres</li>
+      <li>Use the dropdown box to select other units</li>
+    </ul>
+    <p>Measure Distance: </p>
+    <ul>
+      <li>Click the &ldquo;Distance&rdquo; button</li>
+      <li>Click the map to begin</li>
+      <li>Continue clicking on the map and then double  click to finish</li>
+      <li>Results are given in miles</li>
+      <li>Use the dropdown box to select other units</li>
+    </ul>
+    <p>Measure Location:</p>
+    <ul>
+      <li>Select the &ldquo;Location&rdquo; button</li>
+      <li>Click on the map to calculate coordinates</li>
+      <li>Results are returned in a variety of coordinate  systems</li>
+    </ul>
+	</p>  
+  
+  
+  
+  <br /><br /><br />
+  <a name="query" ></a>
+  <p>
+  	<h3>Query</h3>
+    <strong>Query data from  active layers, search for specific records in a layer using the interactive  query string builder.</strong>
+  </p>
+  <p>
+  	To query a layer:<br />
+    <ul>
+      <li>Click the query tool icon.</li>
+      <li>Select a layer (required) from the &ldquo;Layer&rdquo;  dropdown menu. This layer is populated with the active layer list that is visible  in the map.</li>
+      <li>Select an attribute field (required) from the  selected layer in the &ldquo;Field&rdquo; dropdown menu.</li>
+      <li>Next, for the &ldquo;Value&rdquo; field, either select the  &ldquo;samples&rdquo; radio button (when selected the dropdown list is populated with many  samples of values contained in the attribute field) or select the &ldquo;manual&rdquo;  radio button to manually enter the value.</li>
+      <li>Click the &ldquo;Add to Query String&rdquo; button to add  the string to the query builder window. There is also an option to build a more  complex query by using the &ldquo;AND,&rdquo; &ldquo;OR,&rdquo; and &ldquo;NOT&rdquo; buttons.</li>
+      <li>Click the &ldquo;Execute Query&rdquo; button to select the  features that match the query string. Results will be displayed at the bottom  of the Query Tool dialog box. Explore all of the records that matched the query  string. Click &ldquo;Zoom&rdquo; to zoom to the map location for an individual record from  the list of returned records.</li>
+    </ul>
+	</p>  
+  
+  
+  
+  <br /><br /><br />
+  <a name="share" ></a>
+  <p>
+  	<h3>Share Map Tool</h3>
+  	<strong>Use this tool to  share a custom map with others. The tool captures the active layers (in current  stacking order) as well as the map extent and zoom level in a URL. Note that  graphic elements are not preserved.</strong><br />
+  </p>  
+  <p>
+  	To Share the map:<br />
+    <ul>
+      <li>Copy (Ctrl C or right mouse click and select  copy) either the &ldquo;Detailed Link&rdquo; or the &ldquo;Short Link&rdquo;</li>
+      <li>Paste the URL into an email to share with  others.</li>
+      <li>Paste the URL into another document to save to  access the map at another time</li>
+    </ul>
+  </p>
+  
+  
+  
+  <br /><br /><br />
+  <a name="print"></a>
+  <p>
+  	<h3>Print</h3>
+    <strong>Print a custom map;  add a title, author, and select from a list of layouts by downloading a PDF,  PNG32 or JPG file to print.</strong>
+  </p>
+  <p>
+  	To print the map:<br />
+    <ul>
+      <li>The print tool will open a map preview window  (this may take a moment)</li>
+      <li>Enter the Map Title, Author name, and select the  desired layout</li>
+      <li>Click the &ldquo;Download Your Map&rdquo; button.  (Complex maps may take a few moments to load  the output to a new browser tab.)</li>
+    </ul>
+	</p>
+  
+  
+  
+  <br /><br /><br />
+  <a name="popup" ></a>
+  <p><h3>NOTE:</h3> Pop-up Blockers maps prevent the printable map from opening in a new browser  tab. If prompted, after clicking &ldquo;Download Your Map&rdquo;, simply select &ldquo;Allow  Pop-ups on this site.&rdquo;</p>
+  <ul>
+    <li>Once the printable map is viewable in a new  browser tab, use &ldquo;Save&rdquo; (Ctrl S) to save a PDF or &ldquo;Print&rdquo; (Ctrl P) to send the  map to a printer.</li>
+  </ul>
+  
+  
+  
+  
+  <br /><br /><br />
+  <p>
+  	<h3>Tablets and Mobile  Devices</h3>
+  	<strong>Mobile and Tablet devices  use</strong><strong> the same IndianaMAP Viewer application as  desktop PCs.</strong>
+  </p>
+  <ul>
+    <li>It&rsquo;s a free GIS Web application providing you with an  easy way to explore and visualize Indiana GIS information. </li>
+  </ul>
+  
+</div>
+  
+</body>
+</html>
+
+

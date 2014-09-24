@@ -1,0 +1,201 @@
+
+@charset "utf-8";
+
+
+
+
+
+body {
+		padding-top: 105px;
+		background-color:#6A826A;}
+
+h1 {color:#FFFFFF;}
+
+h2 {min-height: 70px;}
+
+p {color:#FFFFFF;}
+      .category-header { 
+        min-height: 0px;
+      }
+      .row { 
+        margin-bottom: 24px;
+      }
+      .menu-dropdown, .dropdown-menu { 
+        _width: 250px; 
+        width: 250px;
+      }
+      
+      .ui-widget { 
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 13px;
+        font-weight: normal;
+        line-height: 18px;
+        color: #404040;
+      }
+
+      /* new per phil */ 
+      #jump-to-top { 
+         z-index:5000; 
+         font-weight:bold; 
+         font-size:24px;
+         margin-left:75%;
+         margin-top:250px;
+         margin-right:5px;
+         display:none;
+         position:fixed; 
+         float:right;
+      }
+
+      #header-top { 
+         width:100%; 
+      }
+
+      #search.form span.glass {
+         display: block;
+         position: absolute;
+         cursor: pointer;
+         display: block;
+         right: 0;
+         padding: 7px 8px 5px 8px;
+				padding-top: 7px;
+				padding-right: 8px;
+				padding-bottom: 5px;
+				padding-left: 8px;
+      } 
+
+
+/*  //////////////////////////////////////   */
+
+/* General */
+#mainContainer{
+		width:93%;
+		margin:auto;}
+
+.details{display:none;}
+
+#splashPage{
+		width:1150px;
+		margin:auto;}
+
+.content{
+	display:inline-block;
+	margin:auto;}
+
+.subCat {padding-bottom: 10px;}
+.subCat a{color:#FFFFFF;}
+
+.bumpers {
+		position:absolute;
+		bottom:0px;
+		margin-bottom:-10px;
+		margin-left:-10px;
+		width:118%;
+		height:10px;
+		box-shadow:3px 4px 8px 0px rgba(0, 0, 0, 0.5);
+		border-radius:0px 0px 15px 15px;
+		background-image:url("/images/double-arrow-up.gif");
+		background-repeat:no-repeat;
+		background-position:50%;
+		background-size:10px 10px;
+		background-color:#FFFFFF;}
+
+/* Section Blocks */
+.section{z-index:5; display:none;}
+
+.sectionBlock{
+		width:355px;
+		height:150px;
+		background-color:white;
+		padding:5px;
+		margin-bottom:15px;
+		border-radius:5px; -webkit-border-radius:5px 5px 5px 5px;
+		box-shadow:0 0 15px #113D43;
+		position:relative;
+		display:inline-block;
+		margin-left:15px;
+		margin-top:15px;}
+		
+.sectionBlock:hover{background-color:rgba(231, 238, 243, 1);}		
+
+.section h1{text-shadow:1px 1px 1px #000000;}
+
+.sectTitle{
+		color:black;
+		font-size:11pt;
+		width:100%;
+		height:25px;
+		display:block;}
+
+.sectMain{
+		width:200px;
+		height:145px;
+		float:right;
+		position:relative;}
+
+.sectDesc{
+		width:200px;
+		height:85px;
+		padding:5px;
+		display:inline-block;
+		color:#8d8080;
+		font-size:8pt;
+		line-height:10pt;
+		vertical-align:top;
+		overflow:auto;}
+
+.sectDesc a{color:#8d8080;}
+
+.sectDesc table td{padding:1px;}
+
+.sectNav{
+		width:340px;
+		height:25px;
+		text-align:right;
+		vertical-align:bottom;
+		display:inline-block;
+		position:absolute;
+		bottom:0;
+		right:15px;}
+		
+.sectNav ul{
+		list-style-type:none;
+		margin-top:1px;}
+
+.sectNav li{
+		display:inline;
+		width:45px;
+		font-size:8pt;
+		margin-left:10px;}
+		
+.sectNav li.addButton{
+		padding: 5px 10px 9px 23px;
+		margin: -5px -15px -10px 2px;
+		white-space:nowrap;
+		border-radius:0px 0px 5px 0px; -webkit-border-radius:0px 0px 5px 0px;
+		background:rgba(151, 168, 151, 1.0);
+		border-top:1pt solid #ccc;
+		border-left:1pt solid #ccc;
+		background-image:url(http://www.indianamap.org/images/addWhite.png);
+		background-repeat:no-repeat;
+		background-position:10px 5px;}
+		
+.sectNav li a{color:#73a9ff;}	
+.sectNav li.addButton a{
+		color:#FFF;
+		cursor:pointer;}	
+
+.thumbnail, .thumbnailSplash {
+		display:inline-block;
+		border:1pt solid black;
+		padding:5px;
+		box-shadow:3px 4px 8px 0px rgba(0, 0, 0, 0.5);
+		background-color:white;}
+		
+.thumbnail div, .thumbnailSplash div{		
+		border:1pt solid black;
+		background-repeat:no-repeat;
+		width:120px;
+		height:80px;}
+
+.thumbnail div{background-position:-10px -50px;}
+.thumbnailSplash div{background-position:-45px -50px;}
