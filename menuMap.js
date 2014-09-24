@@ -103,12 +103,13 @@ function init() {
   geometryService = new esri.tasks.GeometryService("http://maps.indiana.edu/ArcGIS/rest/services/Utilities/Geometry/GeometryServer");
   locatorService = new esri.tasks.Locator("http://maps.indiana.edu/ArcGIS/rest/services/Utilities/Locator_IN_Composite_TRS/GeocodeServer"); 
 	esri.config.defaults.geometryService = geometryService;
-	esri.config.defaults.io.proxyUrl = "http://maps.indiana.edu/proxy/proxy.ashx";
+	//esri.config.defaults.io.proxyUrl = "http://maps.indiana.edu/proxy/proxy.ashx";
   var server = 'maps.indiana.edu';
 	var server2 = 'bl-geoy-crinoid.ads.iu.edu';
 	var server3 = 'http://maps.indiana.edu';
 	esri.config.defaults.io.corsEnabledServers.push(server2);
-
+esri.config.defaults.io.corsEnabledServers.push(server);
+esri.config.defaults.io.corsEnabledServers.push(server3);
 
     
 
