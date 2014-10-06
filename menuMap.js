@@ -3798,7 +3798,7 @@ function handleMapServer(url) {
 	}
 
     } else { 
-	// var layer = new esri.layers.ArcGISDynamicMapServiceLayer(url, { opacity: 0.75 });
+	// var layer = new esri.layers.ArcGISDynamicMapServiceLayer(http://gis.uits.iu.edu/arcgis/rest/services/ISDP/las_tiles/MapServer, { opacity: 0.75 });
 	// var layer = new esri.layers.ArcGISTiledMapServiceLayer(url);
 	// map.addLayer(layer);
 	var myreg = /^http:\/\/(.*)\/ArcGIS\/rest\/services\/(.*)\/MapServer/i; 
