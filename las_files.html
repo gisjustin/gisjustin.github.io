@@ -125,8 +125,8 @@
                 for (var i = 0, il = features.length; i < il; i++) {
                   parcelId = features[i].attributes['TILE_NAME'];
                   fullSiteAddress = features[i].attributes['TILE_NAME'];
-var year = parcelId.substring(2, 5);
-			  var first4 = parcelId.substring(7, 10);
+var year = parcelId.substring(2, 6);
+			  var first4 = parcelId.substring(7, 11);
                   template += "<tr>";
                   template += "<td>" + parcelId + " <a href='https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.0/" + first4 + "/" + parcelId + ".zip' onclick='showFeature(bldgResults.features[" + i + "]); return false;'>('https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.0/" + first4 + "/" + parcelId + ".zip')</a></td>";
                   template += "<td>" + fullSiteAddress + "</td>";
@@ -155,8 +155,8 @@ var year = parcelId.substring(2, 5);
               residentialYearBuilt = features[i].attributes['TILE_NAME'];
               schoolDistrictDescription = features[i].attributes['TILE_NAME'];
               propertyDescription = features[i].attributes['TILE_NAME'];
-			  var year = parcelIdNumber.substring(2, 5);
-			  var first4 = parcelIdNumber.substring(7, 10);
+			  var year = parcelIdNumber.substring(2, 6);
+			  var first4 = parcelIdNumber.substring(7, 11);
 
               template += "<tr>";
               template += "<td>" + parcelIdNumber + " <a href='https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.0/" + first4 + "/" + parcelIdNumber + ".zip' onclick='showFeature(parcelResults.features[" + i + "]); return false;'>('https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.0/" + first4 + "/" + parcelIdNumber + ".zip')</a></td>";
