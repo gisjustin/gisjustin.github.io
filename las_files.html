@@ -128,7 +128,7 @@
 var year = parcelId.substring(2, 6);
 			  var first4 = parcelId.substring(7, 11);
                   template += "<tr>";
-                  template += "<td>" + parcelId + " <a href='https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.0/" + first4 + "/" + parcelId + ".zip' onclick='showFeature(bldgResults.features[" + i + "]); return false;'>('https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.0/" + first4 + "/" + parcelId + ".zip')</a></td>";
+                  template += "<td>" + parcelId + " <a href='https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.5/" + first4 + "/" + parcelId + ".zip' onclick='showFeature(bldgResults.features[" + i + "]); return false;'>('https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.5/" + first4 + "/" + parcelId + ".zip')</a></td>";
                   template += "<td>" + fullSiteAddress + "</td>";
                   template += "</tr>";
                 }
@@ -159,7 +159,7 @@ var year = parcelId.substring(2, 6);
 			  var first4 = parcelIdNumber.substring(7, 11);
 
               template += "<tr>";
-              template += "<td>" + parcelIdNumber + " <a href='https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.0/" + first4 + "/" + parcelIdNumber + ".zip' onclick='showFeature(parcelResults.features[" + i + "]); return false;'>('https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.0/" + first4 + "/" + parcelIdNumber + ".zip')</a></td>";
+              template += "<td>" + parcelIdNumber + " <a href='https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.5/" + first4 + "/" + parcelIdNumber + ".zip' onclick='showFeature(parcelResults.features[" + i + "]); return false;'>('https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.5/" + first4 + "/" + parcelIdNumber + ".zip')</a></td>";
               template += "<td>" + residentialYearBuilt + "</td>";
               template += "<td>" + schoolDistrictDescription + "</td>";
               template += "<td>" + propertyDescription + "</td>";
