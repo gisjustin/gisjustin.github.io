@@ -153,9 +153,11 @@
               residentialYearBuilt = features[i].attributes['TILE_NAME'];
               schoolDistrictDescription = features[i].attributes['TILE_NAME'];
               propertyDescription = features[i].attributes['TILE_NAME'];
+			  var year = parcelIdNumber.substring(2, 5);
+			  var first4 = parcelIdNumber.substring(7, 10);
 
               template += "<tr>";
-              template += "<td>" + parcelIdNumber + " <a href='#' onclick='showFeature(parcelResults.features[" + i + "]); return false;'>(show)</a></td>";
+              template += "<td>" + parcelIdNumber + " <a href='https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.0/" + first4 + "/" + parcelIdNumber + ".zip' onclick='showFeature(parcelResults.features[" + i + "]); return false;'>(show)</a></td>";
               template += "<td>" + residentialYearBuilt + "</td>";
               template += "<td>" + schoolDistrictDescription + "</td>";
               template += "<td>" + propertyDescription + "</td>";
