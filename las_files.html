@@ -124,6 +124,7 @@
 				
                 for (var i = 0, il = features.length; i < il; i++) {
                   parcelId = features[i].attributes['TILE_NAME'];
+				  parcelId = parcelId.toLowerCase();
                   fullSiteAddress = features[i].attributes['TILE_NAME'];
 var year = parcelId.substring(2, 6);
 			  var first4 = parcelId.substring(7, 11);
