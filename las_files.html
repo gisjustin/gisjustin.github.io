@@ -128,7 +128,7 @@
 var year = parcelId.substring(2, 5);
 			  var first4 = parcelId.substring(7, 10);
                   template += "<tr>";
-                  template += "<td>" + parcelId + " <a href='https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.0/" + first4 + "/" + parcelIdNumber + ".zip' onclick='showFeature(bldgResults.features[" + i + "]); return false;'>('https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.0/" + first4 + "/" + parcelIdNumber + ".zip')</a></td>";
+                  template += "<td>" + parcelId + " <a href='https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.0/" + first4 + "/" + parcelIdNumber + ".zip' onclick='showFeature(bldgResults.features[" + i + "]); return false;'>('https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.0/" + first4 + "/" + parcelId + ".zip')</a></td>";
                   template += "<td>" + fullSiteAddress + "</td>";
                   template += "</tr>";
                 }
