@@ -121,12 +121,14 @@
 
                 var parcelId;
                 var fullSiteAddress;
+				
                 for (var i = 0, il = features.length; i < il; i++) {
                   parcelId = features[i].attributes['TILE_NAME'];
                   fullSiteAddress = features[i].attributes['TILE_NAME'];
-
+var year = parcelId.substring(2, 5);
+			  var first4 = parcelId.substring(7, 10);
                   template += "<tr>";
-                  template += "<td>" + parcelId + " <a href='#' onclick='showFeature(bldgResults.features[" + i + "]); return false;'>(show)</a></td>";
+                  template += "<td>" + parcelId + " <a href=''https://spatialdata.iu.edu/DOQQS/state/" + year + "/las/spe_nps1.0/" + first4 + "/" + parcelIdNumber + ".zip'' onclick='showFeature(bldgResults.features[" + i + "]); return false;'>(show)</a></td>";
                   template += "<td>" + fullSiteAddress + "</td>";
                   template += "</tr>";
                 }
