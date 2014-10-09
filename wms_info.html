@@ -52,10 +52,20 @@
     var map, infocontrols, water, highlightlayer;
     
     function load() {
-        map = new OpenLayers.Map('map', {
-            maxExtent: new OpenLayers.Bounds(-87,39,-89,41)
-        });
-
+        map = map = new ol.Map({
+  controls: ol.control.defaults().extend([
+    new ol.control.ScaleLine({
+      units: 'degrees'
+    })
+  ]),
+  layers: layers,
+  target: 'map',
+  view: new ol.View({
+    projection: 'EPSG:4326',
+    center: [0, 0],
+    zoom: 2
+  })
+});
         var political = new OpenLayers.Layer.WMS("State Boundaries",
             "http://geoserver.uits.indiana.edu:8080/geoserver/lastiles/wms", 
             {'layers': 'lastiles:GIBSON_IN_TILE5000', transparent: true, format: 'image/gif'},
