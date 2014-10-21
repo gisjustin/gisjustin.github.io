@@ -382,7 +382,7 @@ var popup = new esri.dijit.Popup({
       }
 function showExtent(ext){
     var theGroup = document.getElementById('DemographicsGroup')
-	 var s = "<a href='http://webdb.iu.edu/spatial/scripts/isdp/filelist.cfm?xmin=" +ext.xmin +"&xmax=" + ext.xmax + "&ymax=" + ext.ymax + "&ymin=" + ext.ymin +">"
+	 var s = "<a href='http://gisdb.uits.indiana.edu/spatial/scripts/isdp/filelistJPP.php?xmin=" +ext.xmin +"&xmax=" + ext.xmax + "&ymax=" + ext.ymax + "&ymin=" + ext.ymin +">"
 	 
 	 console.log(s);
   //   theGroup.innerHTML =+ s;
