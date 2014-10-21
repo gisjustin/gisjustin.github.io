@@ -378,7 +378,13 @@ var popup = new esri.dijit.Popup({
         //modify the grid so only the STATE_NAME field is sortable
       //  grid.canSort = function(col){ if(Math.abs(col) == 2) { return true; } else { return false; } };
       }
-
+function showExtent(ext){
+    var theGroup = document.getElementById('DemographicsGroup')
+	 var s = "<a href='http://webdb.iu.edu/spatial/scripts/isdp/filelist.cfm?xmin=" +ext.xmin +"&xmax=" + ext.xmax + "&ymax=" + ext.ymax + "&ymin=" + ext.ymin +">"
+	 
+	 console.log(s);
+  //   theGroup.innerHTML =+ s;
+   }
       function makeZoomButton(id){
         var zBtn = "<div data-dojo-type='dijit.form.Button'><img src='images/zoom.png'";
         zBtn = zBtn + " width='18' height='18'";
