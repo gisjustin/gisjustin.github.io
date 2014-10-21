@@ -174,6 +174,7 @@ var popup = new esri.dijit.Popup({
         });
 		
 		map.setLevel(0);
+		 dojo.connect(map, "onExtentChange", showExtent);
 
    // map = new esri.Map("map", { extent: startExtent,  fadeOnZoom: false, force3DTransforms: false} );
 
