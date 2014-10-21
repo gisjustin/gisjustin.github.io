@@ -174,12 +174,13 @@ var popup = new esri.dijit.Popup({
         });
 		
 		map.setLevel(0);
-		 dojo.connect(map, "onExtentChange", showExtent);
+		
 
    // map = new esri.Map("map", { extent: startExtent,  fadeOnZoom: false, force3DTransforms: false} );
 
    // dojoConnections.push(dojo.connect(map, "onClick", function(evt) { (evt); }));
    dojoConnections.push(dojo.connect(map, "onClick", function(evt) { identifyClick(evt); }));
+    dojo.connect(map, "onExtentChange", showExtent);
  
     initMap(webmap);
     dojo.connect(map, 'onLoad', function(map) {
