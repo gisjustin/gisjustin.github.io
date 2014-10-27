@@ -75,13 +75,13 @@ var area = d3.svg.area()
     .interpolate("step-after")
     .x(function(d) { return x(d.date); })
     .y0(y(0))
-    .y1(function(d) { return y(d.value); });
+    .y1(function(d) { return y(d.Field7); });
 
 // A line generator.
 var line = d3.svg.line()
     .interpolate("step-after")
     .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.value); });
+    .y(function(d) { return y(d.Field7); });
 
 var svg = d3.select("body").append("svg:svg")
     .attr("width", w + m[1] + m[3])
@@ -135,17 +135,19 @@ svg.append("svg:rect")
     .attr("height", h)
     .call(d3.behavior.zoom().on("zoom", zoom));
 
-d3.csv("amr.csv", function(data) {
+d3.csv("amr5.csv", function(data) {
 
   // Parse dates and numbers.
   data.forEach(function(d) {
-    d.date = parse(d.date);
-    d.value = +d.value;
+	  stringtoparse = d.year + "-" + d.month +"-" + d.day
+    d.date = parse(stringtoparse);
+	
+    d.Field7 = +d.Field7;
   });
 
   // Compute the maximum price.
-  x.domain([new Date(1999, 0, 1), new Date(2003, 0, 0)]);
-  y.domain([0, d3.max(data, function(d) { return d.value; })]);
+  x.domain([new Date(2014, 4, 1), new Date(2014, 5, 1)]);
+  y.domain([500, d3.max(data, function(d) { return d.Field7; })]);
 
   // Bind the data to our path elements.
   svg.select("path.area").data([data]);
@@ -159,7 +161,7 @@ function draw() {
   svg.select("g.y.axis").call(yAxis);
   svg.select("path.area").attr("d", area);
   svg.select("path.line").attr("d", line);
-  d3.select("#footer span").text("U.S. Commercial Flights, " + x.domain().map(format).join("-"));
+  d3.select("#footer span").text("AMR dataset from " + "<a href='ftp://amrc.ssec.wisc.edu/pub/requests/DVPC/AWS_q10_MAY_2014/ag4201405q10.txt'>here</a>" + " , " + x.domain().map(format).join("-"));
 }
 
 function zoom() {
@@ -168,5 +170,6 @@ function zoom() {
 }
 
     </script>
+    <iframe style="border: none;" height="400" width="600" src="http://geoserver.uits.indiana.edu:8080/geoexplorer/viewer/#maps/2"></iframe>
   </body>
 </html>

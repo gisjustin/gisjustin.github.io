@@ -119,7 +119,7 @@ echo "testing " . $qryAllFiles . "<br>";
 									<tr>
 										<td height="40" class="page_heading">
 											Spatial Datasets within the UTM bounding coordinates of:<br>
-											(568854, 4579481) min by (567616, 4578243) max in meters
+											(<?php echo "" . $_GET['xmin'] ."";?>, <?php echo "" . $_GET['ymin'] ."";?>) min by (<?php echo "" . $_GET['xmax'] ."";?>, <?php echo "" . $_GET['ymax'] ."";?>) max in meters
 										</td>
 									</tr>
 									<?php include 'dl_simple_info.php' ?>
