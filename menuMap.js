@@ -105,7 +105,7 @@ function init() {
 	esri.config.defaults.geometryService = geometryService;
 	esri.config.defaults.io.proxyUrl = "http://maps.indiana.edu/proxy/proxy.ashx";
   var server = 'maps.indiana.edu';
-	var server2 = 'bl-geoy-crinoid.ads.iu.edu';
+	var server2 = 'http://gisjustin.github.io';
 	var server3 = 'http://maps.indiana.edu';
 	esri.config.defaults.io.corsEnabledServers.push(server2);
 esri.config.defaults.io.corsEnabledServers.push(server);
