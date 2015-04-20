@@ -1340,7 +1340,7 @@ function jQueryReady() {
           	// First query to get display field -PR
 		    		esri.request({
 							url:lyr.url+'/0',
-							content:{f:"json"},
+							content:{f:"pjson"},
 							callbackParamName:"callback",
 							load: function(data) {
 								var query = new esri.tasks.Query(), 			    
