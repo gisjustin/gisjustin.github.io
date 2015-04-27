@@ -107,6 +107,7 @@ function init() {
   var server = 'maps.indiana.edu';
 	var server2 = 'http://gisjustin.github.io';
 	var server3 = 'http://maps.indiana.edu';
+	var server3 = 'http://maps.iu.edu';
 	esri.config.defaults.io.corsEnabledServers.push(server2);
 esri.config.defaults.io.corsEnabledServers.push(server);
 esri.config.defaults.io.corsEnabledServers.push(server3);
