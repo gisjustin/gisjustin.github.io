@@ -161,7 +161,7 @@ function draw() {
   svg.select("g.y.axis").call(yAxis);
   svg.select("path.area").attr("d", area);
   svg.select("path.line").attr("d", line);
-  d3.select("#footer span").text("AMR dataset from " + "<a href='ftp://amrc.ssec.wisc.edu/pub/requests/DVPC/AWS_q10_MAY_2014/ag4201405q10.txt'>here</a>" + " , " + x.domain().map(format).join("-"));
+  //d3.select("#footer span").text("<a href='http://amrc.ssec.wisc.edu/pub/requests/DVPC/AWS_q10_MAY_2014/ag4201405q10.txt'>here</a>");
 }
 
 function zoom() {
@@ -170,6 +170,7 @@ function zoom() {
 }
 
     </script>
-    <iframe style="border: none;" height="400" width="600" src="http://geoserver.uits.indiana.edu:8080/geoexplorer/viewer/#maps/2"></iframe>
+   <!-- <iframe style="border: none;" height="400" width="600" src="http://geoserver.uits.indiana.edu:8080/geoexplorer/viewer/#maps/2"></iframe>-->
+  <a href='ftp://amrc.ssec.wisc.edu/pub/requests/DVPC/AWS_q10_MAY_2014/ag4201405q10.txt'>Data from amrc</a
   </body>
 </html>
