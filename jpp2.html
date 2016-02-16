@@ -1,0 +1,2776 @@
+
+
+<!DOCTYPE html> 
+<!--
+	Map viewer created by Michael Storm Daniels and Justin Peters
+-->
+
+<html>
+<head>
+	<title>IndianaMAP</title>
+    
+  <meta http-equiv="content-script-type" content="text/javascript">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <link rel="icon" type="image/png" href="/images/favicon.ico">
+  
+  <link rel="stylesheet" type="text/css" href="http://maps.indiana.edu/arcgis_js_v33_api/library/3.3/jsapi/js/dojo/dijit/themes/nihilo/nihilo.css">
+  <link rel="stylesheet" type="text/css" href="http://maps.indiana.edu/arcgis_js_v33_api/library/3.3/jsapi/js/esri/css/esri.css" />
+  <link rel="stylesheet" type='text/css' href='http://maps.indiana.edu/arcgis_js_v33_api/library/3.3/jsapi/js/esri/dijit/css/Popup.css'/>
+  <link rel="stylesheet" type="text/css" href="/JQuery/jquery-ui-1.8.19.custom/css/custom-theme/jquery-ui-1.8.19.custom.css" />  
+  <link rel="stylesheet" type="text/css" href="/JQuery/jquery.qtip.min.css" />
+  <link rel="stylesheet" type="text/css" href="green.css" />
+ 
+  <script>var dojoConfig = { parseOnLoad: true };</script>
+
+ 	<script type="text/javascript" src="http://maps.indiana.edu/arcgis_js_v33_api/library/3.3/jsapi/init.js"></script>
+ 
+  <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAzouhKFqattXIH9KO4JZb7RQVH68FugdrYlBBe-eMgCMZv0p7HhRKXM8sFOUplTOaCMCD2jRNHP31ag&amp;autoload=%7B%27modules%27%3A%5B%7B%27name%27%3A%27jquery%27%2C%27version%27%3A%271.7.1%27%7D%2C%7B%27name%27%3A%27jqueryui%27%2C%27version%27%3A%271.8.17%27%7D%5D%7D"></script> 
+  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+  <script type="text/javascript" src="/JQuery/jquery.qtip.min.js"></script>
+  <script type="text/javascript" src="/JQuery/jquery.bitly.js"></script>  <!-- This is used in the creation of the shortened URL for sharing the map via a link -->
+	<script type="text/javascript" src="search.js"></script>
+  <script type="text/javascript" src="servers.js"></script> 
+ 
+ 
+  
+  <script type="text/javascript">
+
+		function getInternetExplorerVersion() {    
+			var rv = -1; // Return value assumes failure.    
+			if (navigator.appName == 'Microsoft Internet Explorer') {        
+				var ua = navigator.userAgent;        
+				var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");        
+				if (re.exec(ua) != null)            
+				rv = parseFloat(RegExp.$1);    
+			}    
+			return rv;
+		}
+		
+		function checkVersion() {    
+			var msg = "";    
+			var ver = getInternetExplorerVersion();    
+			if (ver > -1) {        
+				if (ver >= 9.0)            
+					msg = ""        
+				else            
+					msg = "****************ALERT****************\n\nIndianaMAP is best viewed in IE9 and above.\n\nYour browser version: Internet Explorer "+ver;    
+			}
+			if (msg != '')  alert(msg);
+		}
+	
+		checkVersion();		
+		
+		var isGTIE8 = true; //This variable tells us weather the browser is IE8 or above. 
+		var IEVersion = getInternetExplorerVersion();
+		
+		if (IEVersion > -1) {        
+			if (IEVersion >= 9.0)            
+				isGTIE8 = true;        
+			else            
+				isGTIE8 = false;
+		}		
+		
+		var toggleDrawTool = function(section,stateImg,selected,isToggle){
+			var stateChk = document.getElementById(stateImg);
+			var defaultBut = '';
+			var cssShow = 'none';		
+			var doIt = false;		
+			
+			//This first if statement is to make sure that the box doesn't toggle if the user is just pressing the button to use it.
+			if(stateChk.src.indexOf('bullet_up') >= 0 || isToggle != null){ doIt = true } 			
+			
+			if(doIt == true){ 
+				if(stateChk.src.indexOf('bullet_up') >= 0){ 
+					cssShow = 'none';
+					document.getElementById(stateImg).src = '/images/bullet_drop.png';
+				}else{
+					cssShow = 'block';
+					document.getElementById(stateImg).src = '/images/bullet_up.png';
+				}
+				
+				switch(section){
+					case 'draw-point':
+						defaultBut = 'draw-stickpin-button';
+						document.getElementById('draw-stickpin-button').style.display = cssShow;
+						document.getElementById('draw-pushpin-button').style.display = cssShow;
+						document.getElementById('draw-cross-button').style.display = cssShow;
+						break;
+					case 'draw-area':
+						defaultBut = 'draw-polygon-button';				
+						document.getElementById('draw-polygon-button').style.display = cssShow;
+						document.getElementById('draw-triangle-button').style.display = cssShow;
+						document.getElementById('draw-rectangle-button').style.display = cssShow;
+						document.getElementById('draw-left-arrow-button').style.display = cssShow;
+						document.getElementById('draw-right-arrow-button').style.display = cssShow;
+						document.getElementById('draw-up-arrow-button').style.display = cssShow;
+						document.getElementById('draw-down-arrow-button').style.display = cssShow;
+						document.getElementById('draw-circle-button').style.display = cssShow;
+						//document.getElementById('draw-ellipse-button').style.display = cssShow;
+						document.getElementById('draw-freehand-polygon-button').style.display = cssShow;
+						break;
+					case 'draw-line':
+						defaultBut = 'draw-polyline-button';
+						document.getElementById('draw-polyline-button').style.display = cssShow;
+						document.getElementById('draw-freehand-polyline-button').style.display = cssShow;
+						break;
+					
+					default: break;
+				}
+				
+				// Turn on the selected button or the default for that section
+				if(selected == null || selected == ''){
+					document.getElementById(defaultBut).style.display = 'block';
+				}else{
+					document.getElementById(selected).style.display = 'block';
+				}
+			}
+		}
+
+	</script>
+
+	<style>
+		
+		.map .dev-med{ 
+			position:absolute; 
+			right:5px; 
+			bottom:5px; 
+			width:1px; 
+			height:1px; 
+			z-index:49; 
+			/*background-image:url('http://maps.indiana.edu/images/IndianaMap/Green/Cornerdev.png'); */
+			cursor:pointer; 
+			background-image:none; }
+	
+		.map .dev-sm { 
+			position:absolute; 
+			right:5px; 
+			bottom:5px; 
+			width:1px; 
+			height:11px; 
+			z-index:49; 
+			background-image:url('http://maps.indiana.edu/images/IndianaMap/Green/Smalldev.png'); 
+			cursor:pointer; 
+			background-image:none; }
+		
+		#alertMessage{
+			position:absolute;
+			bottom:0;
+			color:red;
+			font-weight:bold;}	
+			
+	</style>
+	 
+	<!--<script type="text/javascript">
+		(function(a,b){
+				if(/android.+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|e\-|e\/|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(di|rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|xda(\-|2|g)|yas\-|your|zeto|zte\-/i.test(a.substr(0,4)))window.location=b})(navigator.userAgent||navigator.vendor||window.opera,'http://maps.indiana.edu/mobile.html');
+	
+		if (navigator.userAgent.match(/iPad/i) != null) { 
+			 window.location = 'http://maps.indiana.edu/mobile.html'; 
+		}
+	</script>-->
+
+	<script type="text/javascript" src="RasterLayer.js"></script>
+	<script type="text/javascript" src="menuMap.js"></script>
+  <!-- Google Analytics Code -->
+	<script type="text/javascript">
+   // dojo.addOnLoad(init); 
+	 
+		/*	
+		
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+		try{
+			var pageTracker = _gat._getTracker("UA-2384291-6");
+			pageTracker._trackPageview();
+		} catch(err) {}
+		*/
+
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2384291-6']);
+		_gaq.push(['_trackPageview']);
+	
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+
+		
+	</script>
+</head>
+
+<body class="nihilo">	
+  <!-- Do not remove div#mask, because you'll need it to fill the whole screen --> 
+  <div id="mask"></div>
+
+  <div id="topper">
+    <div id="header_05">
+      <div id="dev_05"><a href="/"><img id="IndianaMapLogo" src='http://www.indianamap.org/images/LogoLong2.png' border='0'></a></div>   
+      
+      <!-- Alert note for messages. -MD -->
+      <!-- <div id="alertMessage">The first Tuesday of each Month from 8:00 AM to 1:00 PM this Website under goes a scheduled maintenance and is off-line.  <br />Please note that maintenance is scheduled for this Tuesday, October 1st.</div> -->
+     
+      
+      <div id="contactContainer_05">
+        <div id="contactText_05">
+          <a href="http://www.indianamap.org/" target="_blank">About</a>&nbsp; | 
+          <a href="http://www.indianamap.org/news.php" target="_blank">News</a>&nbsp; | 
+          <a href="http://www.indianamap.org/mapinfo.php" target="_blank">Help</a>&nbsp; |
+          <a href="http://www.indianamap.org/contact.php" target="_blank">Contact</a>
+          <!-- &nbsp; | <a href="javascript:null(0)" class="printButton">Print</a> Another print link removed per request from Rick Hill. Uncomment to reactivate. -->
+        </div>
+      </div>
+      
+      
+      <div id="searchBox_05">
+        <form action="" id="search-form">
+         <select id="searchSelect">
+            <option value="searchAddy" selected>Address</option>
+            <option value="searchCTP">Zipcode</option>
+             <option value="searchPP">City / Town </option>
+            <option value="searchCounty">Counties</option>
+            <option value="searchQuad">Quadrangles</option>
+            <option value="searchLayers">Layers</option>
+            <option value="searchSTR">Township / Range</option>
+             <option value="searchLL">Lon/Lat</option>
+          </select>
+          <input type="text" class="searchbox" title="Search for an Address" id="searchAddy" placeholder="100 N. Senate 46204  " value="100 N. Senate 46204"/>
+          <input type="text" class="searchbox" title="Search for zipcode" id="searchCTP" placeholder="Example: 46151" value="Example: 46151"/>    
+          <input type="text" class="searchbox" title="Search for City/Town/Place" id="searchPP" placeholder="Example: Bloomington:" value="Example: Bloomington"/>    
+          <select id="searchQuad" class="searchbox" data-dojo-type="dijit.form.ComboBox" value="Select a Quad" onchange="selectQuad(this)" fetchProperties="{sort:[{attribute:'name', descending:false}]}"></select>
+          <!--<input type="text" class="searchbox" title="Search for Quadrangle" id="searchQuad" placeholder="Example:"/>-->
+          <input type="text" class="searchbox" title="Search for Layers" id="searchLayers" placeholder="Example: Hydrology" value="Example: Hydrology" />
+          <input type="text" class="searchbox" title="Search for a S/T/R" id="searchSTR" placeholder="Ex: 4n3w" style="width:70px !important;" value="Ex: 4n3w" /> 
+           <input type="text" class="searchbox" title="Search for a Longitude" id="searchLL" placeholder="Longitude" style="width:70px !important;" value="-86.522029" />
+            <input type="text" class="searchbox" title="Search for a Latitude" id="searchLL2" placeholder="Latitude" style="width:70px !important;" value="39.172889" /> 
+
+          <select id="zoomPM" name="zoomPM" class="searchbox" style="width:75px !important;">
+            <option value="FIRST">1st PM</option>
+            <option value="SECOND" selected="selected">2nd PM</option>
+          </select>  
+         	<!-- <select id="searchCounty" class="searchbox" data-dojo-type="dijit.form.ComboBox" style="width:200px;font-size:16px;" value="Select a County" onchange="selectCounty(this)" fetchProperties="{sort:[{attribute:'name', descending:false}]}"/> -->
+          
+          <!-- Counties Search Tool-->
+          <select class="searchbox" id="searchCounty" title="Search for Counties" style="width:155px !important; color:#000 !important;">
+            <option></option>
+            <option value="Adams" data-xmin="662194.5113038598" data-ymin="4492639.895265399" data-xmax="686015.3983660443" data-ymax="4532474.143494498">Adams</option>
+            <option value="Allen" data-xmin="639382.5478906147" data-ymin="4530881.3708850145" data-xmax="684999.9098530989" data-ymax="4571167.611690534">Allen</option>
+            <option value="Bartholomew" data-xmin="578800.1877701925" data-ymin="4321153.30310569" data-xmax="613508.2110985173" data-ymax="4356451.405410564">Bartholomew</option>
+            <option value="Benton" data-xmin="455364.10138323344" data-ymin="4480566.5358941555" data-xmax="492060.0712094093" data-ymax="4509688.240881277">Benton</option>
+            <option value="Blackford" data-xmin="631466.9009072427" data-ymin="4470957.854413206" data-xmax="652511.5191668421" data-ymax="4492280.263393065">Blackford</option>
+            <option value="Boone" data-xmin="525904.9301209301" data-ymin="4419234.507421035" data-xmax="564884.0779332323" data-ymax="4448101.924535919">Boone</option>
+            <option value="Brown" data-xmin="553301.3753304454" data-ymin="4322341.500482796" data-xmax="579655.87493899" data-ymax="4355382.000225568">Brown</option>
+            <option value="Carroll" data-xmin="519083.42201857734" data-ymin="4475728.54446565" data-xmax="552989.9144661548" data-ymax="4509653.336817244">Carroll</option>
+            <option value="Cass" data-xmin="535240.2312496239" data-ymin="4490245.113567168" data-xmax="570689.4329466391" data-ymax="4529039.156995298">Cass</option>
+            <option value="Clark" data-xmin="587725.9462425057" data-ymin="4236203.636210574" data-xmax="638121.3126894394" data-ymax="4274223.710741984">Clark</option>
+            <option value="Clay" data-xmin="479198.4059174312" data-ymin="4335458.999887014" data-xmax="505164.3128856141" data-ymax="4384180.0003803875">Clay</option>
+            <option value="Clinton" data-xmin="525894.3921369202" data-ymin="4447541.476023398" data-xmax="564505.7130048797" data-ymax="4475909.193425817">Clinton</option>
+            <option value="Crawford" data-xmin="527814.3122667084" data-ymin="4217569.499617219" data-xmax="565890.1876301691" data-ymax="4252991.499778209">Crawford</option>
+            <option value="Daviess" data-xmin="475698.8439301718" data-ymin="4260249.000456968" data-xmax="508315.2192565482" data-ymax="4306164.0003077295">Daviess</option>
+            <option value="Dearborn" data-xmin="661840.4633035297" data-ymin="4311321.845304534" data-xmax="688502.3441603612" data-ymax="4352917.540447272">Dearborn</option>
+            <option value="Decatur" data-xmin="613302.4065543255" data-ymin="4332109.801035894" data-xmax="646952.6511936644" data-ymax="4368472.237677759">Decatur</option>
+            <option value="Dekalb" data-xmin="650667.5818851246" data-ymin="4569671.127849139" data-xmax="683957.193180128" data-ymax="4599964.933957353">Dekalb</option>
+            <option value="Delaware" data-xmin="620668.2136651855" data-ymin="4437304.729261864" data-xmax="652259.9786866074" data-ymax="4471369.452237589">Delaware</option>
+            <option value="Dubois" data-xmin="493591.9997868361" data-ymin="4228336.000491247" data-xmax="528075.4373869514" data-ymax="4264276.999692719">Dubois</option>
+            <option value="Elkhart" data-xmin="577920.1949373735" data-ymin="4587540.660025783" data-xmax="612495.4802175742" data-ymax="4623903.786843648">Elkhart</option>
+            <option value="Fayette" data-xmin="645429.8925362462" data-ymin="4376472.082037209" data-xmax="668792.8048140053" data-ymax="4405854.300816573">Fayette</option>
+            <option value="Floyd" data-xmin="584440.7258874457" data-ymin="4226354.2993694" data-xmax="608288.4028376555" data-ymax="4252764.082689997">Floyd</option>
+            <option value="Fountain" data-xmin="462404.20686179027" data-ymin="4422552.294048125" data-xmax="492297.2470176304" data-ymax="4468465.777354885">Fountain</option>
+            <option value="Franklin" data-xmin="646235.6566329971" data-ymin="4347928.496730626" data-xmax="688017.5651519094" data-ymax="4377083.729525778">Franklin</option>
+            <option value="Fulton" data-xmin="544702.3107464369" data-ymin="4528854.849283127" data-xmax="588692.1445154054" data-ymax="4558364.05839861">Fulton</option>
+            <option value="Gibson" data-xmin="413539.99996828195" data-ymin="4224278.000103468" data-xmax="472429.2190951267" data-ymax="4265090.9998214785">Gibson</option>
+            <option value="Grant" data-xmin="595992.400266204" data-ymin="4470372.912844662" data-xmax="632058.9736117935" data-ymax="4501468.469993621">Grant</option>
+            <option value="Greene" data-xmin="479107.062045346" data-ymin="4305943.500339525" data-xmax="527528.1872104416" data-ymax="4335880.499791406">Greene</option>
+            <option value="Hamilton" data-xmin="564442.3878208213" data-ymin="4419838.520989597" data-xmax="597215.1750513427" data-ymax="4452675.552956179">Hamilton</option>
+            <option value="Hancock" data-xmin="589460.9370921217" data-ymin="4394687.999622174" data-xmax="621711.3071701564" data-ymax="4422718.278304279">Hancock</option>
+            <option value="Harrison" data-xmin="558733.624679504" data-ymin="4201618.333138363" data-xmax="596354.5409385413" data-ymax="4252988.500482207">Harrison</option>
+            <option value="Hendricks" data-xmin="526040.625481056" data-ymin="4383528.00012378" data-xmax="557811.0621186448" data-ymax="4419572.50012535">Hendricks</option>
+            <option value="Henry" data-xmin="620009.4150725715" data-ymin="4405004.344975783" data-xmax="653856.567744094" data-ymax="4437812.442798337">Henry</option>
+            <option value="Howard" data-xmin="552934.1976021035" data-ymin="4469482.963659832" data-xmax="596544.7069547186" data-ymax="4491150.760672012">Howard</option>
+            <option value="Huntington" data-xmin="614049.7186830211" data-ymin="4501145.33040932" data-xmax="640791.6466439264" data-ymax="4540685.068046145">Huntington</option>
+            <option value="Jackson" data-xmin="559008.8123917608" data-ymin="4286843.125281736" data-xmax="604588.7563702101" data-ymax="4325354.3440056015">Jackson</option>
+            <option value="Jasper" data-xmin="476715.1608591182" data-ymin="4509521.492721122" data-xmax="505892.1352222916" data-ymax="4570547.824425956">Jasper</option>
+            <option value="Jay" data-xmin="651102.6293095294" data-ymin="4463315.960518088" data-xmax="686638.1501106247" data-ymax="4493590.957794284">Jay</option>
+            <option value="Jefferson" data-xmin="614248.0091152061" data-ymin="4271952.029203868" data-xmax="656418.1191064799" data-ymax="4308762.48939815">Jefferson</option>
+            <option value="Jennings" data-xmin="603749.5044014286" data-ymin="4296049.60209031" data-xmax="634834.5542863784" data-ymax="4339696.56072296">Jennings</option>
+            <option value="Johnson" data-xmin="564328.437100715" data-ymin="4354977.49974519" data-xmax="590307.1870769095" data-ymax="4388165.016192099">Johnson</option>
+            <option value="Knox" data-xmin="433953.5935872933" data-ymin="4252025.99987331" data-xmax="492138.3754654825" data-ymax="4306581.500468118">Knox</option>
+            <option value="Kosciusko" data-xmin="577376.8492728667" data-ymin="4543875.319569116" data-xmax="613019.2449540617" data-ymax="4588144.067386344">Kosciusko</option>
+            <option value="Lagrange" data-xmin="611399.542168553" data-ymin="4597733.910339275" data-xmax="650667.5818851246" data-ymax="4624672.405340364">Lagrange</option>
+            <option value="Lake" data-xmin="455820.8442956591" data-ymin="4556833.765149184" data-xmax="481666.8541757306" data-ymax="4623270.678363059">Lake</option>
+            <option value="LaPorte" data-xmin="505596.6354460167" data-ymin="4565085.027108869" data-xmax="542832.5236086948" data-ymax="4623201.169242993">LaPorte</option>
+            <option value="Lawrence" data-xmin="527470.0004583877" data-ymin="4282054.000157276" data-xmax="562991.3122354699" data-ymax="4316025.000508914">Lawrence</option>
+            <option value="Madison" data-xmin="596577.0571627486" data-ymin="4422115.070623718" data-xmax="621630.344610081" data-ymax="4470862.8866051175">Madison</option>
+            <option value="Marion" data-xmin="557465.5000063227" data-ymin="4387144.999551149" data-xmax="590824.1248053908" data-ymax="4420257.147549987">Marion</option>
+            <option value="Marshall" data-xmin="544500.5489542484" data-ymin="4557939.237662215" data-xmax="579336.034682692" data-ymax="4592368.614206279">Marshall</option>
+            <option value="Martin" data-xmin="506599.84415095113" data-ymin="4260731.999753417" data-xmax="527686.3747305889" data-ymax="4306248.499763809">Martin</option>
+            <option value="Miami" data-xmin="569938.1917299395" data-ymin="4490544.193247447" data-xmax="596199.148938397" data-ymax="4539203.440396765">Miami</option>
+            <option value="Monroe" data-xmin="527092.1874660356" data-ymin="4315951.499836845" data-xmax="559085.0000398317" data-ymax="4356308.500066431">Monroe</option>
+            <option value="Montgomery" data-xmin="492134.2159774788" data-ymin="4412798.500503041" data-xmax="526080.3751130933" data-ymax="4451623.5281232">Montgomery</option>
+            <option value="Morgan" data-xmin="526859.4373858189" data-ymin="4354449.000032699" data-xmax="564498.3125568731" data-ymax="4387390.500479378">Morgan</option>
+            <option value="Newton" data-xmin="455584.2859594384" data-ymin="4509558.006513156" data-xmax="477431.94447578583" data-ymax="4563063.375650987">Newton</option>
+            <option value="Noble" data-xmin="612238.165401334" data-ymin="4569330.507560823" data-xmax="651428.3012458328" data-ymax="4598797.748036267">Noble</option>
+            <option value="Ohio" data-xmin="661261.540806991" data-ymin="4307674.898997137" data-xmax="688007.6139198998" data-ymax="4322384.074306836">Ohio</option>
+            <option value="Orange" data-xmin="527568.3751144791" data-ymin="4249673.000447119" data-xmax="560371.2495130291" data-ymax="4282411.500061609">Orange</option>
+            <option value="Owen" data-xmin="495266.0308923954" data-ymin="4335218.500174789" data-xmax="531812.687182432" data-ymax="4369272.499822505">Owen</option>
+            <option value="Parke" data-xmin="462897.89876625035" data-ymin="4383901.000316128" data-xmax="499193.5316960532" data-ymax="4422577.455776148">Parke</option>
+            <option value="Perry" data-xmin="516364.68768004514" data-ymin="4188281.999813944" data-xmax="549966.9999033399" data-ymax="4235443.499505866">Perry</option>
+            <option value="Pike" data-xmin="459602.3749231808" data-ymin="4231472.000494167" data-xmax="493699.40612293594" data-ymax="4267128.000015374">Pike</option>
+            <option value="Porter" data-xmin="481438.8564795181" data-ymin="4563142.61686706" data-xmax="505885.6266782861" data-ymax="4623228.188507019">Porter</option>
+            <option value="Posey" data-xmin="403539.0629989682" data-ymin="4180918.7496310864" data-xmax="439741.3747126842" data-ymax="4231837.999598509">Posey</option>
+            <option value="Pulaski" data-xmin="505812.14648621716" data-ymin="4528862.189315135" data-xmax="544783.8590345122" data-ymax="4557942.5359662175">Pulaski</option>
+            <option value="Putnam" data-xmin="498731.18750362284" data-ymin="4368977.000046229" data-xmax="530751.2497414434" data-ymax="4412973.999767205">Putnam</option>
+            <option value="Randolph" data-xmin="651363.7810537731" data-ymin="4429784.416934861" data-xmax="686865.0060468363" data-ymax="4464490.121927183">Randolph</option>
+            <option value="Ripley" data-xmin="634660.9658062169" data-ymin="4308273.054261694" data-xmax="666814.0784121621" data-ymax="4352973.488735324">Ripley</option>
+            <option value="Rush" data-xmin="617041.5743018081" data-ymin="4367954.272877276" data-xmax="646481.532345226" data-ymax="4405564.169872303">Rush</option>
+            <option value="Scott" data-xmin="596616.2763627851" data-ymin="4268720.955920858" data-xmax="624506.0499567594" data-ymax="4298884.385324949">Scott</option>
+            <option value="Shelby" data-xmin="589876.3749165079" data-ymin="4355858.000482012" data-xmax="617981.4670386827" data-ymax="4395181.710982634">Shelby</option>
+            <option value="Spencer" data-xmin="476350.09359477833" data-ymin="4181676.5004157927" data-xmax="520615.969092004" data-ymax="4228605.000171497">Spencer</option>
+            <option value="St Joseph" data-xmin="539408.3464535065" data-ymin="4586916.503353201" data-xmax="578521.7253059335" data-ymax="4623618.091867382">St Joseph</option>
+            <option value="Starke" data-xmin="505863.47858226486" data-ymin="4557817.761566101" data-xmax="544702.3107464369" data-ymax="4586954.990393236">Starke</option>
+            <option value="Steuben" data-xmin="649912.3685724214" data-ymin="4598797.748036267" data-xmax="683146.6132113729" data-ymax="4625481.095005117">Steuben</option>
+            <option value="Sullivan" data-xmin="443058.8746197736" data-ymin="4305883.500083469" data-xmax="479257.25007748604" data-ymax="4345746.500184594">Sullivan</option>
+            <option value="Switzerland" data-xmin="655777.3162898831" data-ymin="4283661.917726774" data-xmax="692187.6249317927" data-ymax="4310614.385207875">Switzerland</option>
+            <option value="Tippecanoe" data-xmin="491936.03920929413" data-ymin="4451586.0783951655" data-xmax="525918.8104409426" data-ymax="4490255.426271178">Tippecanoe</option>
+            <option value="Tipton" data-xmin="564250.8086846424" data-ymin="4451999.975099551" data-xmax="596885.3682030356" data-ymax="4473543.871183615">Tipton</option>
+            <option value="Union" data-xmin="668451.3499656869" data-ymin="4376862.312053572" data-xmax="687774.2668476831" data-ymax="4399676.74023482">Union</option>
+            <option value="Vanderburgh" data-xmin="438418.90635945275" data-ymin="4186713.5001004823" data-xmax="460493.374732011" data-ymax="4224733.999591893">Vanderburgh</option>
+            <option value="Vermillion" data-xmin="454313.12512625474" data-ymin="4384293.499516493" data-xmax="469735.030036618" data-ymax="4444349.068980426">Vermillion</option>
+            <option value="Vigo" data-xmin="446443.6247029258" data-ymin="4345547.9998324085" data-xmax="482911.93782489" data-ymax="4384338.000508536">Vigo</option>
+            <option value="Wabash" data-xmin="588604.082563323" data-ymin="4500568.232680783" data-xmax="615104.2512920033" data-ymax="4544779.137809958">Wabash</option>
+            <option value="Warren" data-xmin="454734.4663106473" data-ymin="4441992.489650231" data-xmax="492195.664169536" data-ymax="4480822.986454394">Warren</option>
+            <option value="Warrick" data-xmin="458460.9692261182" data-ymin="4192313.000393698" data-xmax="498469.4377433788" data-ymax="4233172.999663752">Warrick</option>
+            <option value="Washington" data-xmin="559981.7496086666" data-ymin="4252633.006593876" data-xmax="600429.3492623363" data-ymax="4293186.627111644">Washington</option>
+            <option value="Wayne" data-xmin="652163.2700785175" data-ymin="4397763.227273038" data-xmax="687321.3147832612" data-ymax="4430629.065383647">Wayne</option>
+            <option value="Wells" data-xmin="631121.1350189205" data-ymin="4491843.472096657" data-xmax="663508.5746650835" data-ymax="4531421.892357517">Wells</option>
+            <option value="White" data-xmin="491580.9928089632" data-ymin="4490053.239518991" data-xmax="535385.2716337591" data-ymax="4529062.39565132">White</option>
+            <option value="Whitley" data-xmin="610166.3338474045" data-ymin="4539811.63495733" data-xmax="641767.4623248354" data-ymax="4572560.925483832">Whitley</option>
+          </select> 
+
+          <input type="hidden" id="selectedLayerQuery" value="">
+          
+         
+        </form> 
+      </div>
+        
+      <div id="searchContainer" class="shadowed hidden">
+        <div class="popOutHeader" style="font-size:10pt;"><img src="/images/remove_button.png" id="searchCloseButton" style="cursor:pointer;"> &nbsp; Search Results</div>
+        <div id="searches">
+          <table cellpadding="0" cellspacing="1" width="100%" class="searchResultsTable">
+            <thead>
+              <tr>
+                <th>Location</th>
+               
+                <!--<th>Relevance</th>-->
+              </tr>
+            </thead>
+            <tbody id="queryTableBody" style="text-align:center;"></tbody>
+          </table>
+        </div>        
+      </div>
+        
+      <div id="extraLinks">
+        <ul>
+          <li style="background:rgba(151, 168, 151, 1.0);"><a href="/index.html" style="color:#FFF;">Map Viewer</a></li>
+          <li><a href="MapGallery.html">Map Gallery</a></li>
+          <li><a href="LayerGallery.html">Layer Gallery</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+	
+  <!-- Toolbars -MD -->
+  <div id="toolContainer" class="shadowed">
+    <div id="leftBar_05">
+      <div id="detail-basemap-button" class="tabStyle" name="browse-buttons" title="Basemaps"><img src="/images/basemaps.png"></div>
+      <div id="layer-header-button" 	class="tabStyle" name="browse-buttons" title="Add Content"><img src="/images/addContent.png"></div>
+      <div id="ActiveLayersButton" 		class="tabStyle" name="browse-buttons" title="Active Layers"><img src="/images/activeLayers.png"> <span id="activeCount"></span></div>
+      <div id="detail-legend-button" 	class="tabStyle" title="Legend"				><img src="/images/legend.png" alt="Legend" height="16" width="16"/></div>
+      <div id="detail-reset-button" 	class="tabStyle" name="browse-buttons" title="Reset Map to Default"><img src="/images/refresh.png"></div>
+		</div>
+    <div id="tools_05">    
+      <div id="detail-identify-button" 		class="tabStyle" title="Identify"			style="background-color:rgb(17,61,67);"><img src="/images/identify.png" alt="Identify" height="16" width="16"/></div>
+      <div id="detail-draw-button"  			class="tabStyle" title="Draw"					><img src="/images/Draw.png" alt="Draw" height="16" width="16"/></div>
+      <div id="detail-measurement-button" class="tabStyle" title="Measurement"	><img src="/images/Measurement.png" alt="Measurement" height="16" width="16"/></div>
+      <div id="detail-query-button" 			class="tabStyle" title="Query Layers"	><img src="/images/query.png" alt="Query" height="16" width="16"/></div>
+      <div id="detail-share-button" 			class="tabStyle" title="Share Map"		><img src="/images/share.png" alt="Query" height="16" width="16"/></div>
+      <div id="detail-print-button" 			class="tabStyle printButton" title="Print"><img src="/images/printer.png" alt="Print" height="16" width="16"/></div>
+		</div>
+  </div>
+  
+  
+    
+	<div id="map">   
+  	<div id="IGSLogo"><img src="/images/IGS_Logo_RGB_BW.png"></div>    
+     
+    <!-- Scale value -MD -->
+   <div id="scaleContainer">
+   	<div id="scaletext">
+    	<span id="scalelabel">
+      	<!--<img src='/images/carrotUp.png' onclick=scaleUp() id='scaleUpID' />--> 
+      	<select id="zoomSelect">
+          <option value="0">1:2500000</option>
+          <option value="1">1:1000000</option>
+          <option value="2">1:500000</option>
+          <option value="3">1:250000</option>
+          <option value="4">1:125000</option>
+          <option value="5">1:64000</option>
+          <option value="6">1:32000</option>
+          <option value="7">1:16000</option>
+          <option value="8">1:8000</option>
+          <option value="9">1:4000</option>
+          <option value="10">1:2000</option>
+          <option value="11">1:1000</option>
+    		</select>
+        <!--<img src='/images/carrotDown.png' onclick=scaleDown() id='scaleDownID' />-->
+    	</span> 
+    </div>
+  </div>
+    
+    <!-- Basemap Popout -MD -->
+    <div id="baseMaps_05" class="popOutLeft" style="max-width:500px;">
+      <div class="popOutHeader">
+      	Basemaps
+        <div class="closeButton" onClick="closeTabs('detail-basemap-button');">&nbsp;</div>
+        <div class="helpButton" onClick="help('basemap')" id="baseHelp">&nbsp;</div>
+      </div>
+      <div id="basemapGalleryDiv">&nbsp;</div>
+    </div>
+    
+    <!--
+    <img id="map-full-extent-button" src="http://maps.indiana.edu/images/indianaMap/green/FullExtentMap.png" title="Indiana - Full Extent" />
+    <img id="map-previous-extent-button" src="http://maps.indiana.edu/images/indianaMap/green/ArrowBack.png" title="Previous Extent" />
+    <img id="map-next-extent-button" src="http://maps.indiana.edu/images/indianaMap/green/ArrowForward.png" title="Next Extent" />
+    -->
+    
+    <!-- Add Content Section-->
+    <div id="browse-div" class="popOutLeft">
+      <div class="popOutHeader">
+      	Add Layers
+        <div class="closeButton" onClick="closeTabs('layer-header-button')">&nbsp;</div>
+        <div class="helpButton" onClick="help('addlayer')">&nbsp;</div>
+      </div>
+      <div ID="layersList"></div>
+    </div>
+    
+  
+    <!-- Active Layers Section-->
+    <div id="curLayersDiv" class="popOutLeft">
+      <div id="popOutHeader" class="popOutHeader">
+      	Active Layers 
+        <div class="closeButton" onClick="closeTabs('ActiveLayersButton')">&nbsp;</div>
+        <div class="helpButton" onClick="help('active')">&nbsp;</div>
+      </div>
+      <div id="districtsSection" ></div>
+      <div id="curLayersSection"></div>
+      <!--<div id="curLayersBumper">&lt;<br />&lt;</div>
+      <dl id="detail-list" class="detail-elements" style="display:inline-block !important; width:90% !important; float:left; "></dl>  -->  
+    </div>
+    
+  
+    <!-- Measurment Tool -JP -->
+    <div id="measurementDiv" class="popOutRight">
+      <div id="" class="popOutHeader">
+      	Measurement Tool
+        <div class="closeButton" onClick="closeTabs('detail-measurement-button'); $('#detail-identify-button').click();">&nbsp;</div>
+        <div class="helpButton" onClick="help('measure')">&nbsp;</div>
+      </div>
+      <div id="measurement-list"></div>
+    </div>
+    
+    
+    <!-- Link Tool -JP -->
+    <div id="shareDiv" class="popOutRight">
+      <div id="" class="popOutHeader">
+      	Share Map
+        <div class="closeButton" onClick="closeTabs('detail-share-button'); $('#detail-identify-button').click();">&nbsp;</div>
+        <div class="helpButton" onClick="help('share')">&nbsp;</div>
+      </div>
+      <div class="tabSubHeader">Detailed Link</div>
+      <div class="tabSection"><input id="detailedURLLink" type="text" title="Copy and Paste URL for a link to the map"></div>        
+      <hr />
+      <div class="tabSubHeader">Short Link</div>
+      <div class="tabSection"><input id="shortLink" type="text" title="Copy and Paste URL for a link to the map"></div>   
+      <hr />
+    </div>
+    
+    
+    <!-- Query Tool -JP -MD -->
+    <div id="queryDiv" class="popOutRight">
+      <div id="" class="popOutHeader">
+      	Query Tool
+        <div class="closeButton" onClick="closeTabs('detail-query-button'); $('#detail-identify-button').click();">&nbsp;</div>
+        <div class="helpButton" onClick="help('query')">&nbsp;</div>
+      </div>
+      <div class="tabSubHeader">Layer</div>
+      <div class="tabSection"><select id="query_activeLayers"><option>Required</option></select></div>        
+      <br />
+      <div class="tabSubHeader">Field</div>
+      <div class="tabSection"><select id="query_field" disabled><option></option></select></div>        
+      <br />
+      
+      <div class="tabSubHeader">Operator</div>
+      <div class="tabSection">
+        <select id="query_operator" disabled>
+          <option value="=">=</option>
+          <option value=">">&gt;</option>
+          <option value="<">&lt;</option>
+          <option value=">=">&gt;=</option>
+          <option value=">=">&lt;=</option>
+          <option value="like">LIKE</option>
+        </select>
+      </div>        
+      <br />
+      
+      <div class="tabSubHeader">Value</div>
+      <div class="tabSection">        
+        <table cellpadding="2" cellspacing="0" border="0">
+          <tr>
+          	<td><input type="radio" id="queryValRadio1" name="queryValRadio" value="sample" checked disabled></td>
+            <td style="padding-left:5px;"><span id="sampTxt1" style="color:#AAAAAA;">samples:</span></td>
+        		<td><select id="query_samples" disabled><option value=""> </option></select></td>      
+		        <!--<input id="get_query_samples" type="button" value="Get Samples">-->
+          </tr>
+        	<tr>
+          	<td><input type="radio" id="queryValRadio2" name="queryValRadio" value="manual" disabled></td>
+            <td style="padding-left:5px;"><span id="sampTxt2" style="color:#AAAAAA;">manual:</span></td>
+            <td><input id="query_value" type="text" disabled></td>
+          </tr>         
+        </table>
+      </div>         
+      <br />
+      
+      <div class="tabSubHeader">&nbsp;</div>
+      <div class="tabSection"><input id="add_to_query_string" type="button" value="Add to Query String" class="qButton" disabled></div>       
+      <hr />
+      
+      <div align="center">        
+        <div class="tabSection" style="padding-right:15px;">          
+          <input type="button" value="AND" 	class="qButton" style="width:40px;" onClick="addBool('AND')">
+          <input type="button" value="OR" 	class="qButton" style="width:40px;" onClick="addBool('OR')">
+          <input type="button" value="NOT"	class="qButton" style="width:40px;" onClick="addBool('NOT')">
+          <input type="button" value="(" 		class="qButton" style="width:40px;" onClick="addBool('(')">
+          <input type="button" value=")" 		class="qButton" style="width:40px;" onClick="addBool(')')">
+          <br />
+          <textarea id="query_theQueryString" cols="40" style="height:75px;" disabled></textarea>
+        </div>        
+        <hr />
+        
+        <div align="center" class="tabSection"><input id="execute_query" type="button" value="Execute Query" disabled style="padding:2px 5px 2px 5px;"></div>
+        <hr />
+      
+        <div id="queryResultsDiv" align="center"><img src="/images/searching.gif" id="searchingQImg" alt="Searching" style="display:none;"></div>        
+			</div>
+    </div>   
+    
+    
+    <!-- Draw Tool -MD -->
+    <div id="draw-list" class="popOutRight">
+      <div id="" class="popOutHeader">
+      	Draw Tool
+        <div class="closeButton" onClick="closeTabs('detail-draw-button'); $('#detail-identify-button').click();">&nbsp;</div>
+        <div class="helpButton" onClick="help('draw')">&nbsp;</div>
+      </div>
+      <div class="tabSubHeader">Graphic Color</div>
+      <div style="margin-left:10px; display:inline-block; cursor:pointer;">
+        <span id="cp">this will be replaced</span>
+      </div>
+      <hr />
+      
+      <div class="tabSubHeader">Points:</div>
+      <section id="draw-point" class="drawSec" style="background-color:#F0000;">    
+        <button id="draw-stickpin-button" class="draw-button"><img src="/images/GreenStickpin.png" class="drawDropImg" /> Stickpin</button>
+        <button id="draw-pushpin-button" style="display:none;" class="draw-button"><img src="/images/GreenShinyPin.png" height="16" width="16" class="drawDropImg" /> Pushpin</button>
+        <button id="draw-cross-button" style="display:none;" class="draw-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+            <line x1="8" y1="0" x2="8" y2="15" stroke="red" stroke-width="1" fill="red" ></line>
+            <line x1="0" y1="8" x2="15" y2="8" stroke="red" stroke-width="1" fill="red" ></line>
+          </svg>
+          Cross
+        </button>    
+      </section><div class="drawMoreSel" onClick="toggleDrawTool('draw-point','ptTogImg','','isToggle')"><img id="ptTogImg" src="/images/bullet_drop.png"></div>
+      <br />
+     
+      <div class="tabSubHeader">Shapes:</div>
+      <section id="draw-area" class="drawSec">
+        <button id="draw-polygon-button" class="draw-button"><img src="/images/polygon.png" class="drawDropImg"> Polygon</button> 
+        <button id="draw-triangle-button" class="draw-button" style="display:none;"><img src="/images/triangle.png" class="drawDropImg"> Triangle</button>        
+        <button id="draw-rectangle-button" class="draw-button" style="display:none;"><img src="/images/rectangle.png" class="drawDropImg"> Rectangle</button>                  
+        <button id="draw-left-arrow-button" class="draw-button" style="display:none;"><img src="/images/arrLeft.png" class="drawDropImg"> Left Arrow</button> 
+        <button id="draw-up-arrow-button" class="draw-button" style="display:none;"><img src="/images/arrUp.png" class="drawDropImg"> Up Arrow</button>       
+        <button id="draw-right-arrow-button" class="draw-button" style="display:none;"><img src="/images/arrRight.png" class="drawDropImg"> Right Arrow</button>
+        <button id="draw-down-arrow-button" class="draw-button" style="display:none;"><img src="/images/arrDown.png" class="drawDropImg"> Down Arrow</button>		
+        <button id="draw-circle-button" class="draw-button" style="display:none;"><img src="/images/ellipsis.png" class="drawDropImg"> Circle</button> 	
+        <button id="draw-freehand-polygon-button" class="draw-button" style="display:none;"><img src="/images/freehandPoly.png" class="drawDropImg"> Freehand</button>
+      </section><div class="drawMoreSel" onClick="toggleDrawTool('draw-area','areaTogImg','','isToggle')">
+        <img id="areaTogImg" src="/images/bullet_drop.png">
+      </div>
+      <br />
+ 
+      <div class="tabSubHeader">Lines:</div>
+      <section id="draw-line" class="drawSec">
+        <button id="draw-polyline-button" class="draw-button">
+          <img src="/images/line.png">
+          <!--<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15">
+            <path d="M5 15 L25 15 Z" stroke="#333333" stroke-width="1" fill="#CCCCCC" />
+          </svg>-->
+          Line
+        </button>
+        
+        <button id="draw-freehand-polyline-button" class="draw-button" style="display:none;">
+          <img src="/images/freehandPoly.png">
+          <!--<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15">
+            <g transform="scale(0.25)">
+              <path d="M 51.666668,49.665359 C -20.791948,113.5217 191.26151,46.246283 84.340907,117.35039 C 83.465146,117.87175 82.577965,118.37498 81.666667,118.83203" style="fill:none;fill-rule:evenodd;stroke:#CCCCCC;stroke-width:5px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"  />
+            </g>
+          </svg>-->
+          Freehand
+        </button>
+      </section><div class="drawMoreSel" onClick="toggleDrawTool('draw-line','lineTogImg','','isToggle')">
+        <img id="lineTogImg" src="/images/bullet_drop.png">
+      </div>
+      
+      <hr />  
+        
+      <div class="tabSubHeader">Text:</div>
+      <section id="draw-text" style="display:inline-block;">
+        <input type="text" size="25" id="userText" style="margin-left:10px; display:inline-block; font-size:11px;" value="Place your text here"><br />
+        <button id="draw-text-button" class="draw-text-button shadowed">Add Text</button>
+      </section>
+      <hr />   
+      
+      
+      <div class="tabSubHeader">Buffer Tool</div>
+      <section id="buffer-text" style="display:inline-block;">
+        <input type="text" id="userDistance" value="1" size="8" style="margin-left:10px; display:inline-block; font-size:11px;" />
+        <select id="units" style="font-size:11px;">
+          <option value="MILES">Miles</option>
+          <option value="FEET">Feet</option>
+          <option value="KILOMETERS">Kilometers</option>
+        </select>
+        <br />
+        <button id="draw-buffer-button" class="draw-text-button shadowed">
+        Buffer
+        </button>
+              
+      </section>
+      <hr />
+      <button id="draw-delete-graphic-button" class="draw-delete-button shadowed">Delete Item</button>
+    </div>
+      
+    
+    <!-- Legend -JP -->
+    <div id="legend-list" class="popOutLeft">
+      <div id="" class="popOutHeader">Legend<div class="closeButton" onClick="closeTabs('detail-legend-button')">&nbsp;</div></div>
+      <div id="legendBody"></div>
+    </div>
+  
+    
+    <!-- The popup when you click on the name of a layer--> 
+    <div id="boxes">
+      <!-- #customize your modal window here -->   
+      <div id="layerInfoWindow" class="window shadowed">
+        <!-- close button is defined as close class -->
+        <div class="windowHeader">
+          Layer Information
+          <div style="float:right;"><img src="/images/cancel.png" class="close"></div>
+        </div>
+        <div class="sectionBlock" style="height:250px !important;">      	
+          <div class="sectTitle" id="popTitle">Title</div>        
+          <div class="sectDesc" id="sectDesc" style="height:190px !important; border:1pt dashed #EEEEEE;"> &nbsp; </div>
+          <div id="popDemoImgDiv"><img id="popDemoImg" src="" /></div>
+          <div class="sectNav" style="width:140px !important; left:0px !important;"> 
+            <ul>
+              <li><a id="metaPop" href="http://maps.indiana.edu/metadata/Environment/Agriculture_Census.html" target="_blank">Metadata</a></li>
+              <li><a id="dlPop" href="http://maps.indiana.edu/download/Environment/Agriculture_Census.zip" target="_blank">Download</a></li>
+            </ul>
+          </div>
+        </div>        
+      </div>
+    </div>	
+  </div>
+    
+  <!-- /END MAIN DIV "map"-->  
+  
+    
+  <div id="footer"></div>
+  
+  
+  <div id="printMenuDiv" class="window shadowed">
+  	<div class="windowHeader">
+    	Print Menu
+      <div style="float:right;"><img src="/images/cancel.png" class="close"></div>
+    </div>
+    
+    <div style="padding:25px;">
+      <p><b>Choose your print options:</b></p>
+      
+      <table border="0" cellpadding="10">
+      	<tr>
+        	<td rowspan="3"><div id="printDijit" class="shadowed"></div></td>
+      		<td valign="top" height="10%" style="padding-left:10px;">
+            <table border="0">      	
+              <tr>
+               <td nowrap>Map Title:&nbsp;</td>
+               <td nowrap><input type="text" id="mapTitle" class="text ui-widget-content ui-corner-all" maxlength="142"/></td>
+              </tr>
+              <tr>  
+               <td nowrap>Author:&nbsp;</td>
+               <td><input type="text" id="mapAuthor" class="text ui-widget-content ui-corner-all" maxlength="142"/></td>
+              </tr>
+              
+              <!-- 
+              <tr>  
+              	<td>Scale:&nbsp;</td>
+              	<td><input type="text" id="mapScale" class="text ui-widget-content ui-corner-all" maxlength="10"/></td>
+              </tr>
+              --> 
+              
+              <tr>
+                <td nowrap>Layout:&nbsp;</td>
+                <td>
+                  <select id="printMenuLayout" onChange='$("#printPreparePreview").click();'>
+                    <option value="Letter_Portrait">[PDF] Portrait 8.5 x 11 in.</option>
+                    <option value="Letter_Landscape">[PDF] Landscape 11 x 8.5 in.</option>
+                    <option value="ESRI_Portrait" selected="selected">[PDF] ESRI Portrait 8.5 x 11</option>
+                    <option value="ESRI_Landscape">[PDF] ESRI Landscape 11 x 8.5</option>
+                    <option value="PNG32">PNG32</option>
+                    <option value="JPG">JPG</option>
+                  </select>
+                </td>
+              </tr>
+            </table>
+					</td>
+        </tr>
+        <tr>
+        	<td align="center" valign="top" style="padding-top:25px;">
+            <button id="printPrepare">Download Your Map</button>
+            <button id="printPreparePreview" style="display:none;">Preview Your Map</button>
+          </td>
+        </tr>
+        <tr>
+        	<td style="padding-left:10px; width:150px;">
+          	<p style="font-size:10px;">
+          		<strong style="color:red;">*WARNING*</strong><br />
+              Pop up blockers may prevent the printing of your map.
+              If prompted after you click "Download Your Map", simply select "allow pop ups on this site".
+            </p>
+          </td>
+        </tr>
+      </table>      
+  	</div>
+  </div>
+  
+  <div id="referenceMenuDetail" class="reference-item-detail" style="display:none;width:300px;height:100px;"> </div>
+  
+ <!-- <div id="exportMenuForm">
+    <div id="exportMenu">
+    <p><b>Export Map</b></p>
+    <table>
+      <tr><td>Map Title:&nbsp;</td>
+          <td><input type="text" id="exportMapTitle" class="text ui-widget-content ui-corner-all" maxlength="100" /></td>
+      </tr>
+      <tr>
+        <td>Export Type:&nbsp;</td>
+        <td>
+          <select id="exportType">
+            <option value="hyperlink" >Hyperlink</option>
+            <option value="embeddable">Embeddable Map</option>
+            <option value="kml">Kml Document</option>
+            <option value="json" selected="selected">Webmap Json</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><button id="exportButton">Export</button></td>
+      </tr>
+    </table>
+    </div>
+    <div id="exportResult">
+      <p><span style="color:#FFF;">Highlight Text and Copy JSON</span></p>
+      <textarea id="exportResultClipBoard" rows="50" cols="30"></textarea>
+    </div>
+  </div>-->
+  
+  
+  <script id="legend-item-template" type="text/x-jquery-tmpl">
+    <li style="list-style-type:none;margin-left:20px;"><span class="legend-title">${layerName}</span>
+        <table style="margin-left:20px;">
+          {{each(i, item) legend}}
+      			{{tmpl(item) '#legend-item-data-template'}}
+          {{/each}} 
+        </table>
+    </li>
+  </script>
+  <script id="legend-item-data-template" type="text/x-jquery-tmpl">
+  	<tr>
+			<td><span class="legend-label">${label}</span></td>
+      <td><img src="data:${contentType};base64,${imageData}" style="margin-left:30px;"/></td>
+   </tr>
+  </script>
+  
+  
+	<script type="text/javascript">
+		jQuery.fn.reverse = [].reverse; //reverses an array
+	
+  	//  dojo.require("dijit.ColorPalette");
+		if (!Array.prototype.indexOf) {
+			Array.prototype.indexOf = function (searchElement /*, fromIndex */ ) {
+				"use strict";
+				if (this == null) {	throw new TypeError();	}
+				var t = Object(this);
+				var len = t.length >>> 0;
+				if (len === 0) {	return -1;}
+				var n = 0;
+				if (arguments.length > 1) {
+					n = Number(arguments[1]);
+					if (n != n) { // shortcut for verifying if it's NaN
+							n = 0;
+					} else if (n != 0 && n != Infinity && n != -Infinity) {
+							n = (n > 0 || -1) * Math.floor(Math.abs(n));
+					}
+				}
+				if (n >= len) {	return -1; }
+				var k = n >= 0 ? n : Math.max(len - Math.abs(n), 0);
+				for (; k < len; k++) {
+						if (k in t && t[k] === searchElement) {	return k;	}
+				}
+				return -1;
+			}
+		}
+		
+		
+    dojo.addOnLoad(
+			function() {    		
+				var myPalette = new dijit.ColorPalette(
+					{
+        		palette: "7x10",
+          	onChange: function(val) {graphicColor = val;}
+        	},
+        	"cp"
+				);	
+				startLayerBuild();				
+      }
+		);
+	
+		function getURLParameter(name) {
+			return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+		}
+			
+		function buildActiveLayers(){
+			
+			if(isGTIE8){
+				var sLayerList = window.localStorage.getItem("layerGallery");	// get the current active layer list -MD
+			}else{
+				var sLayerList = null;
+			}
+			var URLLayers = getURLParameter('URLLayers'); //Get the url parameter URLLayers. This is passed from an email link to the map. -MD
+			
+			// If the user already has a map they are working on and click on a link to someone elses map, it asks them if it is o.k. to overwrite. -MD			
+			if(URLLayers !== null){ 
+				//We have a url list				
+				if (sLayerList == null){
+					if(isGTIE8)	window.localStorage.setItem("layerGallery",URLLayers); //Make the local storage what is passed in the URL. -MD
+					sLayerList = URLLayers;	// get the current active layer list -MD										
+				}else{					
+					//we have a url list AND a local storage, ask them if it's o.k. to overwrite?
+					var r = confirm("This will reset your currently active map. Do you wish to proceed?");
+					if (r==true){
+						if(isGTIE8){
+							window.localStorage.clear();
+							window.localStorage.setItem("layerGallery",URLLayers); //Make the local storage what is passed in the URL. -MD
+						}
+						sLayerList = URLLayers;	// get the current active layer list -MD					
+					}else{					
+						//if we have a url list and the user said DO NOT OVERWRITE MYWORK, do nothing different
+					}					
+					//if we do NOT have a url list, do nothing different.					
+				}				 
+			}
+		
+					
+			// Create the Active Layers Tab
+				if(sLayerList !== null){  
+				
+				tokens = sLayerList.split(","); // create an array of the current layers list -MD	
+				if(isGTIE8){	
+				activeCount = tokens.length-1;
+				
+				$('#activeCount').html('('+activeCount+')') // Display the number of active layers on the active layers tab
+				
+				$('#ActiveLayersButton').click();	
+				}
+				
+				$.each(tokens.reverse(),function(key,value){ //we place the layers on the map in reverse order of the list. This way the first item is the layer on top.
+					if(value != '') {
+						addRemoveLayer(value.replace('_','/'),'add')
+					};					
+				})
+			}
+			
+			var HID = getHIDFromUrl(document.location.href);
+			
+			if(HID !== null){ 
+			
+			zoomHID(HID);
+			}
+	var CID = getCIDFromUrl(document.location.href);
+			
+			if(CID !== null){ 
+			zoomCID(CID);
+			}
+			
+			var SID = getSIDFromUrl(document.location.href);
+			
+			if(SID !== null){ 
+			zoomSID(SID);
+			}
+								
+		
+								
+		}
+		
+		
+		
+		function domessage(href) {			
+			var id = '#layerInfoWindow';
+			var layerID = $(this).attr('href');						
+			//Get the window height and width
+			var winH = $(window).height();
+			var winW = $(window).width();
+			
+			document.getElementById('popDemoImg').src = 'http://maps.indiana.edu/images/'+href+'.png';	
+			document.getElementById('popTitle').innerHTML = replaceAll(replaceAll(href,'/',' - '), '_',' ');		
+			document.getElementById('metaPop').href = 'http://maps.indiana.edu/metadata/'+href+'.html';	
+			document.getElementById('dlPop').href = 'http://maps.indiana.edu/download/'+href+'.zip';	
+			$('#dlPop').click(function(){	 _gaq.push(['_trackEvent','Download','Zip',$(this).href]);})	// Sends a push to Google Analytics that this link was clicked. NEED TO TEST. -MD		
+						 
+			//Set the popup window to center
+			$(id).css('top',  winH/2-$(id).height()/2);
+			$(id).css('left', winW/2-$(id).width()/2);
+			
+			doModal();
+			$(id).fadeIn(200);	//transition effect
+			
+			var test = esri.request({
+  			url: "http://maps.indiana.edu/ArcGIS/rest/services/" + href +"/MapServer/0?f=json",
+  			handleAs: "json",
+				load:requestSucceeded,
+				error:requestFailed
+			}); 
+		};
+			
+			
+		function requestSucceeded(data, id2) { $('#sectDesc').html(data.description) ; }
+
+
+		function requestFailed(error) {	console.log("Error: ", error.message);	}
+
+
+		var blacklist = 'UITS_RAS,Basemaps,Utilities,CMIS'; // A list of layers that are not to be displayed -MD
+		
+		
+		
+		
+		
+		
+/*		
+		//get the services (Folders/groups)	
+		function startLayerBuild() {			
+			//esri.config.defaults.io.proxyUrl = "http://maps.indiana.edu/proxy/proxy.ashx";
+			var newReq = esri.request({
+  			url: "http://dev2.maps.indiana.edu/folders.js",
+				content: {
+					tags:'',
+					tagmode: "all",
+					format: "json"
+				},
+  			handleAs: "json",
+  			callbackParamName: "callback",
+				load:newBuildLayers2,
+				error:requestFailed
+			}); 
+		};
+		
+		
+		//Take the services and get the map servers 
+		function newBuildLayers2(data){ //Data is an array of the services (fodlers/groups)
+			var theMessage2 = '';
+  		//console.log("Data: ", dojo.toJson(data, true)); // print the data to browser's console
+			for(var i=0; i<data.folders.length; i++){	
+					
+				if(blacklist.indexOf(data.folders[i]) < 0){			// Check the black list. If a folder if not supposed to be seen, do not build it. -MD			
+					theMessage2 = theMessage2 + "<div onClick=toggleLayerGroup('"+data.folders[i]+"Group',this) class='activeSec'>"+replaceAll(data.folders[i],'_',' ')+"</div>";	  // Add the category. The class 'activeSec' is used to move everything from the active layers tab.	-MD			
+					theMessage2 = theMessage2 + "<ul id='"+data.folders[i]+"Group' class='hidden activeSec' style='padding-top:5px;'><ul>"; // Add the container that will hold list of layers (Tier 2). The class 'activeSec' is used to move everything from the active layers tab. -MD
+					
+					var newReq = esri.request({
+						url: "http://dev2.maps.indiana.edu/"+data.folders[i]+".js",
+						handleAs: "json",
+						load:buildServices,
+						error:requestFailed
+					});
+					theMessage2 = theMessage2 + "</ul></ul>";		
+				}
+			};			
+			document.getElementById('layersList').innerHTML = theMessage2;
+			buildActiveLayers();
+		}
+*/		
+		
+		
+		
+		//get the services (Folders/groups)	
+		function startLayerBuild() {			
+			//esri.config.defaults.io.proxyUrl = "http://maps.indiana.edu/proxy/proxy.ashx";			
+			var newReq = esri.request({
+				url: "http://maps.indiana.edu/arcgis/rest/services/?f=pjson",
+				handleAs: "json",
+				load:buildLayers2,
+				error:requestFailed
+			});	
+		};
+		
+		
+		function buildLayers2(data){ //Data is an array of the services (fodlers/groups)
+			var theMessage2 = '';
+  		//console.log("Data: ", dojo.toJson(data, true)); // print the data to browser's console
+			for(var i=0; i<data.folders.length; i++){	
+					
+				if(blacklist.indexOf(data.folders[i]) < 0){			// Check the black list. If a folder if not supposed to be seen, do not build it. -MD			
+					theMessage2 = theMessage2 + "<div onClick=toggleLayerGroup('"+data.folders[i]+"Group',this) class='activeSec'>"+replaceAll(data.folders[i],'_',' ')+"</div>";	  // Add the category. The class 'activeSec' is used to move everything from the active layers tab.	-MD			
+					theMessage2 = theMessage2 + "<ul id='"+data.folders[i]+"Group' class='hidden activeSec' style='padding-top:5px;'>"; // Add the container that will hold list of layers (Tier 2). The class 'activeSec' is used to move everything from the active layers tab. -MD
+					
+					var newReq = esri.request({
+						url: "http://maps.indiana.edu/arcgis/rest/services/"+data.folders[i]+"?f=json",
+						handleAs: "json",
+						load:buildServices,
+						error:requestFailed
+					});
+					theMessage2 = theMessage2 + "</ul>";		
+				}
+			};			
+			document.getElementById('layersList').innerHTML = theMessage2;
+			buildActiveLayers();
+			
+		}
+		
+
+		// Creates the add content tab 
+		function buildServices(data){ //data is an array of the map servers for a specific folder/group
+			var theGroup;
+			var theName;
+			var checked = false;
+			var serviceName;
+			var theLocalStorage;
+			
+			
+			for(var j=0; j<data.services.length; j++){
+				checked = false;
+				serviceName = data.services[j].name;
+				//layersearch.push(replaceAll(serviceName.replace('/',' - '),'_',' ')); 
+				layersearch.push(serviceName);
+				// Add this layer to a searchable object to be used in the layer search box. -JP
+				
+				
+				if(!serviceName.indexOf('Demographics/')){			
+					theGroup = document.getElementById('DemographicsGroup');
+					theName = serviceName.replace('Demographics/','');
+					//layersearch.push(theName);
+				}else if(!serviceName.indexOf('Environment/')){			
+					theGroup = document.getElementById('EnvironmentGroup');
+					theName = serviceName.replace('Environment/','');
+					//layersearch.push(theName);
+				}else if(!serviceName.indexOf('Geology/')){			
+					theGroup = document.getElementById('GeologyGroup');
+					theName = serviceName.replace('Geology/','');
+					//layersearch.push(theName);
+				}else if(!serviceName.indexOf('Government/')){			
+					theGroup = document.getElementById('GovernmentGroup');
+					theName = serviceName.replace('Government/','');
+					//layersearch.push(theName);
+				}else if(!serviceName.indexOf('Hydrology/')){			
+					theGroup = document.getElementById('HydrologyGroup');
+					theName = serviceName.replace('Hydrology/','');
+					//layersearch.push(theName);
+				}else if(!serviceName.indexOf('Imagery/')){			
+					theGroup = document.getElementById('ImageryGroup');
+					theName = serviceName.replace('Imagery/','');
+					//layersearch.push(theName);
+				}else if(!serviceName.indexOf('Infrastructure/')){			
+					theGroup = document.getElementById('InfrastructureGroup');
+					theName = serviceName.replace('Infrastructure/','');
+					//layersearch.push(theName);
+				}else if(!serviceName.indexOf('Reference/')){			
+					theGroup = document.getElementById('ReferenceGroup');
+					theName = serviceName.replace('Reference/','');
+					//layersearch.push(theName);
+				}else{
+					theGroup = '';
+					theName = '';
+				}
+				
+				// In browsers greater than IE8 use the local storage variable. Otherwise create an empty string.
+				if(isGTIE8){ 
+					if(null != window.localStorage.getItem("layerGallery")){
+						theLocalStorage = window.localStorage.getItem("layerGallery").split(',')
+					}else{theLocalStorage = []}; 
+				}else{ theLocalStorage = []};	
+				
+				if(blacklist.indexOf(theName) < 0){ // If the layer is not in the blacklist... -MD					
+					//If the layer is in the users active layer list, make the check box turned on. Else turn it off. -MD										
+					theName = replaceAll(theName,'_',' '); //remove underscores from the name -MD
+					theListItem = serviceName.replace('/','_');
+					 
+					if(theLocalStorage.length > 0 && theGroup != '' && isGTIE8){
+						// ** REQUIRES HTML5 COMPLIANT BROWSERS TO HAVE PRE-CHECKED ITEMS
+						if(jQuery.inArray(theListItem,theLocalStorage) >= 0){ // If the layer is already on add the layer with a checked box, else add the layer with an unchecked box -MD
+							theGroup.innerHTML += "<li><input type='checkbox' class='lyrChk' name='"+serviceName+"' id='"+serviceName+"' checked='checked' > <a onclick=domessage('" + serviceName + "') class='layerName'>"+theName+"</a></li>";							
+						}else{
+							theGroup.innerHTML += "<li><input type='checkbox' class='lyrChk' name='"+serviceName+"' id='"+serviceName+"'> <a onclick=domessage('" + serviceName + "') class='layerName'>"+theName+"</a></li>";
+						}; 				
+					}else{
+						theGroup.innerHTML += "<li><input type='checkbox' class='lyrChk' name='"+serviceName+"' id='"+serviceName+"'> <a onclick=domessage('" + serviceName + "') class='layerName'>"+theName+"</a></li>";
+					}
+				}
+				
+				
+				// Layer Search -JP
+				$("#searchLayers").autocomplete({ source: layersearch });
+				$("#searchLayers").autocomplete({
+					select: function(event, ui) {					 
+						var selectedObj = ui.item;
+					  var tmp = new String();
+					  tmp = selectedObj.value;	
+					  //tmp.replaceAll(serviceName.replace('/',' - '),'_',' ')				  
+						var tmp2 = tmp.replace('/','\\/'); // add escape characters for / in checkbox id -JP
+				 // alert(tmp2);
+						addRemoveLayer(selectedObj.value,"add"); //add layer to map -JP
+								
+						$("input[id=" + tmp2 + "]").attr('checked', true); //check checkbox -JP			
+					}
+				});
+			}			
+			
+			
+			
+			if(!isGTIE8) $(".popOutLeft,.popOutRight").each(function(){ $(this).addClass('popOutIE8')}); // If the browser is IE8 or less, put a background and border on the popouts. -MD
+		
+		}
+
+
+		// This utility function replaces all instances of a string with that of another string -MD
+		function replaceAll(str,oldS,newS){
+			var strReplaceAll = str;
+			var intIndexOfMatch = strReplaceAll.indexOf( oldS );
+			 
+			// Loop over the string value replacing out each matching substring. -MD
+			while (intIndexOfMatch != -1){
+				// Relace out the current instance. -MD
+				strReplaceAll = strReplaceAll.replace( oldS, newS )				 
+				// Get the index of any next matching substring. -MD
+				intIndexOfMatch = strReplaceAll.indexOf( oldS );
+			}
+			return strReplaceAll;
+		}
+		
+		
+		
+		//This function adds or removes a layer from the viewer -MD
+		function addRemoveLayer(id,choice){
+				var curInd = map.getLayer("overlay");
+			var serviceURL = "http://maps.indiana.edu/arcgis/rest/services/" + id + "/MapServer";
+			var layer_name = replaceAll(id,'/','_');
+			var activeDivID = 'active_'+id.replace('/','_');
+			var visiCheckID = 'visiCheck_'+id.replace('/','_');
+			var remLayerDivID = 'removeLayer_'+id.replace('/','_');
+			var upID = 'removeLayer_'+id.replace('/','_');
+			var downID = 'removeLayer_'+id.replace('/','_');
+			var sliderName = 'slider_'+id.replace('/','XXX');
+			var visibilityName = 'visibility_'+id.replace('/','_');
+			var curHTML = $('#curLayersSection').html();
+			var newStuff = '';
+			var op;
+					
+			if(choice == 'add'){
+				
+				
+				vislays.push(id);		
+				var op = "0.8";		
+				var imageParameters = new esri.layers.ImageParameters();
+				imageParameters.format = "png32";
+				window[id]  = new esri.layers.ArcGISTiledMapServiceLayer(serviceURL,{"imageParameters":imageParameters, "id":id, "opacity":op});
+				//window[id]  = new esri.layers.ArcGISDynamicMapServiceLayer(serviceURL,{"imageParameters":imageParameters, "id":id});
+				
+				map.addLayer(window[id]); //add the layer to the map -MD	
+				var v = map.getLayer(id);
+				v.setOpacity(op);
+				removeLayerDiv = "<div title='Remove Layer from the Map' class='visiDiv'><img src='/images/remove_button.png' class='removeImg' onclick=addRemoveLayer('"+id+"','remove') id='"+remLayerDivID+"'></div>";	
+				visibilityDiv = "<div title='Layer Visibility' id='"+visibilityName+"' class='visiDiv'><input type='checkbox' id='"+visiCheckID+"' class='visiCheck' checked></div>";
+				titleDiv = "<div class='activeLayerTitleDiv'><a onclick=domessage('" + id + "') class='layerName' style='cursor:pointer;'>"+replaceAll(replaceAll(id,'/',' '),'_',' ')+"</a></div>";
+				opacityDiv = "<div title='Layer Opacity' id='"+sliderName+"' class='visibility-slider'></div>";
+				moveLayerDiv = "<div class='moveLayerBox'><img src='/images/carrotUp.png' onclick=moveUp('"+id+"') id='"+upID+"' /><img src='/images/carrotDown.png' onclick=moveDown('"+id+"') id='"+downID+"' /></div>";				
+				newLayerDiv = "<div id='"+activeDivID+"' class='activeLayerDiv'>"+removeLayerDiv+visibilityDiv+titleDiv+"<br />"+opacityDiv+moveLayerDiv+"</div>" + curHTML; //Create the Active Layers div -MD		
+				
+				$('#curLayersSection').html(newLayerDiv); // Add it to the Active Layers Tab -MD
+				
+				if(isGTIE8)	addRemoveLayerToStorage(layer_name, 'add'); // Add it to the local Storage of active Layers list -MD
+
+				
+			// Add Slider to the Active Layers tab -MD
+/*				var v = map.getLayer(id);
+				window[v] = v.opacity * 100;
+				window[v] = map.getLayer(id);
+				alert(url);
+				var lyr3 = map.getLayer($(this).attr('id').replace('slider_',''));
+				var lyr = map.getLayer(id);
+				var lyr = map.getLayer(id);
+				
+				window[lyr] = new dijit.form.HorizontalSlider({
+            name: sliderName,
+            value: 5,
+            minimum: 0,
+            maximum: 100,
+            intermediateChanges: true,
+            style: "width:300px;",
+            onChange: function(value){
+				 var tmp = $(this).attr('id').replace('slider_','');
+				 var lyr = map.getLayer(tmp)
+                lyr.setOpacity(value/100);
+            }
+        }, sliderName);
+				slider.startup();
+*/				
+
+				// Add move layer functionality -MD
+				$(".moveLayerBox img").mouseover(function(){$(this).css('backgroundColor','#DDD')});
+				$(".moveLayerBox img").mouseout(function(){$(this).css('backgroundColor','')});
+				buildSlider(sliderName, id);
+				
+				if (curInd !=undefined) {
+
+var lenInd = map.layerIds.length;					
+					//if (curInd !== lenInd) {map.reorderLayer(curInd,lenInd)};
+map.reorderLayer(curInd,lenInd)
+		};
+		
+				
+			}else{ // Remove the Layer	
+				$('#'+activeDivID).remove(); // remove the layer from the Active Layers Tab -MD
+				map.removeLayer(window[id]); // remove the layer from the map -MD
+				$('input[name="'+id+'"]').attr('checked', false); // Uncheck the box from the Add Content tab -MD 
+				if(isGTIE8) addRemoveLayerToStorage(layer_name, 'remove'); // remove layer from the Global Storage - AKA current list of layers -MD
+			}
+			
+			//Query Stuff -JP
+				populateQuery(id,choice);
+			
+
+		}
+		
+		function buildSlider(sliderName, id) {	
+		
+			
+			for (var lyr in vislays) {
+				 	
+		  	var lyrv = map.getLayer(vislays[lyr])
+				//alert(id);
+				var tmp21 = String(vislays[lyr]);
+				var tmp2 = 'slider_' + tmp21.replace('/','XXX');
+				
+				$('#'+tmp2).slider(
+					{
+						min: 0,
+						max: 100,
+						//value: (lyrv.opacity * 100),
+						range: "min",
+						create: function(event, ui) { 
+						
+						var after = 80;
+						$(this).slider( "option", "value", after );
+					},	
+					slide: function(event, ui) { 
+						var tmp3 = $(this).attr('id').replace('slider_','');
+						var tmp4 = tmp3.replace('XXX','/');			 
+						var lyr5 = map.getLayer(tmp4);
+						var opacity = ui.value * .01;
+						var txt = Math.round(.01 * $("#"+sliderName).slider('option', 'value')); 
+		   			txt = ((opacity * 100).toFixed(0) + '%'); 	
+						lyr5.setOpacity(opacity);
+						if (isGTIE8 != true) { //IE8 does not like transparency slider next couple of lines are an ugly workaround          
+				 
+						lyr5.hide();
+						lyr5.show();
+						}
+						//var after = lyr5.opacity * 100;
+						//$("#"+tmp2).slider( "option", "value", after );
+					}	
+				});
+			}			
+		}
+		
+		
+		
+		
+		//add field to query select  -JP
+		function populateQuery(id,choice){			
+			// First we reset the query select boxes
+			// Then we either add or remove the layer ID to our array that tracks them. NOTE: This is different than window.LayerStorage -MD
+			if(choice == 'add'){		
+				var test = esri.request({
+					url: "http://maps.indiana.edu/ArcGIS/rest/services/" + id +"/MapServer/0?f=json",
+					handleAs: "json"
+				});		
+				
+				test.then(
+					function (data) {						
+						if (data.type === "Raster Layer") {
+							idArray.push(id);	
+						}	else {
+							idArray.push(id);
+							queryArray.push(id);						
+						}
+						
+						$('#query_activeLayers') 
+				.find('option')
+				.remove()
+				.end();
+			
+				var mySelect = $('#query_activeLayers');		
+				$('#query_activeLayers').append($('<option></option>').val('').html('Required'));
+							for(var i=0; i<queryArray.length; i++){	
+					
+					
+					
+						theValue = queryArray[i];
+							text = replaceAll(queryArray[i].replace('/',' '),'_', ' ');
+					//	var o = new Option(text, theValue);
+/// jquerify the DOM object 'o' so we can use the html method
+//$(o).html("option text");
+//$("#mySelect").append(o);
+						
+					
+						mySelect.append(
+							$('<option></option>').val(theValue).html(text)
+						);
+					}	
+				});
+				 // Add the layer id to the Active Layers list -MD							
+			}else if (choice == 'remove'){		
+				var mySelect = $('#query_activeLayers');	
+				var getind = idArray.indexOf(id);
+				
+				var getindq = queryArray.indexOf(id);
+				
+				idArray.splice(getind, 1);
+				queryArray.splice(getindq, 1);
+				//var removeval = id.replace('/',' '),'_', ' ');
+				mySelect.find("option[value='"+ id + "']").remove();
+				if(idArray.length == 0) $('#query_field').attr('disabled', 'disabled'); //if there are no active layers to choose from, disable the field select box -MD
+			}				
+			// Finally we add the options to the Active Layers select box by looping through our list of layers -MD
+		}
+		
+		
+		
+		
+		//Add a layer to the local Storage of active Layers list. **ONLY AVAILABLE IN HTML5 COMPLIANT BROWSERS**  -MD				
+		function addRemoveLayerToStorage(layerName, choice){ 
+			var sLayerList = window.localStorage.getItem("layerGallery");	// get the current active layer list -MD
+			var tokens = [];
+			
+			if(sLayerList !== null){
+				tokens = sLayerList.split(","); // create an array of the current layers list -MD		
+			}
+			
+			if(sLayerList != null){	
+				if(sLayerList.indexOf(layerName) < 0 && choice == 'add')	{ 					
+					tokens.unshift(layerName) // If the layer is not already in the list add it to the list -MD	
+				}else if (sLayerList.indexOf(layerName) >= 0 && choice == 'remove') {
+					tokens.splice(tokens.indexOf(layerName),1); // If the layer is in the list, remove it -MD						
+				}
+			}else if(choice == 'add'){
+				tokens.unshift(layerName) // If the active layer list is empty add it to the list -MD	
+			}
+			
+			if(tokens.length > 0){
+				window.localStorage.setItem("layerGallery", tokens); //Set the local storage variable of the web browser. This is used everywhere. -MD
+			}else{
+				window.localStorage.clear();
+			}
+			if(isGTIE8){	
+			activeCount = tokens.length;
+			$('#activeCount').html('('+activeCount+')') // Display the number of active layers on the active layers tab -MD
+			}
+		}
+		
+		
+		
+		function doQ(id) {
+			var queryTask = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/" + id + "/MapServer/0");
+			//alert("id" + id);
+			//build query filter
+			var query = new esri.tasks.Query();
+			query.returnGeometry = true;
+			query.outFields = ['*'];
+			query.where = '1=1';
+			query.outSpatialReference = new esri.SpatialReference({wkid:26916});
+			//execute query
+			queryTask.execute(query,  function (results) {
+				var selectedfield = document.getElementById(id + "Select").value;
+				var featureSet = results;
+				var numFeatures = featureSet.features.length;
+				//alert("num" + numFeatures);
+				//alert("id" + id);
+				//alert(selectedfield);
+				//QueryTask returns a featureSet.  Loop through features in the featureSet and add them to the infowindow.
+				var dataselectlist = document.getElementById(id + "DataSelect");
+				for (var i=0; i<numFeatures; i++) {
+					var graphic = featureSet.features[i];
+					// alert(graphic.attributes.NAME_U);
+					var Entry = document.createElement("option");
+					var selFieldString = new Object("graphic.attributes." + selectedfield);//"graphic.attributes." + selectedfield;
+					//Entry.text = selFieldString;
+					var newarray = [];
+					newarray = 
+					Entry.text = graphic.attributes[selectedfield];
+					//alert(graphic.attributes[selectedfield]);
+					//alert(Entry.text);
+					dataselectlist.add(Entry ,null);
+				}			
+			});
+		}
+		
+		
+		
+		function doAdd(id) {			
+			var qs = document.getElementById(id + "Select").value;
+			qs = qs + document.getElementById(id +"OperatorSelect").value;
+			qs = qs + "'" + document.getElementById(id + "DataSelect").value + "'";
+			
+			$('input[name=query]').val(qs);
+			}
+		
+		
+		
+		function doQuery(id) {
+			var queryTask = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/" + id + "/MapServer/0");
+			//alert("id" + id);
+      //build query filter
+	  	var dirty = (new Date()).getTime();
+	  
+      var query = new esri.tasks.Query();
+      query.returnGeometry = true;
+      query.outFields = ['*'];
+			var qstr = $("#query_theQueryString").val();
+			query.where = qstr + " AND " + dirty + "=" + dirty;
+			
+			//var infoTemplate = new esri.InfoTemplate();
+      //infoTemplate.setTitle("${NAME}");
+      //infoTemplate.setContent
+			//var infoTemplate = ("Attributes", "${*}");
+      //execute query
+			var infoTemplate = new esri.InfoTemplate("Attributes", "${*}");
+      dojo.connect(queryTask, "onComplete", function(featureSet) {
+      	map.graphics.clear();
+          
+        var markerSymbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255, 0, 0]), 1), new dojo.Color([0, 255, 0, 0.25]));
+        var lineSymbol = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASH, new dojo.Color([255, 0, 0]), 1);
+        var polygonSymbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_NONE, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASHDOT, new dojo.Color([255, 0, 0]), 2), new dojo.Color([255, 255, 0, 0.25]));
+        //QueryTask returns a featureSet.  Loop through features in the featureSet and add them to the map.
+		  
+        dojo.forEach(featureSet.features,function(feature){			 
+        	var graphic = feature;			
+					switch (graphic.geometry.type) {
+          	case "point":
+            	graphic.setSymbol(markerSymbol);
+            	break;
+						case "polyline":
+							graphic.setSymbol(lineSymbol);
+							break;
+						case "polygon":		 
+            	graphic.setSymbol(polygonSymbol);
+            	break;
+          }
+		 			//alert(map.spatialReference);
+          //graphic.setSymbol(symbol);
+					//console.log(map.spatialReference);
+		
+					var s = "";
+					s = "XMin: "+ map.extent.xmin
+						+" YMin: " + map.extent.ymin
+						+" XMax: " + map.extent.xmax
+						+" YMax: " + map.extent.ymax;
+					console.log(s);
+					console.log(featureSet.features[0].geometry);
+					console.log(featureSet.features[0].geometry.spatialReference);	 
+					graphic.setInfoTemplate(infoTemplate);           
+					map.graphics.add(graphic);
+					showResults(featureSet);
+					var zoomExtent = esri.graphicsExtent(featureSet.features);
+					//console.log(zoomExtent);
+					map.setExtent(zoomExtent);
+				});
+			});
+      queryTask.execute(query);
+		}
+		
+		
+		
+		
+		function showResults(results) {			
+			//for (var i=0, il=results.geometry[i]; i<il; i++) {
+			//var featureExtent = results.geometry[i].getExtent().expand(5.0);
+			//map.setExtent(featureExtent);
+			//var spatialReference = new esri.SpatialReference({wkid:26916});
+			//var newgeom = results.features[0].geometry.setSpatialReference(spatialReference)
+			//var gsvc = new esri.tasks.GeometryService("http://maps.indiana.edu/ArcGIS/rest/services/Utilities/Geometry/GeometryServer");
+			//var params = new esri.tasks.ProjectParameters();
+			// params.geometries = [newgeom];
+			// params.outSR = spatialReference;
+			//params.transformation = transformation;
+			//  gsvc.project(params, function(geometries) {
+			//	  console.log(data[0]);
+			//	var mapcenter = data[0].extent.getCenter();
+			//	map.centerAt(mapcenter);
+			//	alert("here")
+			//	 //map.centerAt(geometries[0]);
+			//	 //var mapcenter = map.extent.getCenter();
+			//});
+			//		
+			//		
+			//		 // map.setExtent(newgeom);
+			//		  var s = "";
+			//  s = "XMin: "+ map.extent.xmin
+			//      +" YMin: " + map.extent.ymin
+			//      +" XMax: " + map.extent.xmax
+			//      +" YMax: " + map.extent.ymax;
+			//      console.log(s);
+			//}
+			
+			var s = "";
+	  	dojo.forEach(results.features,function(feature){ var graphic = feature; });			
+			for (var i=0, il=results.features.length, j=1; i<il; i++,j++) {
+				//alert(results.features.length);
+				//alert(results.features[i].geometry.type);
+				if (results.features[i].geometry.type === "point") {
+          	var zgraphic = results.features[i];
+				var ixmin = zgraphic.geometry.x;
+				var	iymin = zgraphic.geometry.y;
+				var	ixmax = zgraphic.geometry.x;
+				var	iymax = zgraphic.geometry.y;
+				}
+				else{
+				
+				var zgraphic = results.features[i];
+				var ixmin = zgraphic.geometry.getExtent().xmin;
+				var	iymin = zgraphic.geometry.getExtent().ymin;
+				var	ixmax = zgraphic.geometry.getExtent().xmax;
+				var	iymax = zgraphic.geometry.getExtent().ymax;
+				//alert(ixmin);
+				}
+				var featureAttributes = results.features[i].attributes;
+				
+				zoomlink =  "<th><a id='myLink' title='zoom' href='#' onclick='zoomtographic(" + ixmin + "," + iymin + "," + ixmax + "," + iymax + ")'>Zoom</a></th>";				
+				
+				s += "<table class='queryResultsTable' cellspacing=0 border=0><tr><th>"+j+"</th>"+ zoomlink+"</tr>"; // Create the Header Line and start a section. -MD
+				
+				for (att in featureAttributes) {						
+					s += "<tr><td align='left' style='border:0px !important;'>&nbsp;</td><td>" + att + "</td><td>" + featureAttributes[att] + "</td></tr>"; // Create a record. -MD 
+
+				}
+				s += "</table><hr />";				
+			}							
+			$('#searchingQImg').css('display','none');	// Hide the searching image -MD	
+			$('#queryResultsDiv').attr('align','left');
+			document.getElementById('queryResultsDiv').innerHTML = s ; // Display the query results -JP				
+		}
+ 
+		
+		
+		
+		function zoomtographic(xmin,ymin,xmax,ymax) {	
+	
+		if (xmin === xmax){
+		//var zExtent = new esri.geometry.Extent(xmin,ymin,xmax,ymax,new esri.SpatialReference({ wkid:26916 }));
+			//map.setExtent(zExtent);	
+			//var xypt2 = new esri.geometry.Point(xmin, ymin, new esri.SpatialReference({ wkid: 26916 }));
+var xypt2 = new esri.geometry.Point([xmin,ymin],new esri.SpatialReference({ wkid:26916 }));
+	map.setLevel(9);
+	map.centerAt(xypt2);
+		
+		}
+		else {
+			var zExtent = new esri.geometry.Extent(xmin,ymin,xmax,ymax,new esri.SpatialReference({ wkid:26916 }));
+			map.setExtent(zExtent);	
+		}
+		};		
+		
+		
+		
+		
+	 	function showDLResults(r) {
+			var results = [];
+			r = dojo.filter(r, function (result) { return r[0];	}); //filter out any failed tasks			
+			for (i=0;i<r.length;i++) { results = results.concat(r[i][1]);	}			
+			results = dojo.map(results, 
+				function(result) {
+					var feature = result.feature;
+					feature.attributes.layerName = result.layerName;
+					var template = new esri.InfoTemplate("Attributes", "${*}");
+				}
+			);
+			
+			if(results.length === 0) {
+				map.infoWindow.clearFeatures();
+			} else {
+				map.infoWindow.setFeatures(results);
+			}
+			map.infoWindow.show(idParams.geometry);
+			return results;
+		}
+		
+		
+		
+		// Has Bit.ly create a shorter url -MD	
+		function shortenUrl(urlMatch){
+			var urlMatch = urlMatch
+			var username="igsweb";
+			var key = 'R_d91e60e6ffd50cda8df878647977ea37';			
+			$.ajax({
+					url:"http://api.bit.ly/v3/shorten",
+					data:{longUrl:urlMatch,apiKey:key,login:username},
+					dataType:"jsonp",
+					success:function(v)
+					{
+						var shortUrl=v.data.url;
+						$('#shortLink').val(shortUrl);
+					}
+			});
+		}
+	
+	
+	
+		function addBool(sBool){$('#query_theQueryString').val($('#query_theQueryString').val()+' '+sBool);}
+
+		// Moves an item up or down in the local storage array/list
+		function moveLocalStorage(curIndex,dir){						 
+			var sLayerList = window.localStorage.getItem("layerGallery");	// get the current active layer list -MD
+			var tokens = [];
+			var lyrs = [];
+			
+			if(sLayerList != null){		
+				tokens = sLayerList.split(",");	// create an array of the current layers list -MD					 
+				for (var i = 0; i < tokens.length; i++) {
+					if(dir == 'up'){						 
+						if(i == curIndex-1){
+							lyrs.push(tokens[curIndex]);
+							lyrs.push(tokens[i]);
+						}else if(i == curIndex){
+						}else{ lyrs.push(tokens[i])}
+					}else{						 
+						if(i == curIndex+1){
+							lyrs.push(tokens[i]);
+							lyrs.push(tokens[curIndex]);
+						}else if(i == curIndex){
+						}else{ lyrs.push(tokens[i])};
+					}
+				}
+			}
+			window.localStorage.setItem("layerGallery", lyrs); //Set the local storage variable of the web browser. This is used everywhere. -MD
+		}
+		
+	
+		
+		// Move the layer up in the active layers -MD
+		function moveUp(lyrid){
+			var curInd = map.getLayer("overlay");
+			var actLyrDivID = 'active_'+lyrid.replace('/','_');			
+			var theNode = $('#'+actLyrDivID); // Get the div that we are trying to move. -MD
+			var curIndex = theNode.parent().children().index(theNode); // Get the position in the DOM that the div is currently at. -MD
+			if(curIndex > 0)	theNode.insertBefore( theNode.parent().children().eq(curIndex - 1) ); // If it's not already at the top, insert it before the previous Dom Object -MD		
+			
+			var numlays  = map.layerIds.length;
+			var layersin = []; // will be a snapshot of layer order before reordering
+			for(var j = 0; j < numlays; j++) {
+				layersin.push(map.getLayer(map.layerIds[j]));
+				
+			}
+			for(var j = 0; j < layersin.length; j++) {
+				
+		   	if (layersin[j].id === lyrid) {
+					var curInd = map.layerIds.indexOf(lyrid);
+					if (curInd + 1 !== map.layerIds.length) map.reorderLayer(lyrid, (curInd + 1)); //do not want to move up beyond top layer -JP
+				}
+			}
+			
+			if(isGTIE8 && curIndex > 0)	moveLocalStorage(curIndex,'up'); // HTML5 Browsers only: Move the item in the local storage -MD
+		
+		
+		
+		if (curInd !=undefined) {
+
+var lenInd = map.layerIds.length;					
+					//if (curInd !== lenInd) {map.reorderLayer(curInd,lenInd)};
+map.reorderLayer(curInd,lenInd)
+		};
+		
+		
+		}
+	
+	
+	
+	
+		// Move the layer down in the active layers -MD	
+		function moveDown(lyrid){
+			var curInd = map.getLayer("overlay");
+			if(curInd == undefined){
+			var actLyrDivID = 'active_'+lyrid.replace('/','_');			
+			var theNode = $('#'+actLyrDivID); // Get the div that we are trying to move. -MD
+			var curIndex = theNode.parent().children().index(theNode); // Get the position in the DOM that the div is currently at. -MD
+			if(curIndex < theNode.parent().children().length)	theNode.insertAfter( theNode.parent().children().eq(curIndex + 1) ); // If it's not already at the top, insert it after the previous Dom Object -MD
+			
+			for(var j = 0; j < map.layerIds.length; j++) {
+				var layer = map.getLayer(map.layerIds[j]);
+				var txt = layer.id;
+				var txt2 = lyrid;
+				if (txt === txt2) {
+					var curInd = map.layerIds.indexOf(lyrid);					
+					if (curInd !== 1) map.reorderLayer(lyrid,curInd - 1) //do not want to move down beyond basemap (layer0) -JP
+				}					
+			}
+			
+			if(isGTIE8 && curIndex < theNode.parent().children().length)	moveLocalStorage(curIndex,'down'); // HTML5 Browsers only: Move the item in the local storage -MD
+		
+			}
+			else {
+				
+				var actLyrDivID = 'active_'+lyrid.replace('/','_');			
+			var theNode = $('#'+actLyrDivID); // Get the div that we are trying to move. -MD
+			var curIndex = theNode.parent().children().index(theNode); // Get the position in the DOM that the div is currently at. -MD
+			if(curIndex < theNode.parent().children().length)	theNode.insertAfter( theNode.parent().children().eq(curIndex + 1) ); // If it's not already at the top, insert it after the previous Dom Object -MD
+			
+			for(var j = 0; j < map.layerIds.length; j++) {
+				var layer = map.getLayer(map.layerIds[j]);
+				var txt = layer.id;
+				var txt2 = lyrid;
+				if (txt === txt2) {
+					var curInd = map.layerIds.indexOf(lyrid);					
+					if (curInd !== 1) map.reorderLayer(lyrid,curInd - 1) //do not want to move down beyond basemap (layer0) -JP
+				}					
+			}
+			
+			if(isGTIE8 && curIndex < theNode.parent().children().length)	moveLocalStorage(curIndex,'down'); // HTML5 Browsers only: Move the item in the local storage -MD
+		
+			}
+				
+	if (curInd !=undefined) {
+
+var lenInd = map.layerIds.length;					
+					//if (curInd !== lenInd) {map.reorderLayer(curInd,lenInd)};
+map.reorderLayer(curInd,lenInd)
+		};
+		
+				
+				
+				
+			}
+		
+		
+		
+		
+	
+		
+		
+		// When you select a search type, show the appropriate search box. -MD
+		$('#searchSelect').change( 
+			function(){ 
+				$('.searchbox').hide();
+				$('#searchContainer').hide();
+				$('#'+$(this).val()).show();
+				if($(this).val() == 'searchSTR'){	$('#zoomPM').show(); }; // If you are trying to search for Section/Twonship/Range, show the Prime Meridian dropdown as well. 
+				if($(this).val() == 'searchLL'){	$('#searchLL2').show(); };
+				if($(this).val() == 'searchQuad'){	
+					$('#widget_searchQuad').show();
+					$('#widget_searchQuad').addClass('searchbox');
+										
+					var quadList = new esri.layers.FeatureLayer("http://maps.indiana.edu/arcgis/rest/services/Reference/Quadrangle_Boundaries_24k/MapServer/0", { mode:esri.layers.FeatureLayer.MODE_SELECTION, outFields: ["*"]});
+					var quadQuery = new esri.tasks.Query();
+					
+					quadQuery.where = "1=1";
+					quadList.queryFeatures(quadQuery, function(featureSet) {
+						//Populate dropdown list with unique tree species
+						var values = dojo.map(featureSet.features, function(feature) {	return {name: feature.attributes.NAME, id: feature.attributes.OBJECTID };	});
+						var dataItems = {
+							identifier: 'id',
+							label: 'name',
+							items: values
+						};
+		
+						var store = new dojo.data.ItemFileReadStore({  data: dataItems    });	
+						dijit.byId("searchQuad").set("store", store);  
+					});
+					
+					$("#widget_searchQuad").css('display','inline-block');
+					
+					
+				}; 
+						
+				//						if($(this).val() == 'searchCounty'){	
+				//				$('#widget_searchCounty').show();
+				//									
+				//var countyList = new esri.layers.FeatureLayer("http://maps.indiana.edu/arcgis/rest/services/Reference/PLSS_Counties/MapServer/0", { mode:esri.layers.FeatureLayer.MODE_SELECTION, outFields: ["*"]});
+				//
+				//		 var countyQuery = new esri.tasks.Query();
+				//        countyQuery.where = "1=1";
+				//
+				//        countyList.queryFeatures(countyQuery, function(featureSet) {
+				//        //Populate dropdown list with unique tree species
+				//          var values = dojo.map(featureSet.features, function(feature) {
+				//            return {
+				//              name: feature.attributes.NAME_L,
+				//              
+				//            };
+				//          });
+				//
+				//          var dataItems2 = {
+				//            identifier: 'name',
+				//            label: 'name',
+				//            items: values
+				//          };
+				//
+				//          var store2 = new dojo.data.ItemFileReadStore({
+				//            data: dataItems2
+				//          });
+				//
+				//          dijit.byId("searchCounty").set("store", store2);
+				//        });
+				//
+				//				
+				//					};
+				//					
+			}
+		)
+	
+	
+	
+		
+		$('.searchbox').hide(); // Hide all of the Search Boxes -MD	
+		$('#searchAddy').show(); // Start with the Address option search enabled -MD	
+	
+	
+	
+	
+		//County Search Function -MD
+		$("#searchCounty").change(function() { 
+			var el = $("#searchCounty option:selected");			
+			var xmin = el.attr("data-xmin"),
+					ymin = el.attr("data-ymin"),
+					xmax = el.attr("data-xmax"),
+					ymax = el.attr("data-ymax");
+			var extent = new esri.geometry.Extent({"xmin":xmin,"ymin":ymin,"xmax":xmax,"ymax":ymax,"spatialReference":{"wkid":26916}}); 
+			var x = ((1*xmin) + (1*xmax)) / 2, y = ((1*ymin) + (1*ymax)) / 2; 
+			var pt = new esri.geometry.Point({"x":x, "y":y, "spatialReference":{"wkid":26916}})
+			
+			//map.setExtent(extent);
+			map.centerAndZoom(pt,3);
+
+			var sfs = new esri.symbol.SimpleFillSymbol(simpleFill);
+			var graphic = new esri.Graphic(extent, sfs); 
+			map.graphics.add(graphic); 
+			clearDelay();
+		});
+		
+		
+		$("#searchLL").keypress(function(e) { 
+	var code = (e.keyCode ? e.keyCode : e.which);
+	console.log("kp");
+	if (code == 13) { 
+		var Lon = $("#searchLL").val(); 
+		var Lat = $("#searchLL2").val(); 
+		if ($.isNumeric(Lon) == false){
+		alert("Longitude value must be numeric")	;
+		}
+		else if ($.isNumeric(Lat) == false){
+		alert("Latitude value must be numeric")	;
+		}
+		else if (Lon < -89) {
+		alert("Longitude value must be between -85 and -89")	;
+		}
+		
+		
+		else if (Lon > -85) {
+			alert("Longitude value must be between -85 and -89")	;
+		}
+		else if (Lat > 42) {
+			alert("Latitude value must be between 37 and 42")	;
+		}
+		else if (Lat < 37) {
+			alert("Latitude value must be between 37 and 42")	;
+		}
+		
+		else {
+		e.preventDefault(); 
+		cAndZ(Lon,Lat); 
+		}
+	}
+}); 
+
+$("#searchLL2").keypress(function(e) { 
+console.log("kp");
+	var code = (e.keyCode ? e.keyCode : e.which);
+	if (code == 13) { 
+		var Lon = $("#searchLL").val(); 
+		var Lat = $("#searchLL2").val(); 
+		if ($.isNumeric(Lon) == false){
+		alert("Longitude value must be numeric")	;
+		}
+		else if ($.isNumeric(Lat) == false){
+		alert("Latitude value must be numeric")	;
+		}
+		else if (Lon < -89) {
+		alert("Longitude value must be between -85 and -89")	;
+		}
+		
+		
+		else if (Lon > -85) {
+			alert("Longitude value must be between -85 and -89")	;
+		}
+		else if (Lat > 42) {
+			alert("Latitude value must be between 37 and 42")	;
+		}
+		else if (Lat < 37) {
+			alert("Latitude value must be between 37 and 42")	;
+		}
+		
+		else {
+		e.preventDefault(); 
+		cAndZ(Lon,Lat); 
+		}
+	}
+}); 
+
+		
+		
+		$("#searchCTP").keypress(function(e) { 
+			var code = (e.keyCode ? e.keyCode : e.which);
+			//var code = (e.keyCode ? e.keyCode : e.which);
+				 var value = $("#searchCTP").val(); 
+				
+				var keypressed;			
+					switch (code) {
+				case 8:
+            	keypressed = '%';
+				break;
+				case 48:
+            	keypressed = 0;
+				break;
+            	case 49:
+				keypressed = 1;
+				break;
+				case 50:
+				keypressed = 2;
+				break;
+				case 51:
+            	keypressed = 3;
+				break;
+            	case 52:
+				keypressed = 4;
+				break;
+				case 53:
+				keypressed = 5;
+				break;
+				case 54:
+            	keypressed = 6;
+				break;
+            	case 55:
+				keypressed = 7;
+				break;
+				case 56:
+				keypressed = 8;
+				break;
+				case 57:
+				keypressed = 9;
+				break;
+					}
+				 var reg = /^(\d+)(\w)(\d+)(\w)$/; 
+				 var match = reg.exec(value); 
+//if (value.length === 1)
+//{
+//	 var task = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/Reference/Zip_Codes_USCB/MapServer/0"); 
+//				 /* Township and Range */ 
+//				 var q = new esri.tasks.Query(); 
+//				 
+//				 			var infoTemplate = new esri.InfoTemplate("Attributes", "${*}");
+//      dojo.connect(task, "onComplete", function(featureSet) {
+//      	map.graphics.clear();
+//          
+//        var markerSymbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255, 0, 0]), 1), new dojo.Color([0, 255, 0, 0.25]));
+//        var lineSymbol = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASH, new dojo.Color([255, 0, 0]), 1);
+//        var polygonSymbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_NONE, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASHDOT, new dojo.Color([255, 0, 0]), 2), new dojo.Color([255, 255, 0, 0.25]));
+//        //QueryTask returns a featureSet.  Loop through features in the featureSet and add them to the map.
+//		  
+//        dojo.forEach(featureSet.features,function(feature){			 
+//        	var graphic = feature;			
+//					switch (graphic.geometry.type) {
+//          	case "point":
+//            	graphic.setSymbol(markerSymbol);
+//            	break;
+//						case "polyline":
+//							graphic.setSymbol(lineSymbol);
+//							break;
+//						case "polygon":		 
+//            	graphic.setSymbol(polygonSymbol);
+//            	break;
+//          }
+//		 			//alert(map.spatialReference);
+//          //graphic.setSymbol(symbol);
+//					//console.log(map.spatialReference);
+//		
+//				
+//					//console.log(s);
+//					//console.log(featureSet.features[0].geometry);
+//					//console.log(featureSet.features[0].geometry.spatialReference);	 
+//					graphic.setInfoTemplate(infoTemplate);           
+//					map.graphics.add(graphic);
+//					//showResults(featureSet);
+//					var zoomExtent = esri.graphicsExtent(featureSet.features);
+//					//console.log(zoomExtent);
+//					map.setExtent(zoomExtent);
+//				});
+//			});
+//				 
+//				 
+//				 
+//				 q.where = "ZCTA5 LIKE '"+ value + keypressed + "%%%'"; 
+//				
+//				 q.outFields = ["ZCTA5"]; 
+//				 q.returnGeometry = true; 
+//				
+//				 task.execute(q); // @TODO errorWell
+//				 (7);
+//				 //var visLay = layer.visibleLayers;
+//}else if (value.length === 2)
+//{
+//	 var task = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/Reference/Zip_Codes_USCB/MapServer/0"); 
+//				 /* Township and Range */ 
+//				 var q = new esri.tasks.Query(); 
+//				 
+//				 			var infoTemplate = new esri.InfoTemplate("Attributes", "${*}");
+//      dojo.connect(task, "onComplete", function(featureSet) {
+//      	map.graphics.clear();
+//          
+//        var markerSymbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255, 0, 0]), 1), new dojo.Color([0, 255, 0, 0.25]));
+//        var lineSymbol = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASH, new dojo.Color([255, 0, 0]), 1);
+//        var polygonSymbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_NONE, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASHDOT, new dojo.Color([255, 0, 0]), 2), new dojo.Color([255, 255, 0, 0.25]));
+//        //QueryTask returns a featureSet.  Loop through features in the featureSet and add them to the map.
+//		  
+//        dojo.forEach(featureSet.features,function(feature){			 
+//        	var graphic = feature;			
+//					switch (graphic.geometry.type) {
+//          	case "point":
+//            	graphic.setSymbol(markerSymbol);
+//            	break;
+//						case "polyline":
+//							graphic.setSymbol(lineSymbol);
+//							break;
+//						case "polygon":		 
+//            	graphic.setSymbol(polygonSymbol);
+//            	break;
+//          }
+//		 			//alert(map.spatialReference);
+//          //graphic.setSymbol(symbol);
+//					//console.log(map.spatialReference);
+//		
+//				
+//					//console.log(s);
+//					//console.log(featureSet.features[0].geometry);
+//					//console.log(featureSet.features[0].geometry.spatialReference);	 
+//					graphic.setInfoTemplate(infoTemplate);           
+//					map.graphics.add(graphic);
+//					//showResults(featureSet);
+//					var zoomExtent = esri.graphicsExtent(featureSet.features);
+//					//console.log(zoomExtent);
+//					map.setExtent(zoomExtent);
+//				});
+//			});
+//				 
+//				 
+//				 
+//				 q.where = "ZCTA5 LIKE '"+ value + keypressed + "%%'"; 
+//				
+//				 q.outFields = ["ZCTA5"]; 
+//				 q.returnGeometry = true; 
+//				
+//				 task.execute(q); // @TODO errorWell
+//				 clearDelay(7);
+//				 //var visLay = layer.visibleLayers;
+//}
+//else if (value.length === 3)
+//{ var task = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/Reference/Zip_Codes_USCB/MapServer/0"); 
+//				 /* Township and Range */ 
+//				 var q = new esri.tasks.Query(); 
+//				 
+//				 			var infoTemplate = new esri.InfoTemplate("Attributes", "${*}");
+//      dojo.connect(task, "onComplete", function(featureSet) {
+//      	map.graphics.clear();
+//          
+//        var markerSymbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255, 0, 0]), 1), new dojo.Color([0, 255, 0, 0.25]));
+//        var lineSymbol = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASH, new dojo.Color([255, 0, 0]), 1);
+//        var polygonSymbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_NONE, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASHDOT, new dojo.Color([255, 0, 0]), 2), new dojo.Color([255, 255, 0, 0.25]));
+//        //QueryTask returns a featureSet.  Loop through features in the featureSet and add them to the map.
+//		  
+//        dojo.forEach(featureSet.features,function(feature){			 
+//        	var graphic = feature;			
+//					switch (graphic.geometry.type) {
+//          	case "point":
+//            	graphic.setSymbol(markerSymbol);
+//            	break;
+//						case "polyline":
+//							graphic.setSymbol(lineSymbol);
+//							break;
+//						case "polygon":		 
+//            	graphic.setSymbol(polygonSymbol);
+//            	break;
+//          }
+//		 			//alert(map.spatialReference);
+//          //graphic.setSymbol(symbol);
+//					//console.log(map.spatialReference);
+//		
+//				
+//					//console.log(s);
+//					//console.log(featureSet.features[0].geometry);
+//					//console.log(featureSet.features[0].geometry.spatialReference);	 
+//					graphic.setInfoTemplate(infoTemplate);           
+//					map.graphics.add(graphic);
+//					//showResults(featureSet);
+//					var zoomExtent = esri.graphicsExtent(featureSet.features);
+//					//console.log(zoomExtent);
+//					map.setExtent(zoomExtent);
+//				});
+//			});
+//				 /* Township and Range */ 
+//				 var q = new esri.tasks.Query(); 
+//				 q.where = "ZCTA5 LIKE '"+ value + keypressed + "%'"; 
+//				
+//				 q.outFields = ["ZCTA5"]; 
+//				 q.returnGeometry = true; 
+//				// var task = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/Reference/Zip_Codes_USCB/MapServer/0"); 
+//				 task.execute(q); // @TODO errorWell
+//				 clearDelay(7);
+//				 //var visLay = layer.visibleLayers;
+//}
+//else if (value.length === 4)
+//{ var task = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/Reference/Zip_Codes_USCB/MapServer/0"); 
+//				 /* Township and Range */ 
+//				 var q = new esri.tasks.Query(); 
+//				 
+//				 			var infoTemplate = new esri.InfoTemplate("Attributes", "${*}");
+//      dojo.connect(task, "onComplete", function(featureSet) {
+//      	map.graphics.clear();
+//          
+//        var markerSymbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255, 0, 0]), 1), new dojo.Color([0, 255, 0, 0.25]));
+//        var lineSymbol = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASH, new dojo.Color([255, 0, 0]), 1);
+//        var polygonSymbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_NONE, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASHDOT, new dojo.Color([255, 0, 0]), 2), new dojo.Color([255, 255, 0, 0.25]));
+//        //QueryTask returns a featureSet.  Loop through features in the featureSet and add them to the map.
+//		  
+//        dojo.forEach(featureSet.features,function(feature){			 
+//        	var graphic = feature;			
+//					switch (graphic.geometry.type) {
+//          	case "point":
+//            	graphic.setSymbol(markerSymbol);
+//            	break;
+//						case "polyline":
+//							graphic.setSymbol(lineSymbol);
+//							break;
+//						case "polygon":		 
+//            	graphic.setSymbol(polygonSymbol);
+//            	break;
+//          }
+//		 			//alert(map.spatialReference);
+//          //graphic.setSymbol(symbol);
+//					//console.log(map.spatialReference);
+//		
+//				
+//					//console.log(s);
+//					//console.log(featureSet.features[0].geometry);
+//					//console.log(featureSet.features[0].geometry.spatialReference);	 
+//					graphic.setInfoTemplate(infoTemplate);           
+//					map.graphics.add(graphic);
+//					//showResults(featureSet);
+//					var zoomExtent = esri.graphicsExtent(featureSet.features);
+//					//console.log(zoomExtent);
+//					map.setExtent(zoomExtent);
+//				});
+//			});
+//				 
+//				 
+//				 q.where = "ZCTA5 LIKE '"+ value + keypressed + "'"; 
+//				
+//				 q.outFields = ["ZCTA5"]; 
+//				 q.returnGeometry = true; 
+//				// var task = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/Reference/Zip_Codes_USCB/MapServer/0"); 
+//				 task.execute(q); // @TODO errorWell
+//				 clearDelay(7);
+//				 //var visLay = layer.visibleLayers;
+//}
+//else
+//{
+	
+			
+			if (code == 13) {
+				 var task = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/Reference/Zip_Codes_USCB/MapServer/0"); 
+				 /* Township and Range */ 
+				 var q = new esri.tasks.Query(); 
+				 
+				 			var infoTemplate = new esri.InfoTemplate("Attributes", "${*}");
+      dojo.connect(task, "onComplete", function(featureSet) {
+      	map.graphics.clear();
+          
+        var markerSymbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255, 0, 0]), 1), new dojo.Color([0, 255, 0, 0.25]));
+        var lineSymbol = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASH, new dojo.Color([255, 0, 0]), 1);
+        var polygonSymbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_NONE, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASHDOT, new dojo.Color([255, 0, 0]), 2), new dojo.Color([255, 255, 0, 0.25]));
+        //QueryTask returns a featureSet.  Loop through features in the featureSet and add them to the map.
+		  
+        dojo.forEach(featureSet.features,function(feature){			 
+        	var graphic = feature;			
+					switch (graphic.geometry.type) {
+          	case "point":
+            	graphic.setSymbol(markerSymbol);
+            	break;
+						case "polyline":
+							graphic.setSymbol(lineSymbol);
+							break;
+						case "polygon":		 
+            	graphic.setSymbol(polygonSymbol);
+            	break;
+          }
+		 			//alert(map.spatialReference);
+          //graphic.setSymbol(symbol);
+					//console.log(map.spatialReference);
+		
+				
+					//console.log(s);
+					//console.log(featureSet.features[0].geometry);
+					//console.log(featureSet.features[0].geometry.spatialReference);	 
+					graphic.setInfoTemplate(infoTemplate);           
+					map.graphics.add(graphic);
+					//showResults(featureSet);
+					var zoomExtent = esri.graphicsExtent(featureSet.features);
+					//console.log(zoomExtent);
+					map.setExtent(zoomExtent);
+				});
+			});
+				 
+				 
+				 q.where = "ZCTA5 LIKE '"+ value +"'"; 
+				
+				 q.outFields = ["ZCTA5"]; 
+				 q.returnGeometry = true; 
+				// var task = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/Reference/Zip_Codes_USCB/MapServer/0"); 
+				 task.execute(q); // @TODO errorWell
+				 clearDelay();
+				 //var visLay = layer.visibleLayers;
+}
+			
+		}); 
+		
+		
+	
+		
+		$("#searchPP").keypress(function(e) { 
+		 var value = $("#searchPP").val(); 
+			var code = (e.keyCode ? e.keyCode : e.which);
+			
+			if (code == 13) {
+				
+			var task = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/Reference/Places_Populated_Areas/MapServer/0"); 
+ 
+				 /* Township and Range */ 
+				 var q = new esri.tasks.Query(); 
+				 
+				 			var infoTemplate = new esri.InfoTemplate("Attributes", "${*}");
+      dojo.connect(task, "onComplete", function(featureSet) {
+		  
+		  
+		  if (featureSet.features.length === 0) {
+			  
+			  
+			  var task2 = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/Reference/Places_GNIS_USGS/MapServer/0"); 
+ 
+				 /* Township and Range */ 
+				 var q2 = new esri.tasks.Query(); 
+				 
+				 			var infoTemplate = new esri.InfoTemplate("Attributes", "${*}");
+      dojo.connect(task2, "onComplete", function(featureSet) {
+		  map.graphics.clear();
+          
+        var markerSymbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255, 0, 0]), 1), new dojo.Color([0, 255, 0, 0.25]));
+        var lineSymbol = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASH, new dojo.Color([255, 0, 0]), 1);
+        var polygonSymbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_NONE, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASHDOT, new dojo.Color([255, 0, 0]), 2), new dojo.Color([255, 255, 0, 0.25]));
+        //QueryTask returns a featureSet.  Loop through features in the featureSet and add them to the map.
+		  
+        dojo.forEach(featureSet.features,function(feature){			 
+        	var graphic = feature;			
+					switch (graphic.geometry.type) {
+          	case "point":
+            	graphic.setSymbol(markerSymbol);
+            	break;
+						case "polyline":
+							graphic.setSymbol(lineSymbol);
+							break;
+						case "polygon":		 
+            	graphic.setSymbol(polygonSymbol);
+            	break;
+          }
+		 			//alert(map.spatialReference);
+          //graphic.setSymbol(symbol);
+					//console.log(map.spatialReference);
+		
+				
+					//console.log(s);
+					//console.log(featureSet.features[0].geometry);
+					//console.log(featureSet.features[0].geometry.spatialReference);	 
+					graphic.setInfoTemplate(infoTemplate);           
+					map.graphics.add(graphic);
+					//showResults(featureSet);
+					
+				var pt = new esri.geometry.Point({"x":graphic.geometry.x, "y":graphic.geometry.y, "spatialReference":{"wkid":26916}})
+				map.centerAndZoom(pt,4);
+					
+					
+					var zoomExtent = esri.graphicsExtent(featureSet.features);
+					//console.log(zoomExtent);
+					map.setExtent(zoomExtent);
+				});
+			});
+				 
+				 
+				 q2.where = "NAME = '"+ value + "'"; 
+				
+				 q2.outFields = ["NAME"]; 
+				 q2.returnGeometry = true; 
+				// var task = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/Reference/Zip_Codes_USCB/MapServer/0"); 
+				 task2.execute(q2); // @TODO errorWell
+				 clearDelay();
+				 //var visLay = layer.visibleLayers;
+}
+		  
+		  
+	 
+	 
+	
+		  
+		  
+      	map.graphics.clear();
+          
+        var markerSymbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255, 0, 0]), 1), new dojo.Color([0, 255, 0, 0.25]));
+        var lineSymbol = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASH, new dojo.Color([255, 0, 0]), 1);
+        var polygonSymbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_NONE, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASHDOT, new dojo.Color([255, 0, 0]), 2), new dojo.Color([255, 255, 0, 0.25]));
+        //QueryTask returns a featureSet.  Loop through features in the featureSet and add them to the map.
+		  
+        dojo.forEach(featureSet.features,function(feature){			 
+        	var graphic = feature;			
+					switch (graphic.geometry.type) {
+          	case "point":
+            	graphic.setSymbol(markerSymbol);
+            	break;
+						case "polyline":
+							graphic.setSymbol(lineSymbol);
+							break;
+						case "polygon":		 
+            	graphic.setSymbol(polygonSymbol);
+            	break;
+          }
+		 			//alert(map.spatialReference);
+          //graphic.setSymbol(symbol);
+					//console.log(map.spatialReference);
+		
+				
+					//console.log(s);
+					//console.log(featureSet.features[0].geometry);
+					//console.log(featureSet.features[0].geometry.spatialReference);	 
+					graphic.setInfoTemplate(infoTemplate);           
+					map.graphics.add(graphic);
+					//showResults(featureSet);
+					var zoomExtent = esri.graphicsExtent(featureSet.features);
+					//console.log(zoomExtent);
+					map.setExtent(zoomExtent);
+				});
+			});
+				 
+				 
+				 q.where = "NAME = '"+ value + "'"; 
+				
+				 q.outFields = ["NAME"]; 
+				 q.returnGeometry = true; 
+				// var task = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/Reference/Zip_Codes_USCB/MapServer/0"); 
+				 task.execute(q); // @TODO errorWell
+				 clearDelay();
+				 //var visLay = layer.visibleLayers;
+}
+				  	
+	  
+				});
+	
+	
+	
+	
+	
+	
+	
+	
+				
+		$("#searchSTR").keypress(function(e) { 
+			var code = (e.keyCode ? e.keyCode : e.which);
+			if (code == 13) { 
+				 var value = $("#searchSTR").val(); 
+				var pm = $("#zoomPM :selected").val();
+				
+				if (pm === "SECOND"){
+					 value = value.replace(/ /g,'').replace(/-/g,'').replace(/n/g,'N').replace(/s/g,'S').replace(/e/g,'E').replace(/w/g,'W'); 
+	
+	
+				 var reg = /^(\d+)(\w)(\d+)(\w)$/; 
+				 var match = reg.exec(value); 
+
+				 /* Township and Range */ 
+				 var q = new esri.tasks.Query(); 
+				 q.where = "T_R = '"+ match[1] + match[2] + " - " + match[3] + match[4] + "'" + " and MERIDIAN = 'SECOND'"; 
+				
+				 q.outFields = ["T_R"]; 
+				 q.returnGeometry = true; 
+				 var task = new esri.tasks.QueryTask("http://gis.indiana.edu/arcgis/rest/services/PDMS/Basic_PDMS/MapServer/63"); 
+				 task.execute(q, showTR); // @TODO errorWell
+				 //var visLay = layer.visibleLayers;
+				}
+				else {
+				 value = value.replace(/ /g,'').replace(/-/g,'').replace(/n/g,'N').replace(/s/g,'S').replace(/e/g,'E').replace(/w/g,'W'); 
+	
+	
+				 var reg = /^(\d+)(\w)(\d+)(\w)$/; 
+				 var match = reg.exec(value); 
+
+				 /* Township and Range */ 
+				 var q = new esri.tasks.Query(); 
+				  q.where = "T_R = '"+ match[1] + match[2] + " - " + match[3] + match[4] + "'" + " and MERIDIAN = 'FIRST'"; 
+				 q.outFields = ["T_R"]; 
+				 q.returnGeometry = true; 
+				 var task = new esri.tasks.QueryTask("http://gis.indiana.edu/arcgis/rest/services/PDMS/Basic_PDMS/MapServer/63"); 
+				 task.execute(q, showTR); // @TODO errorWell
+				// var visLay = layer.visibleLayers;
+				}
+				// alert(String(visLay));
+				//var isIn = visLay.indexOf(67); 
+				//alert("hereTR");
+				//if (isIn === -1) {
+				////alert(isIn);
+				//
+				// visLay.push(67);
+				//layer.setVisibleLayers(visLay);
+				//$('input[name=67]').attr('checked', true);
+				//
+				//$('span[name=s67]').addClass("visibleLayer"); 
+				//				
+				//}
+				//buildLayerList(layer)
+			} 
+		}); 
+	 
+	 
+	 
+		
+		function showTR(results) { 
+			//alert(results.features.length);
+			if (results.features.length === 0){
+				alert("not found");	
+			}	else{
+				var extent = results.features[0].geometry.getExtent(); 
+				var xmin = extent.xmin,
+						ymin = extent.ymin,
+						xmax = extent.xmax,
+						ymax = extent.ymax;
+				var x = ((1*xmin) + (1*xmax)) / 2, y = ((1*ymin) + (1*ymax)) / 2; 
+				var pt = new esri.geometry.Point({"x":x, "y":y, "spatialReference":{"wkid":26916}})
+				map.centerAndZoom(pt,4);
+				var sfs = new esri.symbol.SimpleFillSymbol(simpleFill);
+				var graphic = new esri.Graphic(extent, sfs); 
+				map.graphics.add(graphic); 
+				clearDelay();
+			} 
+		}
+		function showZip(results) { 
+			
+			 dojo.forEach(results.features,function(feature){			 
+        	var graphic = feature;	
+			
+					switch (graphic.geometry.type) {
+          	case "point":
+            	graphic.setSymbol(markerSymbol);
+            	break;
+						case "polyline":
+							graphic.setSymbol(lineSymbol);
+							break;
+						case "polygon":		 
+            	graphic.setSymbol(polygonSymbol);
+            	break;
+          }
+		 			//alert(map.spatialReference);
+          //graphic.setSymbol(symbol);
+					//console.log(map.spatialReference);
+		
+					//console.log(s);
+					//console.log(featureSet.features[0].geometry);
+					//console.log(featureSet.features[0].geometry.spatialReference);	 
+					//graphic.setInfoTemplate(infoTemplate);  
+					//alert("here2");		         
+					map.graphics.add(graphic);
+					//showResults(featureSet);
+					var zoomExtent = esri.graphicsExtent(results.features);
+					//console.log(zoomExtent);
+					map.setExtent(zoomExtent);
+			//alert("here3");
+			
+			 });
+			 clearDelay();
+			 
+		
+		}
+		
+		
+		
+		
+		function clearDelay(secs) {
+	 		scs = secs || 7000;
+	 		window.setTimeout(function() { clearMap() }, scs);
+		}
+
+
+
+		/*** START FUNCTION ***/
+		function clearMap() {  map.graphics.clear(); }
+
+
+
+		$("#searchAddy").keypress(function(e) { 
+			var code = (e.keyCode ? e.keyCode : e.which);
+			//alert(code);
+			if (code == 13) { 
+			//alert("enter");
+				 var term = $("#searchAddy").val(); 
+					e.preventDefault(); 
+					map.graphics.clear(); 
+					//var term = $("#SearchFor").val();
+					//term = term.replace(/\"/g, ' '); // "
+					
+							locatorService.outSpatialReference = map.spatialReference;
+							locatorService.addressToLocations({"SingleLine":term},["Loc_name"]); 
+							$("#SearchFor").val('');  
+					
+			}
+		}); 
+	 
+	 
+	 
+	 
+		function selectQuad(item) {		 
+			var queryTask = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/Reference/Quadrangle_Boundaries_24k/MapServer/0");
+			//alert("id" + id);
+      //build query filter
+	  	var dirty = (new Date()).getTime();	  
+      var query = new esri.tasks.Query();
+      query.returnGeometry = true;
+      query.outFields = ['*'];
+			var qstr = $("#query_theQueryString").val();
+			query.where = "NAME='" + item.value + "' AND " + dirty + "=" + dirty;
+			
+			
+			//var infoTemplate = new esri.InfoTemplate();
+      //infoTemplate.setTitle("${NAME}");
+      //infoTemplate.setContent
+			//var infoTemplate = ("Attributes", "${*}");
+      //execute query
+			
+			var infoTemplate = new esri.InfoTemplate("Attributes", "${*}");
+      dojo.connect(queryTask, "onComplete", function(featureSet) {
+      	map.graphics.clear();          
+        var markerSymbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255, 0, 0]), 1), new dojo.Color([0, 255, 0, 0.25]));
+        var lineSymbol = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASH, new dojo.Color([255, 0, 0]), 1);
+        var polygonSymbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_NONE, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASHDOT, new dojo.Color([255, 0, 0]), 2), new dojo.Color([255, 255, 0, 0.25]));
+        //QueryTask returns a featureSet.  Loop through features in the featureSet and add them to the map.		  
+        dojo.forEach(featureSet.features,function(feature){			 
+        	var graphic = feature;			
+					switch (graphic.geometry.type) {
+          	case "point":
+            	graphic.setSymbol(markerSymbol);
+            	break;
+          	case "polyline":
+            	graphic.setSymbol(lineSymbol);
+            	break;
+          	case "polygon":		 
+            	graphic.setSymbol(polygonSymbol);
+            	break;
+          }			 
+          graphic.setInfoTemplate(infoTemplate);           
+          map.graphics.add(graphic);
+					showResults(featureSet);
+					var zoomExtent = esri.graphicsExtent(featureSet.features);
+					//console.log(zoomExtent);
+    			map.setExtent(zoomExtent);
+        });
+      });
+      queryTask.execute(query);
+			clearDelay();
+    }
+		
+		
+		
+		
+		
+		function selectCounty(item) {		 
+			var queryTask = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/Reference/PLSS_Counties/MapServer/0");
+			//alert("id" + id);
+      //build query filter
+	  	var dirty = (new Date()).getTime();	  
+      var query = new esri.tasks.Query();
+      query.returnGeometry = true;
+      query.outFields = ['*'];
+			var qstr = $("#query_theQueryString").val();
+			query.where = "NAME_U='" + item.value + "' AND " + dirty + "=" + dirty;
+			
+			//var infoTemplate = new esri.InfoTemplate();
+      //infoTemplate.setTitle("${NAME}");
+      //infoTemplate.setContent
+			//var infoTemplate = ("Attributes", "${*}");
+      //execute query
+			var infoTemplate = new esri.InfoTemplate("Attributes", "${*}");
+      dojo.connect(queryTask, "onComplete", function(featureSet) {
+      	map.graphics.clear();          
+        var markerSymbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255, 0, 0]), 1), new dojo.Color([0, 255, 0, 0.25]));
+        var lineSymbol = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASH, new dojo.Color([255, 0, 0]), 1);
+        var polygonSymbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_NONE, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASHDOT, new dojo.Color([255, 0, 0]), 2), new dojo.Color([255, 255, 0, 0.25]));
+        //QueryTask returns a featureSet.  Loop through features in the featureSet and add them to the map.		  
+        dojo.forEach(featureSet.features,function(feature){			 
+        	var graphic = feature;			
+					switch (graphic.geometry.type) {
+          	case "point":
+            	graphic.setSymbol(markerSymbol);
+            	break;
+          	case "polyline":
+            	graphic.setSymbol(lineSymbol);
+            	break;
+          	case "polygon":		 
+            	graphic.setSymbol(polygonSymbol);
+            	break;
+          }			 
+					graphic.setInfoTemplate(infoTemplate);           
+					map.graphics.add(graphic);
+					showResults(featureSet);
+					var zoomExtent = esri.graphicsExtent(featureSet.features);
+					//console.log(zoomExtent);
+					map.setExtent(zoomExtent);
+				});
+      });
+
+      queryTask.execute(query);
+			clearDelay();
+    }
+		
+		
+		
+		
+		
+		
+		function showQuadResults(results) {	
+			dojo.forEach(results.features,function(feature){ var graphic = feature; });			
+			for (var i=0, il=results.features.length, j=1; i<il; i++,j++) {
+				//alert(results.features.length);
+				var zgraphic = results.features[i];
+				var ixmin = zgraphic.geometry.getExtent().xmin;
+				var	iymin = zgraphic.geometry.getExtent().ymin;
+				var	ixmax = zgraphic.geometry.getExtent().xmax;
+				var	iymax = zgraphic.geometry.getExtent().ymax;
+				var featureAttributes = results.features[i].attributes;
+			}
+		}
+ 
+ 
+ 
+ 
+ 		$("#queryTableBody").on('click', 'tr', function(e) { 
+			e.preventDefault(); 
+			map.graphics.clear();
+			var x = $(this).attr("data-x"), y = $(this).attr("data-y");
+			var pt = new esri.geometry.Point({"x":(1*x), "y":(1*y), "spatialReference":{"wkid":26916}})
+			map.centerAndZoom(pt,6);
+			var sms = new esri.symbol.PictureMarkerSymbol("http://maps.indiana.edu/images/IndianaMap/PushPinCenterHighlight.png",50,50);
+			var sfs = new esri.symbol.SimpleFillSymbol(simpleFill);
+			var graphic = new esri.Graphic(pt, sms); 
+	 		map.graphics.add(graphic); 
+		})
+	
+	
+	
+	
+	
+		$("#queryTableBody").on('mouseenter', 'tr', function() { 
+			var level = map.getLevel();
+			map.graphics.clear();
+			var x = $(this).attr("data-x"), 
+					y = $(this).attr("data-y"),
+					scalar = 1000 * ((13 - (1+level)) / (1+level));
+					var pt = new esri.geometry.Point({"x":(1*x), "y":(1*y), "spatialReference":{"wkid":26916}});
+			var extent = new esri.geometry.Extent({"xmin":(1*x - scalar),
+					"ymin":(1*y) - scalar,
+					"xmax": (1*x + scalar),
+					"ymax": (1*y + scalar), 
+					"spatialReference":{"wkid":26916}}); 
+			var sms = new esri.symbol.PictureMarkerSymbol("http://maps.indiana.edu/images/IndianaMap/PushPinCenterHighlight.png",50,50);
+			
+			var sfs = new esri.symbol.SimpleFillSymbol(simpleFill);
+			var graphic = new esri.Graphic(pt, sms); 
+	 		map.graphics.add(graphic); 
+		});
+	 
+	 
+		//$("#queryTableBody").on('mouseleave', 'tr', function() { map.graphics.clear(); });
+
+
+		// When a search box is clicked, clear out the example value. -MD
+		$("#searchAddy, #searchCTP, #searchPP, #searchLayers, #searchSTR, #searchLL, #searchLL2").click(
+			function(){ 
+				$(this).val('');
+				$(this).css('color','#000');
+			}
+		)
+		
+		
+		$("#zoomSelect").change(changeScale);
+		
+
+		function changeScale() {	map.setLevel($("#zoomSelect").val());	}
+		
+		
+		function scaleUp() {
+			var currentmaplevel = map.getLevel();
+			map.setLevel(currentmaplevel + 1);
+		}
+		
+		function scaleDown() {
+		var currentmaplevel = map.getLevel();
+			map.setLevel(currentmaplevel - 1);
+		}
+		
+		
+		
+		function help(button){
+			window.open('/Help.html#'+button);
+		}
+	</script>
+</body>
+</html>
+
+
