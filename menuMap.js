@@ -105,7 +105,7 @@ function init() {
 	esri.config.defaults.geometryService = geometryService;
 	
 	esri.config.defaults.io.proxyUrl = "http://geoserver.uits.indiana.edu/ISDP/PHP/proxy.php";
-	esriConfig.defaults.io.alwaysUseProxy = false;
+	esriConfig.defaults.io.alwaysUseProxy = true;
   var server = 'maps.indiana.edu';
 	var server2 = 'http://gisjustin.github.io';
 	var server3 = 'http://maps.indiana.edu';
