@@ -1686,7 +1686,7 @@ function doBuildList(dto,folders) {
 function doQueryServer(url,avoid) { 
   esri.request({
 		url:url,
-		content:{f:"json"},
+		content:{f:"pjson"},
 		callbackParamName:"callback",
 		load: function(data) {
 	    $.each(avoid,function(index) { 
@@ -1695,7 +1695,7 @@ function doQueryServer(url,avoid) {
             
 	    for (var folder in data.folders) { 
 				esri.request({url:url+data.folders[folder],
-			  	content:{f:"json"},
+			  	content:{f:"pjson"},
 			    callbackParamName:"callback",
 			    load:function(dto){doBuildList(dto,data.folders);}
 			  });
@@ -2511,8 +2511,8 @@ function initDetailButtons() {
 			$('#query_field').append($('<option></option>').val('').html('Required'));// add the required option to the Field select box -MD
 			
 			var test = esri.request({
-  			url: "http://maps.indiana.edu/ArcGIS/rest/services/" + ($(this).val()) +"/MapServer/0?f=json",
-  			handleAs: "json"
+  			url: "http://maps.indiana.edu/ArcGIS/rest/services/" + ($(this).val()) +"/MapServer/0?f=pjson",
+  			handleAs: "pjson"
 			});		
 				
 				test.then(
@@ -3130,7 +3130,7 @@ function initNavButtons() {
 			if (layersin[lyr].id !== "layer1"){
 				esri.request({
 					url:'http://maps.indiana.edu/arcgis/rest/services/' + layersin[lyr].id + '/mapserver/legend',
-					content:{f:"json"},
+					content:{f:"pjson"},
 					callbackParamName:"callback",
 					load: function(data) {
 						if (data.layers) { 
@@ -3459,7 +3459,7 @@ function filterDetail(tt,id) {
     var lyr = map.getLayer(id); 
     esri.request({
 	url:lyr.url+'/0',
-	content:{f:"json"},
+	content:{f:"pjson"},
 	callbackParamName:"callback",
 	load: function(data) {
 	    var query = new esri.tasks.Query(), 
@@ -3832,7 +3832,7 @@ function handleMapServer(url) {
 	    // We get a url, and make assumption its a mapserver. 
 	    esri.request({
 		url:url+'/0',
-		content:{f:"json"},
+		content:{f:"pjson"},
 		callbackParamName:"callback",
 		load: function(data) {	
 		    var opt = {}; 
