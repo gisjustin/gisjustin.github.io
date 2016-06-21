@@ -954,7 +954,7 @@
 			$(id).fadeIn(200);	//transition effect
 			
 			var test = esri.request({
-  			url: "http://maps.iu.edu/ArcGIS/rest/services/" + href +"/MapServer/0?f=json",
+  			url: "http://maps.indiana.edu/ArcGIS/rest/services/" + href +"/MapServer/0?f=json",
   			handleAs: "json",
 				load:requestSucceeded,
 				error:requestFailed
@@ -1024,7 +1024,7 @@
 		function startLayerBuild() {			
 			//esri.config.defaults.io.proxyUrl = "http://maps.indiana.edu/proxy/proxy.ashx";			
 			var newReq = esri.request({
-				url: "http://maps.iu.edu/arcgis/rest/services/?f=pjson",
+				url: "http://maps.indiana.edu/arcgis/rest/services/?f=pjson",
 				handleAs: "json",
 				load:buildLayers2,
 				error:requestFailed
@@ -1042,7 +1042,7 @@
 					theMessage2 = theMessage2 + "<ul id='"+data.folders[i]+"Group' class='hidden activeSec' style='padding-top:5px;'>"; // Add the container that will hold list of layers (Tier 2). The class 'activeSec' is used to move everything from the active layers tab. -MD
 					
 					var newReq = esri.request({
-						url: "http://maps.iu.edu/arcgis/rest/services/"+data.folders[i]+"?f=json",
+						url: "http://maps.indiana.edu/arcgis/rest/services/"+data.folders[i]+"?f=json",
 						handleAs: "json",
 						load:buildServices,
 						error:requestFailed
@@ -1179,7 +1179,7 @@
 		//This function adds or removes a layer from the viewer -MD
 		function addRemoveLayer(id,choice){
 				var curInd = map.getLayer("overlay");
-			var serviceURL = "http://maps.iu.edu/arcgis/rest/services/" + id + "/MapServer";
+			var serviceURL = "http://maps.indiana.edu/arcgis/rest/services/" + id + "/MapServer";
 			var layer_name = replaceAll(id,'/','_');
 			var activeDivID = 'active_'+id.replace('/','_');
 			var visiCheckID = 'visiCheck_'+id.replace('/','_');
@@ -1322,7 +1322,7 @@ map.reorderLayer(curInd,lenInd)
 			// Then we either add or remove the layer ID to our array that tracks them. NOTE: This is different than window.LayerStorage -MD
 			if(choice == 'add'){		
 				var test = esri.request({
-					url: "http://maps.iu.edu/ArcGIS/rest/services/" + id +"/MapServer/0?f=json",
+					url: "http://maps.indiana.edu/ArcGIS/rest/services/" + id +"/MapServer/0?f=json",
 					handleAs: "json"
 				});		
 				
@@ -1411,7 +1411,7 @@ map.reorderLayer(curInd,lenInd)
 		
 		
 		function doQ(id) {
-			var queryTask = new esri.tasks.QueryTask("http://maps.iu.edu/arcgis/rest/services/" + id + "/MapServer/0");
+			var queryTask = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/" + id + "/MapServer/0");
 			//alert("id" + id);
 			//build query filter
 			var query = new esri.tasks.Query();
@@ -1458,7 +1458,7 @@ map.reorderLayer(curInd,lenInd)
 		
 		
 		function doQuery(id) {
-			var queryTask = new esri.tasks.QueryTask("http://maps.iu.edu/arcgis/rest/services/" + id + "/MapServer/0");
+			var queryTask = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/" + id + "/MapServer/0");
 			//alert("id" + id);
       //build query filter
 	  	var dirty = (new Date()).getTime();
