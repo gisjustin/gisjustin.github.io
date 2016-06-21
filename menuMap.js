@@ -104,7 +104,7 @@ function init() {
   locatorService = new esri.tasks.Locator("http://maps.indiana.edu/ArcGIS/rest/services/Utilities/Locator_IN_Composite_TRS/GeocodeServer"); 
 	esri.config.defaults.geometryService = geometryService;
 	
-	//esri.config.defaults.io.proxyUrl = "http://maps.indiana.edu/proxy/proxy.ashx";
+	esri.config.defaults.io.proxyUrl = "http://maps.indiana.edu/proxy/proxy.ashx";
 	//esriConfig.defaults.io.alwaysUseProxy = false;
   var server = 'maps.indiana.edu';
 	var server2 = 'http://gisjustin.github.io';
