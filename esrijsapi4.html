@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Scene Layer - 4.0</title>
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.0/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.0/"></script>
+
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/SceneView",
+      "esri/layers/SceneLayer",
+      "esri/renderers/SimpleRenderer",
+      "esri/symbols/MeshSymbol3D",
+      "esri/layers/TileLayer",
+	  "esri/layers/FeatureLayer",
+      "esri/symbols/FillSymbol3DLayer",
+      
+
+      "dojo/domReady!"
+    ], function(Map, SceneView, SceneLayer, SimpleRenderer, MeshSymbol3D, TileLayer, FeatureLayer,
+      FillSymbol3DLayer) {
+var layer = new TileLayer({
+    url: "https://tiles.arcgis.com/tiles/i4Ofa92MsoSleULR/arcgis/rest/services/IUPUI_Aerial_Tiles/MapServer"
+  });
+  var layer2 = new FeatureLayer({
+    url: "http://services6.arcgis.com/i4Ofa92MsoSleULR/ArcGIS/rest/services/IUPUI_Interactive_Feature/FeatureServer/12"
+  });
+      // Create Map
+      var map = new Map({
+        basemap: "satellite",
+        ground: "world-elevation"
+      });
+
+      // Create the SceneView
+      var view = new SceneView({
+        container: "viewDiv",
+        map: map,
+        camera: {
+          position: [-86.177272, 39.760108, 707],
+          tilt: 75,
+          heading: 0
+        }
+      });
+      
+
+      // Create SceneLayer and add to the map
+      var sceneLayer = new SceneLayer({
+        url: "http://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/buildings_Indianapolis/SceneServer/layers/0",
+        popupEnabled: false
+      });
+      map.add(layer);
+	  map.add(layer2);
+      map.add(sceneLayer);
+
+      // Create MeshSymbol3D for symbolizing SceneLayer
+      var symbol = new MeshSymbol3D(
+        new FillSymbol3DLayer({
+          // If the value of material is not assigned, the default color will be grey
+          material: {
+            color: [244, 247, 134]
+          }
+        })
+      );
+      
+      
+      // Add the renderer to sceneLayer
+      sceneLayer.renderer = new SimpleRenderer({
+        symbol: symbol
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+</html>
