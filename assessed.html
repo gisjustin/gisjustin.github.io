@@ -1,0 +1,402 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <title>Shapes and Symbols</title>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/3.22/esri/css/esri.css">
+
+    <style>
+      #info {
+        top: 20px;
+        color: #444;
+        height: auto;
+        font-family: arial;
+        right: 20px;
+        margin: 5px;
+        padding: 10px;
+        position: absolute;
+        width: 115px;
+        z-index: 40;
+        border: solid 2px #666;
+        border-radius: 4px;
+        background-color: #fff;
+      }
+	  #messages{
+        background-color: #fff;
+        box-shadow: 0 0 5px #888;
+        font-size: 1.1em;
+        max-width: 15em;
+        padding: 0.5em;
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        z-index: 40;
+      }
+      html, body, #mapDiv {
+        padding:0;
+        margin:0;
+        height:100%;
+      }
+      button {
+        display: block;
+      }
+    </style>
+    
+
+    <script src="https://js.arcgis.com/3.22/"></script>
+    <script>
+      var map, tb;
+
+      require([
+        "esri/layers/ArcGISTiledMapServiceLayer", "esri/geometry/Circle", "esri/map", "esri/Color", "esri/toolbars/draw", "esri/layers/FeatureLayer", "esri/SpatialReference", 
+        "esri/tasks/query",  
+        "esri/symbols/SimpleMarkerSymbol", "esri/symbols/PictureMarkerSymbol", "esri/symbols/SimpleLineSymbol",
+        "esri/symbols/PictureFillSymbol", "esri/symbols/CartographicLineSymbol", 
+        "esri/graphic", "esri/symbols/SimpleFillSymbol", "esri/renderers/SimpleRenderer", "esri/config", "dojo/dom", "dojo/on", "dojo/domReady!"
+      ], function(
+	  ArcGISTiledMapServiceLayer, Circle, Map, Color, Draw, FeatureLayer, SR, 
+        Query, 
+        SimpleMarkerSymbol, PictureMarkerSymbol, SimpleLineSymbol,
+        PictureFillSymbol, CartographicLineSymbol, 
+        Graphic, SimpleFillSymbol, SimpleRenderer, esriConfig, 
+        dom, on
+      ) {
+        map = new Map("mapDiv", { 
+          basemap: "national-geographic",
+          center: [-86.5249, 39.1954],
+          zoom: 14,
+          slider: false
+        });
+		
+		
+		
+		
+		
+		
+        map.on("load", initToolbar);
+		 
+		var featureLayer = new FeatureLayer("https://services.arcgis.com/tKsJAIiLjd90D5q2/arcgis/rest/services/monroeparcels/FeatureServer/0",{
+          outFields: ["*"]
+        });
+		var featureLayer2 = new FeatureLayer("https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/MSBFP2/FeatureServer/0",{
+          outFields: ["*"]
+        });
+
+
+var infoTemplate = new esri.InfoTemplate();
+        infoTemplate.setTitle("${NAME}");
+        infoTemplate.setContent( "<b>2016 Assessed Value: </b>${Field16}<br/>"
+                             + "<b>Parcel Number: </b>${Field1}<br/>");
+
+
+        // Selection symbol used to draw the selected census block points within the buffer polygon
+        var symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+    new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT,
+    new Color([200,200,20]), 2),new Color([200,200,20,0.25])
+  );
+        featureLayer.setSelectionSymbol(symbol); 
+        
+        // Make unselected features invisible
+        var nullSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+    new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT,
+    new Color([100,100,100]), 2),new Color([100,255,0,0.25])
+  );
+        //featureLayer.setRenderer(new SimpleRenderer(nullSymbol));
+        
+       map.addLayer(featureLayer2);
+        
+        var circleSymb = new SimpleFillSymbol(
+          SimpleFillSymbol.STYLE_NULL,
+          new SimpleLineSymbol(
+            SimpleLineSymbol.STYLE_SHORTDASHDOTDOT,
+            new Color([105, 105, 105]),
+            2
+          ), new Color([255, 255, 0, 0.25])
+        );
+        var circle;
+
+        // When the map is clicked create a buffer around the click point of the specified distance
+        map.on("click", function(evt){
+          circle = new Circle({
+            center: evt.mapPoint,
+            geodesic: true,
+            radius: 2640,
+            radiusUnit: "esriFeet"
+          });
+		   r = "<b>Working....</b>";
+            dom.byId("messages").innerHTML = r;
+		  
+          map.graphics.clear();
+          var graphic = new Graphic(circle, circleSymb);
+         // map.graphics.add(graphic);
+		  
+		   
+
+        map.infoWindow.resize(245,105);
+
+          var query = new Query();
+          query.geometry = circle.getExtent();
+          // Use a fast bounding box query. It will only go to the server if bounding box is outside of the visible map.
+          featureLayer.queryFeatures(query, selectInBuffer);
+        });
+
+        function selectInBuffer(response){
+			
+          var feature;
+          var totalassessed = 0;
+		  var features = response.features;
+		   console.log(response.features);
+		  console.log(response.features.length);
+          var inBuffer = [];
+		   var myBuffer = [];
+          // Filter out features that are not actually in buffer, since we got all points in the buffer's bounding box
+          for (var i = 0; i < features.length; i++) {
+            feature = features[i];
+			
+			var symbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255,255,255,0.35]), 1),new dojo.Color([125,125,125,0.35]));
+          
+          //QueryTask returns a featureSet.  Loop through features in the featureSet and add them to the map.
+          
+            var graphic = feature;
+            graphic.setSymbol(symbol);
+            graphic.setInfoTemplate(infoTemplate);
+            r = "<b>Working on it....</b>";
+            dom.byId("messages").innerHTML = r;
+            map.graphics.add(graphic);
+			
+			
+			
+			
+			
+			
+			totalassessed += feature.attributes["Field16"];
+			//console.log(feature);
+           // if(circle.contains(feature.geometry)){
+//			  myBuffer.push(feature);		
+//              inBuffer.push(feature.attributes.Field16);
+//			  console.log("here");
+//            }
+			var totalPopulation = sumPopulation(features);
+            var r = "";
+            r = "<b>The total Assessed value of the " + response.features.length + " parcels affected by this model event is $<i>" + totalassessed.toLocaleString() + "</i>.</b>";
+            dom.byId("messages").innerHTML = r;
+          }
+		
+		  
+          var query = new Query();
+          query.objectIds = inBuffer;
+          // Use an objectIds selection query (should not need to go to the server)
+          featureLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results){
+			 // console.log(results);
+            
+          });
+		  
+		  
+		   var query2 = new Query();
+          query2.objectIds = inBuffer;
+          // Use an objectIds selection query (should not need to go to the server)
+          featureLayer2.selectFeatures(query2, FeatureLayer2.SELECTION_NEW, function(results){
+			 // console.log(results);
+            
+          });
+        }
+        
+        function sumPopulation(features) {
+          var popTotal = 0;
+          for (var x = 0; x < features.length; x++) {
+            popTotal = popTotal + features[x].attributes["Field16"];
+			//console.log(features[x].attributes["Field16"]);
+          }
+		  //console.log(features[x].attributes["Field16"]);
+          return popTotal;
+        }
+		 
+		
+		
+		
+		
+		
+        function initToolbar() {
+          tb = new Draw(map);
+          tb.on("draw-end", addGraphic);
+
+          // event delegation so a click handler is not
+          // needed for each individual button
+          on(dom.byId("info"), "click", function(evt) {
+            if ( evt.target.id === "info" ) {
+              return;
+            }
+            var tool = evt.target.id.toLowerCase();
+            map.disableMapNavigation();
+            tb.activate(tool);
+          });
+		  
+		  
+		  var customBasemap = new ArcGISTiledMapServiceLayer(
+    "http://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer");
+    //map.addLayer(customBasemap);
+			
+			var buildings = new ArcGISTiledMapServiceLayer(
+    "http://bl-geoy-zoolite.ads.iu.edu/ArcGIS/rest/services/Infrastructure/Building_Footprints_IN/MapServer");
+    map.addLayer(buildings);
+		  
+		  var featureLayer = new FeatureLayer("https://services.arcgis.com/tKsJAIiLjd90D5q2/arcgis/rest/services/monroeparcels/FeatureServer/0",{
+          outFields: ["*"]
+        });
+
+
+			var featureLayer2 = new FeatureLayer("https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/MSBFP2/FeatureServer/0",{
+          outFields: ["*"]
+        });
+			
+var spatialReference = new SR({wkid:102100});		
+
+
+var infoTemplate = new esri.InfoTemplate();
+        infoTemplate.setTitle("${NAME}");
+        infoTemplate.setContent( "<b>2016 Assessed Value: </b>${Field16}<br/>"
+                             + "<b>Parcel Number: </b>${Field1}<br/>");
+
+
+		  
+        }
+
+        function addGraphic(evt) {
+          //deactivate the toolbar and clear existing graphics 
+		 
+		  var r = "";
+            r = "<b>Working....</b>";
+            dom.byId("messages").innerHTML = r;
+			//r = "<b>The total Assessed value of the " + response.features.length + " parcels within the square mile of the point is <i>" + totalassessed.toLocaleString() + "</i>.</b>";
+            //dom.byId("messages").innerHTML = r;
+			
+          tb.deactivate(); 
+          map.enableMapNavigation();
+		  map.graphics.clear();
+		  
+		  
+		  
+        // markerSymbol is used for point and multipoint, see http://raphaeljs.com/icons/#talkq for more examples
+		
+		var pictureMarkerSymbol = new PictureMarkerSymbol('/images/t2.jpg', 25, 25);
+     var markerSymbol = new SimpleMarkerSymbol();
+        markerSymbol.setPath("M16,4.938c-7.732,0-14,4.701-14,10.5c0,1.981,0.741,3.833,2.016,5.414L2,25.272l5.613-1.44c2.339,1.316,5.237,2.106,8.387,2.106c7.732,0,14-4.701,14-10.5S23.732,4.938,16,4.938zM16.868,21.375h-1.969v-1.889h1.969V21.375zM16.772,18.094h-1.777l-0.176-8.083h2.113L16.772,18.094z");
+        markerSymbol.setColor(new Color("#00FFFF"));
+         
+
+
+        // lineSymbol used for freehand polyline, polyline and line. 
+        var lineSymbol = new CartographicLineSymbol(
+          CartographicLineSymbol.STYLE_SOLID,
+          new Color([255,0,0]), 10, 
+          CartographicLineSymbol.CAP_ROUND,
+          CartographicLineSymbol.JOIN_MITER, 5
+        );
+
+        // fill symbol used for extent, polygon and freehand polygon, use a picture fill symbol
+        // the images folder contains additional fill images, other options: sand.png, swamp.png or stiple.png
+        var fillSymbol = new PictureFillSymbol(
+          "images/mangrove.png",
+          new SimpleLineSymbol(
+            SimpleLineSymbol.STYLE_SOLID,
+            new Color('#000'), 
+            1
+          ), 
+          42, 
+          42
+        );
+
+          // figure out which symbol to use
+          var symbol;
+          if ( evt.geometry.type === "point" || evt.geometry.type === "multipoint") {
+            //symbol = markerSymbol;
+			  symbol = pictureMarkerSymbol
+			  
+			  var r = "";
+            r = "<b>Working on point....</b>";
+            dom.byId("messages").innerHTML = r;
+					
+			
+          } else if ( evt.geometry.type === "line" || evt.geometry.type === "polyline") {
+            symbol = lineSymbol;
+			
+			  var r = "";
+            r = "<b>Working on line....</b>";
+            dom.byId("messages").innerHTML = r;
+			
+			//console.log(evt.geometry.paths);
+			 var query = new Query();
+          query.geometry = evt.geometry;
+          // Use a fast bounding box query. It will only go to the server if bounding box is outside of the visible map.
+          featureLayer.queryFeatures(query, selectInBuffer);
+			
+			
+          }
+          else {
+			  
+			    var r = "";
+            r = "<b>Working on polygon....</b>";
+            dom.byId("messages").innerHTML = r;
+            symbol = fillSymbol;
+			console.log(evt);
+			 var query = new Query();
+			  query.geometry = evt.geometry;
+          // Use a fast bounding box query. It will only go to the server if bounding box is outside of the visible map.
+          featureLayer.queryFeatures(query, selectInBuffer);
+          }
+
+          map.graphics.add(new Graphic(evt.geometry, symbol));
+		  dothis(evt);
+		 
+		  
+		  
+		  
+		  
+        }
+      });
+	  
+	  
+	  
+	  
+	  
+	  
+	  function dothis (evt) {
+		  
+
+		 
+	  }
+		  
+	
+	  
+    </script>
+  </head>
+  
+  <body>
+    <div id="parcel info">
+    <span id="messages">Use the map tools to model an extreme weather event.  A potential cost of the event will be displayed here.</span>
+    </div>
+    <div id="info">
+    
+      <div>Select a shape then draw on the map to add a graphic.  <br></br>Potentially affected parcels will be added to the map with a total assessed value of affected parcels.<br></br></div>
+      <button id="Point">Point (tornado touchdown)</button>
+     <!-- <button id="Multipoint">Multipoint</button>
+      <button id="Line">Line</button>
+      <button id="Polyline">Polyline</button>-->
+      <button id="FreehandPolyline">Freehand Polyline (Tornado Path)</button>
+      <!--<button id="Triangle">Triangle</button>
+      <button id="Extent">Rectangle</button>
+      <button id="Circle">Circle</button>
+      <button id="Ellipse">Ellipse</button>
+      <button id="Polygon">Polygon</button>-->
+      <button id="FreehandPolygon">Freehand Polygon (Flood Area)</button>
+    </div>
+
+    <div id="mapDiv"></div>
+
+  </body>
+</html>
