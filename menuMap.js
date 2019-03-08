@@ -108,7 +108,7 @@ function init() {
 	//esriConfig.defaults.io.alwaysUseProxy = false;
   var server = 'maps.indiana.edu';
 	var server2 = 'http://gisjustin.github.io';
-	var server3 = 'http://maps.indiana.edu';
+	var server3 = 'https://maps.indiana.edu';
 	var server4 = 'http://maps.iu.edu';
 		var server5 = 'http://geoserver.uits.indiana.edu';
 	esri.config.defaults.io.corsEnabledServers.push(server);
