@@ -106,12 +106,12 @@ function init() {
 	esriConfig.defaults.io.corsDetection = false;
 	//esri.config.defaults.io.proxyUrl = "http://maps.indiana.edu/proxy/proxy.ashx";
 	//esriConfig.defaults.io.alwaysUseProxy = true;
-  var server = 'maps.indiana.edu';
+ // var server = 'maps.indiana.edu';
 	var server2 = 'http://gisjustin.github.io';
 	var server3 = 'https://maps.indiana.edu';
 	var server4 = 'http://maps.iu.edu';
 		var server5 = 'http://geoserver.uits.indiana.edu';
-	esri.config.defaults.io.corsEnabledServers.push(server);
+	//esri.config.defaults.io.corsEnabledServers.push(server);
 	esri.config.defaults.io.corsEnabledServers.push(server2);
 esri.config.defaults.io.corsEnabledServers.push(server);
 esri.config.defaults.io.corsEnabledServers.push(server3);
