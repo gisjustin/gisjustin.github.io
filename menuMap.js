@@ -105,7 +105,7 @@ function init() {
 	esri.config.defaults.geometryService = geometryService;
 	esriConfig.defaults.io.corsDetection = false;
 	//esri.config.defaults.io.proxyUrl = "http://maps.indiana.edu/proxy/proxy.ashx";
-	//esriConfig.defaults.io.alwaysUseProxy = false;
+	//esriConfig.defaults.io.alwaysUseProxy = true;
   var server = 'maps.indiana.edu';
 	var server2 = 'http://gisjustin.github.io';
 	var server3 = 'https://maps.indiana.edu';
