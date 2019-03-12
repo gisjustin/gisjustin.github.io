@@ -122,7 +122,7 @@
       "esri/config",
       "esri/geometry/webMercatorUtils",
       "esri/graphic",
-      "esri/layers/ImageryLayer",
+      
       "esri/layers/ArcGISImageServiceLayer", 
       "esri/lang",
       "esri/map",
@@ -150,7 +150,7 @@
       
       var params = new ImageServiceParameters();
         params.noData = 0;
-      var layer = new ImageryLayer({
+      var layer = new ArcGISImageServiceLayer({
           url: "https://imagery.gis.in.gov/arcgis/rest/services/Imagery/1998_DOQQ/ImageServer",
           format: "jpgpng" // server exports in either jpg or png format
         });
