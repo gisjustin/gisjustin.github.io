@@ -123,6 +123,7 @@
       "esri/geometry/webMercatorUtils",
       "esri/graphic",
       "esri/layers/ImageryLayer",
+      "esri/layers/ArcGISImageServiceLayer", 
       "esri/lang",
       "esri/map",
       "esri/symbols/SimpleFillSymbol",
@@ -142,19 +143,23 @@
       map = new Map("map", {
         basemap: "gray",
         center: [2.352, 48.87],
-        zoom: 12,
+        zoom: 14,
         slider: false,
         layers: [layer]
       });
       
+      var params = new ImageServiceParameters();
+        params.noData = 0;
       var layer = new ImageryLayer({
           url: "https://imagery.gis.in.gov/arcgis/rest/services/Imagery/1998_DOQQ/ImageServer",
           format: "jpgpng" // server exports in either jpg or png format
         });
-      var layer2005 = new ImageryLayer({
-          url: "https://imagery.gis.in.gov/arcgis/rest/services/Imagery/2005_CIR/ImageServer",
-          format: "jpgpng" // server exports in either jpg or png format
+      
+      var imageServiceLayer = new ArcGISImageServiceLayer("https://imagery.gis.in.gov/arcgis/rest/services/Imagery/2005_CIR/ImageServer", {
+          imageServiceParameters: params,
+          opacity: 0.75
         });
+       
 
       on(map, "load", function (){
         console.log("Map load event");
@@ -227,7 +232,9 @@
           orientation: "vertical",
           range: "min",
           change: function (event, ui){
-              map.addLayer(layer2005);
+              
+            
+             map.addLayer(imageServiceLayer);
           //  map.setLevel(ui.value);
           }
         });
