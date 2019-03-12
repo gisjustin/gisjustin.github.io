@@ -151,7 +151,7 @@
           url: "https://imagery.gis.in.gov/arcgis/rest/services/Imagery/1998_DOQQ/ImageServer",
           format: "jpgpng" // server exports in either jpg or png format
         });
-      var 2005 = new ImageryLayer({
+      var layer2005 = new ImageryLayer({
           url: "https://imagery.gis.in.gov/arcgis/rest/services/Imagery/2005_CIR/ImageServer",
           format: "jpgpng" // server exports in either jpg or png format
         });
@@ -227,7 +227,7 @@
           orientation: "vertical",
           range: "min",
           change: function (event, ui){
-              map.addLayer(2005);
+              map.addLayer(layer2005);
           //  map.setLevel(ui.value);
           }
         });
