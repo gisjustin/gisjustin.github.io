@@ -1,55 +1,45 @@
-dojo.require("dojo.fx.easing");
-dojo.require("dojo.data.ItemFileReadStore");
-dojo.require("dojox.data.CsvStore");
-dojo.require("dojox.encoding.digests._base"); 
-dojo.require("dojox.layout.FloatingPane");
-dojo.require("dojox.layout.ExpandoPane");
-dojo.require("dijit.Dialog");
-dojo.require("dijit.TitlePane");
-dojo.require("dijit.Tree"); 
-dojo.require("dijit.layout.BorderContainer");
-dojo.require("dijit.layout.ContentPane");
-dojo.require("dijit.form.CheckBox");
+// dojo.require("dojo.fx.easing");
+// dojo.require("dojo.data.ItemFileReadStore");
+// dojo.require("dojox.data.CsvStore");
+// dojo.require("dojox.encoding.digests._base"); 
+// dojo.require("dojox.layout.FloatingPane");
+// dojo.require("dojox.layout.ExpandoPane");
+// dojo.require("dijit.Dialog");
+// dojo.require("dijit.TitlePane");
+// dojo.require("dijit.Tree"); 
+// dojo.require("dijit.layout.BorderContainer");
+// dojo.require("dijit.layout.ContentPane");
+// dojo.require("dijit.form.CheckBox");
 dojo.require("dijit.form.ComboBox");
-dojo.require("esri.arcgis.utils"); 
-dojo.require("esri.dijit.InfoWindowLite"); 
+// dojo.require("esri.arcgis.utils"); 
+// dojo.require("esri.dijit.InfoWindowLite"); 
 dojo.require("esri.dijit.Scalebar"); 
 dojo.require("esri.dijit.Popup"); 
-dojo.require("esri.dijit.Legend");
+// dojo.require("esri.dijit.Legend");
 dojo.require("esri.dijit.BasemapGallery");
 dojo.require("esri.dijit.Measurement");
 dojo.require("esri.dijit.Print"); 
-dojo.require("esri.layers.FeatureLayer");
-dojo.require("esri.layers.KMLLayer"); 
+// dojo.require("esri.layers.FeatureLayer");
+// dojo.require("esri.layers.KMLLayer"); 
 dojo.require("esri.tasks.find");
-dojo.require("esri.tasks.query");
-dojo.require("esri.tasks.PrintTask"); 
+// dojo.require("esri.tasks.query");
+// dojo.require("esri.tasks.PrintTask"); 
 dojo.require("esri.tasks.locator");
 dojo.require("esri.toolbars.edit"); 
 dojo.require("esri.toolbars.draw");
-dojo.require("dijit.Tooltip"); 
+// dojo.require("dijit.Tooltip"); 
 dojo.require("esri.toolbars.navigation"); 
 dojo.require("esri.map");
 dojo.require("dijit.ColorPalette");
-dojo.require("esri.layers.agsdynamic");
-dojo.require("esri.utils");
-dojo.require("esri.layers.FeatureLayer");
-dojo.require("dojo.parser");
-dojo.require("dijit.layout.BorderContainer");
-dojo.require("dijit.layout.ContentPane");
+// dojo.require("esri.layers.agsdynamic");
+// dojo.require("esri.utils");
+// dojo.require("dojo.parser");
 dojo.require("dijit.form.Button");
-dojo.require("dijit.form.TextBox");
-dojo.require("dojox.grid.DataGrid");
-dojo.require("dojo.data.ItemFileReadStore");
-dojo.require("esri.dijit.Legend");
-dojo.require("dojox.grid.DataGrid");
-dojo.require("dijit.form.HorizontalSlider");   
-   
-
-
-
+// dojo.require("dijit.form.TextBox");
+// dojo.require("dojox.grid.DataGrid");
+// dojo.require("dijit.form.HorizontalSlider");
 // dojo.require("modules.RasterLayer");
-// dojo.addOnLoad(dojo.isIE ? init : initLocalStorage); 
+
 dojo.addOnLoad(dojo.isIE ? init : init); 
 
 /**
@@ -67,10 +57,10 @@ var simpleFill = { "type": "esriSFS",
 											"color": [0,255,255,255],
 											"width": 1
 										}
-									}
+									};
 
 									
- var find, params, idyn, selectedBasemap, graphicColor = "nothing", firstConnect, scalebar, map, bookmarkArray = [], layersearch = [], vislays = [], myNewColor=new Array(), currentMap = 0, addList = [], webmap = {}, startExtent, wkid = 26916, geometryService, seen = 0, referencedata = {}, printer, nwroot;
+ var find, params, idyn, selectedBasemap, graphicColor = "nothing", firstConnect, scalebar, map, bookmarkArray = [], layersearch = [], vislays = [], myNewColor= [], currentMap = 0, addList = [], webmap = {}, startExtent, wkid = 26916, geometryService, seen = 0, referencedata = {}, printer, nwroot;
  var rasterLayer, flickrFeatureLayer, maxoffset, browseFeatures = [], idArray = [], queryArray = [], currentBrowseGraphic, currentEditGraphic = null, toolbar, editToolbar, navToolbar, measurement = null, maps = [], mapid = "", dojoConnections = [], pointType = "", workers = false, browseGraphics = {}, featureLayer, browseCache = {}, identifyCache = [], locatorService, scaffold = {"points":0,"polylines":0,"polygons":0,"rasters":0,"onload":0}, emptymap = {item: {
     "title": "Initial Map",
     "snippet": "IndianaMap",
@@ -81,7 +71,7 @@ var simpleFill = { "type": "esriSFS",
     "operationalLayers":[],
     "baseMap":{
 	"baseMapLayers": [{ 
-	    "url":"http://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Shaded_Relief/MapServer",
+	    "url":"https://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Shaded_Relief/MapServer",
 	    "opacity":1,
 	    "visibility":true,
 	    "type":"Raster",
@@ -99,23 +89,21 @@ var simpleFill = { "type": "esriSFS",
  */
 function init() { 
 	idyn = "true";
-  esriConfig.defaults.map.logoLink = "http://maps.indiana.edu";
-  geometryService = new esri.tasks.GeometryService("http://maps.iu.edu/ArcGIS/rest/services/Utilities/Geometry/GeometryServer");
-  locatorService = new esri.tasks.Locator("http://maps.indiana.edu/ArcGIS/rest/services/Utilities/Locator_IN_Composite_TRS/GeocodeServer"); 
+  esriConfig.defaults.map.logoLink = "https://maps.indiana.edu";
+  //geometryService = new esri.tasks.GeometryService("https://gis.indiana.edu/ArcGIS/rest/services/Utilities/Geometry/GeometryServer");
+  geometryService = new esri.tasks.GeometryService("https://maps.indiana.edu/ArcGIS/rest/services/Utilities/Geometry/GeometryServer");
+  //locatorService = new esri.tasks.Locator("https://gis.indiana.edu/ArcGIS/rest/services/Utilities/Locator_IN_Composite_TRS/GeocodeServer");
+  locatorService = new esri.tasks.Locator("https://maps.indiana.edu/ArcGIS/rest/services/ImageService/Locator_IN_Composite_TRS/GeocodeServer");  
 	esri.config.defaults.geometryService = geometryService;
-	esriConfig.defaults.io.corsDetection = false;
-	//esri.config.defaults.io.proxyUrl = "http://maps.indiana.edu/proxy/proxy.ashx";
-	//esriConfig.defaults.io.alwaysUseProxy = true;
- // var server = 'maps.indiana.edu';
-	var server2 = 'http://gisjustin.github.io';
-	var server3 = 'https://maps.indiana.edu';
-	var server4 = 'http://maps.iu.edu';
-		var server5 = 'http://geoserver.uits.indiana.edu';
-	//esri.config.defaults.io.corsEnabledServers.push(server);
+	// esri.config.defaults.io.proxyUrl = "https://maps.indiana.edu/proxy/proxy.ashx";
+	esri.config.defaults.io.proxyUrl = "./proxy/proxy.ashx";
+	esri.config.defaults.io.alwaysUseProxy = true;
+
+  var server = 'maps.indiana.edu';
+	var server2 = 'bl-geoy-crinoid.ads.iu.edu';
+	var server3 = '//maps.indiana.edu';
 	esri.config.defaults.io.corsEnabledServers.push(server2);
-esri.config.defaults.io.corsEnabledServers.push(server);
-esri.config.defaults.io.corsEnabledServers.push(server3);
-esri.config.defaults.io.corsEnabledServers.push(server5);
+
 
     
 
@@ -149,7 +137,7 @@ esri.config.defaults.io.corsEnabledServers.push(server5);
       "operationalLayers":[],
       "baseMap":{
 	"baseMapLayers": [{ 
-        "url":"http://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Shaded_Relief/MapServer",
+        "url":"https://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Shaded_Relief/MapServer",
         "opacity":1,
         "visibility":true,
         "type":"Raster",
@@ -172,7 +160,6 @@ var popup = new esri.dijit.Popup({
 	startExtent = new esri.geometry.Extent(386105.3,4155355.6,710312.7,4654126.4,new esri.SpatialReference({wkid:26916}));
     }
    map = new esri.Map("map", {
-       //   infoWindow: popup
 	   extent: startExtent,
 	   sliderStyle: "large",
 	   showAttribution: false,
@@ -180,13 +167,11 @@ var popup = new esri.dijit.Popup({
         });
 		
 		map.setLevel(0);
-		 dojo.connect(map, "onExtentChange", showExtent);
 
    // map = new esri.Map("map", { extent: startExtent,  fadeOnZoom: false, force3DTransforms: false} );
 
    // dojoConnections.push(dojo.connect(map, "onClick", function(evt) { (evt); }));
    dojoConnections.push(dojo.connect(map, "onClick", function(evt) { identifyClick(evt); }));
-    dojo.connect(map, "onExtentChange", showExtent);
  
     initMap(webmap);
     dojo.connect(map, 'onLoad', function(map) {
@@ -332,14 +317,14 @@ var popup = new esri.dijit.Popup({
 
 		
         // deleteMyMaps();            	
-	// doQueryServer("http://maps.indiana.edu/ArcGIS/rest/services/",["Imagery","Maps","Utilities","CMIS"]);
+	// doQueryServer("https://maps.indiana.edu/ArcGIS/rest/services/",["Imagery","Maps","Utilities","CMIS"]);
 	// map.setLevel(0); 
 
         // Map needs to load before deferred calls to replace map
-        /* Test map: "http://bl-geoy-crinoid.ads.iu.edu:8888/map/525458ed-eed1-47a1-bc81-54414f31aca3" */
+        /* Test map: "https://bl-geoy-crinoid.ads.iu.edu:8888/map/525458ed-eed1-47a1-bc81-54414f31aca3" */
         if (mapid.length > 1) { 
             esri.request({
-		"url":"http://bl-geoy-crinoid.ads.iu.edu:8888/map/" + mapid,
+		"url":"https://bl-geoy-crinoid.ads.iu.edu:8888/map/" + mapid,
 		"load":function(data) { 
 		    var myreg = /^\{u\'map\'\: u\'(.*)\', u\'\_id\'\: ObjectId/i; 
 		    var match = myreg.exec(data.status_string); 
@@ -362,7 +347,7 @@ var popup = new esri.dijit.Popup({
   
 
 
-  browseGraphics.locatorHoverSymbol = new esri.symbol.PictureMarkerSymbol("http://maps.indiana.edu/images/IndianaMap/PushPinCenterHighlight.png",50,50), 
+  browseGraphics.locatorHoverSymbol = new esri.symbol.PictureMarkerSymbol("https://maps.indiana.edu/images/IndianaMap/PushPinCenterHighlight.png",50,50), 
   browseGraphics.markerSymbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE,20,
 								   new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID,
 												    new dojo.Color([255,140,0]), 2.5), 
@@ -386,13 +371,7 @@ var popup = new esri.dijit.Popup({
         //modify the grid so only the STATE_NAME field is sortable
       //  grid.canSort = function(col){ if(Math.abs(col) == 2) { return true; } else { return false; } };
       }
-function showExtent(ext){
-    var theGroup = document.getElementById('DemographicsGroup')
-	 var s = "<a href='https://gisdb.uits.indiana.edu/ISDP/filelist.php?xmin=" +ext.xmin +"&xmax=" + ext.xmax + "&ymax=" + ext.ymax + "&ymin=" + ext.ymin +">"
-	 
-	 console.log(s);
-  //   theGroup.innerHTML =+ s;
-   }
+
       function makeZoomButton(id){
         var zBtn = "<div data-dojo-type='dijit.form.Button'><img src='images/zoom.png'";
         zBtn = zBtn + " width='18' height='18'";
@@ -420,14 +399,6 @@ function showExtent(ext){
 * and calls as appropriate
 * 
 */
-
-function showExtent(ext){
-    var theGroup = document.getElementById('DemographicsGroup')
-	 var s = "<a href='https://gisdb.uits.indiana.edu/ISDP/filelist.php?xmin=" +ext.xmin +"&xmax=" + ext.xmax + "&ymax=" + ext.ymax + "&ymin=" + ext.ymin +">"
-	 
-	 console.log(s);
-  //   theGroup.innerHTML =+ s;
-   }
 function initMap(webmap) { 
 
 	 // Create the Base Maps for the Basemap tab - MD
@@ -477,139 +448,126 @@ console.log("initmap");
 	
 		
 	var Streets = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/arcgis/rest/services/Basemaps/Streets/MapServer"
+		 url: "https://maps.indiana.edu/arcgis/rest/services/Basemaps/Streets/MapServer"
 	});
 	var StreetsBasemap = new esri.dijit.Basemap({
 		 layers: [Streets],
 		 title: "Streets",
 		  id: "bm1",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/Streets_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/Streets_rectangle.png"
 	});
 	basemaps.push(StreetsBasemap);
 	
 	var ShadedRelief = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/arcgis/rest/services/Basemaps/Shaded_Relief/MapServer"
+		 url: "https://maps.indiana.edu/arcgis/rest/services/Basemaps/Shaded_Relief/MapServer"
 	});
 	var ShadedReliefBasemap = new esri.dijit.Basemap({
 		 layers: [ShadedRelief],
 		 title: "Streets and Shaded Relief",
 		  id: "bm6",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/Shaded_Relief_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/Shaded_Relief_rectangle.png"
 	});
 	basemaps.push(ShadedReliefBasemap);
 	
 	var darkColShaRel = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/arcgis/rest/services/Basemaps/Dark_Color_Shaded_Relief/MapServer"
+		 url: "https://maps.indiana.edu/arcgis/rest/services/Basemaps/Dark_Color_Shaded_Relief/MapServer"
 	});
 	var darkColShaRelBasemap = new esri.dijit.Basemap({
 		 layers: [darkColShaRel],
 		 title: "Dark Color Shaded Relief",
 		  id: "bm2",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/Dark-Color-Shaded-Relief_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/Dark-Color-Shaded-Relief_rectangle.png"
 	});
 	basemaps.push(darkColShaRelBasemap);
 	
 	var Light = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Light_Color_Shaded_Relief/MapServer"
+		 url: "https://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Light_Color_Shaded_Relief/MapServer"
 	});
 	var LightBasemap = new esri.dijit.Basemap({
 		 layers: [Light],
 		 title: "Light Color Shaded Relief",
 		
 		  id: "bm11",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/Light-Color-Shaded-Relief_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/Light-Color-Shaded-Relief_rectangle.png"
 	});
 	basemaps.push(LightBasemap);
 	
 	var ImgHyb2005 = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/arcgis/rest/services/Basemaps/Imagery_2005/MapServer"
+		 url: "https://maps.indiana.edu/arcgis/rest/services/Basemaps/Imagery_2005/MapServer"
 	});
 	var ImgHyb2005Basemap = new esri.dijit.Basemap({
 		 layers: [ImgHyb2005],
 		 title: "Imagery Hybrid 2005",
 		 id: "bm3",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/imagery_hybrid_2005_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/imagery_hybrid_2005_rectangle.png"
 	});
 	basemaps.push(ImgHyb2005Basemap);
 	
-	var Imagery = new esri.dijit.BasemapLayer({url:"http://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Imagery_2005/MapServer"});
+	var Imagery = new esri.dijit.BasemapLayer({url:"https://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Imagery_2005/MapServer"});
 	var ImageryHybridBasemap = new esri.dijit.Basemap({
 		 layers: [Imagery],
 		 title: "2005 Imagery",
 		  id: "bm8",
-		 thumbnailUrl: "http://maps.indiana.edu/images/Basemaps/imagery_rectangle.png"
+		 thumbnailUrl: "./images/Basemaps/imagery_rectangle.png"
 	});
 	basemaps.push(ImageryHybridBasemap);
 	
 	var NAIP2010 = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/arcgis/rest/services/Basemaps/NAIP_2010/MapServer"
+		 url: "https://maps.indiana.edu/arcgis/rest/services/Basemaps/NAIP_2010/MapServer"
 	});
 	var NAIP2010Basemap = new esri.dijit.Basemap({
 		 layers: [NAIP2010],
 		 title: "NAIP 2010",
 		  id: "bm4",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/NAIP-2010_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/NAIP-2010_rectangle.png"
 	});
 	basemaps.push(NAIP2010Basemap);
 	
 	
 	var Image2011 = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/ArcGIS/rest/services/Imagery/Best_Available_Imagery_2011/MapServer"
+		 url: "https://maps.indiana.edu/ArcGIS/rest/services/Imagery/Best_Available_Imagery_2011/MapServer"
 	});
 	var ImageryBasemap = new esri.dijit.Basemap({
 		 layers: [Image2011],
 		 title: "2011 Imagery",
 		  id: "bm9",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/imagery_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/imagery_rectangle.png"
 	});
 	basemaps.push(ImageryBasemap);
 	
 	var BestAvailImHybrid = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/arcgis/rest/services/Basemaps/Best_Available_Imagery_Hybrid/MapServer"
+		 url: "https://maps.indiana.edu/arcgis/rest/services/Basemaps/Best_Available_Imagery_Hybrid/MapServer"
 	});
 	var BestAvailImHybridBasemap = new esri.dijit.Basemap({
 		 layers: [BestAvailImHybrid],
 		 title: "Best Availaible Imagery Hybrid",
 		 id: "bm7",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/Best_Available_Imagery_Hybrid_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/Best_Available_Imagery_Hybrid_rectangle.png"
 	});
 	basemaps.push(BestAvailImHybridBasemap);
 	
 	
 	var PLSS = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/arcgis/rest/services/Basemaps/PLSS/MapServer"
+		 url: "https://maps.indiana.edu/arcgis/rest/services/Basemaps/PLSS/MapServer"
 	});
 	var PLSSBasemap = new esri.dijit.Basemap({
 		 layers: [PLSS],
 		 title: "PLSS",
 		  id: "bm5",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/PLSS_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/PLSS_rectangle.png"
 	});
 	basemaps.push(PLSSBasemap);
 	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
 	var Topo = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Topos/MapServer"
+		 url: "https://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Topos/MapServer"
 	});
 	var TopoBasemap = new esri.dijit.Basemap({
 		 layers: [Topo],
 		 title: "USGS Topographic",
 		  id: "bm10",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/Topos_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/Topos_rectangle.png"
 	});
 	basemaps.push(TopoBasemap);
-
-	
-	
 	
 	
 	var basemapGallery = new esri.dijit.BasemapGallery({
@@ -640,22 +598,6 @@ else {
 	console.log(selectedBasemap);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
  // map.center
 
   // @TODO recognize title, snippet, etc. 
@@ -835,7 +777,7 @@ function jQueryReady() {
 //					} else if (addList[i].category === 'Zip') { zoomZip(addList[i].label); 
 //					} else { 
 //						try { 
-//							handleMapServer("http://maps.indiana.edu/ArcGIS/rest/services/"+addList[i].category +'/'+ addList[i].id + "/MapServer");
+//							handleMapServer("https://maps.indiana.edu/ArcGIS/rest/services/"+addList[i].category +'/'+ addList[i].id + "/MapServer");
 //							addList.length = 0; 			    
 //						} catch (err) { logger(err.message); 
 //					} 
@@ -884,11 +826,11 @@ function jQueryReady() {
 //		.data("autocomplete")._renderItem = function (ul, item) { 
 //			var uri; 
 //			if (item.category === "Basemaps") { 
-//				uri = "http://maps.indiana.edu/images/IndianaMap/BasemapLayer.png"; 
+//				uri = "https://maps.indiana.edu/images/IndianaMap/BasemapLayer.png"; 
 //			} else if (item.category === "Zip" || item.category === "Place" || item.category === "County" ){
-//				uri = "http://maps.indiana.edu/images/IndianaMap/PushPin.png"; 
+//				uri = "https://maps.indiana.edu/images/IndianaMap/PushPin.png"; 
 //			} else { 
-//				uri = "http://maps.indiana.edu/images/IndianaMap/OperationalLayer.png"; 
+//				uri = "https://maps.indiana.edu/images/IndianaMap/OperationalLayer.png"; 
 //			}
 //			
 //			return $("<li></li>")
@@ -928,7 +870,7 @@ function jQueryReady() {
 						tmp.push($(this).attr("data-lyr-id")); 
 					}); 
 						 tmp = tmp.reverse(); 
-						 for (i in tmp) { 
+						 for (var i in tmp) { 
 					 var lyr = map.getLayer(tmp[i]); 
 					 if (lyr !== undefined) { 
 							 map.reorderLayer(lyr,i); 
@@ -945,7 +887,7 @@ function jQueryReady() {
 					 else { 
 							 return 0; 
 					 }
-						 }
+						 };
 						 webmap.itemData.operationalLayers.sort(myCompare); 
 						 sync(); 
 				 }
@@ -1346,7 +1288,7 @@ function jQueryReady() {
           	// First query to get display field -PR
 		    		esri.request({
 							url:lyr.url+'/0',
-							content:{f:"pjson"},
+							content:{f:"json"},
 							callbackParamName:"callback",
 							load: function(data) {
 								var query = new esri.tasks.Query(), 			    
@@ -1570,7 +1512,7 @@ function jQueryReady() {
     //if (options.url.match(/^http/i)) { 
 //    	options.url = options.url; 
 //    } else { 
-//			options.url = ('http://maps.indiana.edu/ArcGIS/rest/services/'+options.url+'/MapServer');  // fragment -PR
+//			options.url = ('//maps.indiana.edu/ArcGIS/rest/services/'+options.url+'/MapServer');  // fragment -PR
 //    }
 //
 //		if (options.id) {
@@ -1677,7 +1619,7 @@ function doBuildList(dto,folders) {
 		    children.push(service); 
 			}
 		}
-	  var folder = {"id":key,"name":key,"type":"folder","children":children, "thumb": "http://maps.indiana.edu/images/IndianaMap/Green/"+key+"Small.png"};
+	  var folder = {"id":key,"name":key,"type":"folder","children":children, "thumb": "https://maps.indiana.edu/images/IndianaMap/Green/"+key+"Small.png"};
 	  nwroot["items"].push(folder); 
 	}
   //doAfterBuildList(); 
@@ -1686,7 +1628,7 @@ function doBuildList(dto,folders) {
 function doQueryServer(url,avoid) { 
   esri.request({
 		url:url,
-		content:{f:"pjson"},
+		content:{f:"json"},
 		callbackParamName:"callback",
 		load: function(data) {
 	    $.each(avoid,function(index) { 
@@ -1695,7 +1637,7 @@ function doQueryServer(url,avoid) {
             
 	    for (var folder in data.folders) { 
 				esri.request({url:url+data.folders[folder],
-			  	content:{f:"pjson"},
+			  	content:{f:"json"},
 			    callbackParamName:"callback",
 			    load:function(dto){doBuildList(dto,data.folders);}
 			  });
@@ -1969,10 +1911,10 @@ var font = new esri.symbol.Font("20px", esri.symbol.Font.STYLE_NORMAL, esri.symb
 							
 
 	} else if (pointType === "PUSHPIN") { 
-            symbol = new esri.symbol.PictureMarkerSymbol("http://static.arcgis.com/images/Symbols/Basic/GreenShinyPin.png",32,32); 
+            symbol = new esri.symbol.PictureMarkerSymbol("https://static.arcgis.com/images/Symbols/Basic/GreenShinyPin.png",32,32); 
 			symbol.setOffset(0, 8);
         } else if (pointType === "STICKPIN") { 
-            symbol = new esri.symbol.PictureMarkerSymbol("http://static.arcgis.com/images/Symbols/Basic/GreenStickpin.png",32,32); 
+            symbol = new esri.symbol.PictureMarkerSymbol("https://static.arcgis.com/images/Symbols/Basic/GreenStickpin.png",32,32); 
 			symbol.setOffset(0, 16);
         } else if (pointType === "TEXT") { 
             var userText = {"SingleLine":dojo.byId("userText").value};
@@ -2061,7 +2003,7 @@ function zoomToResult(results) {
 // Query sublayer section
 function queryCounty(q) { 
   try{
-    var url = "http://maps.indiana.edu/ArcGIS/rest/services/Reference/PLSS_Counties/MapServer/0";
+    var url = "https://maps.indiana.edu/ArcGIS/rest/services/Reference/PLSS_Counties/MapServer/0";
     queryTask = new esri.tasks.QueryTask(url); 
     query = new esri.tasks.Query(); 
     query.returnGeometry = false; 
@@ -2076,7 +2018,7 @@ function queryCounty(q) {
 function findCounty(q) { 
   try{
     // Add PLSS-Counties
-    find = new esri.tasks.FindTask("http://maps.indiana.edu/ArcGIS/rest/services/Reference/PLSS_Counties/MapServer");
+    find = new esri.tasks.FindTask("https://maps.indiana.edu/ArcGIS/rest/services/Reference/PLSS_Counties/MapServer");
     params = new esri.tasks.FindParameters();
     params.returnGeometry = true; 
     params.layerIds = [0];
@@ -2089,7 +2031,7 @@ function findCounty(q) {
 function findPlace(q) { 
   try{
     // Add PLSS-Counties
-    find = new esri.tasks.FindTask("http://maps.indiana.edu/ArcGIS/rest/services/Reference/Places_GNIS_USGS/MapServer");
+    find = new esri.tasks.FindTask("https://maps.indiana.edu/ArcGIS/rest/services/Reference/Places_GNIS_USGS/MapServer");
     params = new esri.tasks.FindParameters();
     params.returnGeometry = true; 
     params.layerIds = [0];
@@ -2102,7 +2044,7 @@ function findPlace(q) {
 function zoomCounty(q) { 
   try{
     // Add PLSS-Counties
-    find = new esri.tasks.FindTask("http://maps.indiana.edu/ArcGIS/rest/services/Reference/PLSS_Counties/MapServer");
+    find = new esri.tasks.FindTask("https://maps.indiana.edu/ArcGIS/rest/services/Reference/PLSS_Counties/MapServer");
     params = new esri.tasks.FindParameters();
     params.returnGeometry = true; 
     params.layerIds = [0];
@@ -2115,7 +2057,7 @@ function zoomCounty(q) {
 
 function zoomPlace(q) { 
   try{
-    find = new esri.tasks.FindTask("http://maps.indiana.edu/ArcGIS/rest/services/Reference/Places_GNIS_USGS/MapServer");
+    find = new esri.tasks.FindTask("https://maps.indiana.edu/ArcGIS/rest/services/Reference/Places_GNIS_USGS/MapServer");
     params = new esri.tasks.FindParameters();
     params.returnGeometry = true; 
     params.layerIds = [0];
@@ -2128,7 +2070,7 @@ function zoomPlace(q) {
 
 function zoomZip(q) { 
   try{
-    find = new esri.tasks.FindTask("http://maps.indiana.edu/ArcGIS/rest/services/Reference/Zip_Codes_USCB/MapServer");
+    find = new esri.tasks.FindTask("https://maps.indiana.edu/ArcGIS/rest/services/Reference/Zip_Codes_USCB/MapServer");
     params = new esri.tasks.FindParameters();
     params.returnGeometry = true; 
     params.layerIds = [0];
@@ -2285,10 +2227,10 @@ function initDetailButtons() {
 				.remove()
 				.end()
 				;
-			var queryTask = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/" + ($("#query_activeLayers").val()) + "/MapServer/0");
+			var queryTask = new esri.tasks.QueryTask("https://maps.indiana.edu/arcgis/rest/services/" + ($("#query_activeLayers").val()) + "/MapServer/0");
 			//alert("id" + id);
 			//build query filter
-			//alert("http://maps.indiana.edu/arcgis/rest/services/" + ($("#query_activeLayers").val()) + "/MapServer/0");
+			//alert("https://maps.indiana.edu/arcgis/rest/services/" + ($("#query_activeLayers").val()) + "/MapServer/0");
 			var query = new esri.tasks.Query();
 			var dirty = (new Date()).getTime();
 			query.returnGeometry = true;
@@ -2382,7 +2324,7 @@ function initDetailButtons() {
 			}else{
 				alert('You must have a query to execute.');
 			}
-			//var queryTask = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/" + ($("#query_activeLayers").val()) + "/MapServer/0");
+			//var queryTask = new esri.tasks.QueryTask("https://maps.indiana.edu/arcgis/rest/services/" + ($("#query_activeLayers").val()) + "/MapServer/0");
 			//			//alert("id" + id);
 			//      //build query filter
 			//      var query = new esri.tasks.Query();
@@ -2413,7 +2355,7 @@ function initDetailButtons() {
 				.remove()
 				.end();
 				
-			var queryTask = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/" + ($("#query_activeLayers").val()) + "/MapServer/0");
+			var queryTask = new esri.tasks.QueryTask("https://maps.indiana.edu/arcgis/rest/services/" + ($("#query_activeLayers").val()) + "/MapServer/0");
 			//build query filter
 			var query = new esri.tasks.Query();
 			var dirty = (new Date()).getTime();
@@ -2511,8 +2453,8 @@ function initDetailButtons() {
 			$('#query_field').append($('<option></option>').val('').html('Required'));// add the required option to the Field select box -MD
 			
 			var test = esri.request({
-  			url: "http://maps.indiana.edu/ArcGIS/rest/services/" + ($(this).val()) +"/MapServer/0?f=pjson",
-  			handleAs: "pjson"
+  			url: "https://maps.indiana.edu/ArcGIS/rest/services/" + ($(this).val()) +"/MapServer/0?f=json",
+  			handleAs: "json"
 			});		
 				
 				test.then(
@@ -2968,7 +2910,7 @@ function initNavButtons() {
 				*/
 				
 				window.localStorage.clear(); // Clear the local storage. -MD	
-				document.location.href='/';
+				document.location.href='../IndianaMap'; //Update this value when moving to production. BR (3/11/201)
 				
 			}
 		}
@@ -3008,8 +2950,8 @@ function initNavButtons() {
 			//alert(n);
 			//var base = $( "#basemapGalleryDiv" ).getSelected(); 
 			//console.log(base);
-			//http://dev2.maps.indiana.edu/index.html?x=541383&y=4336026&z=12
-			var urllink = "http://maps.indiana.edu/index.html?x=" + x + "&y=" + y + "&z=" + z + "&sBasemap=" + selectedBasemap.id + "&URLLayers=" + n;
+			////dev2.maps.indiana.edu/index.html?x=541383&y=4336026&z=12
+			var urllink = "https://maps.indiana.edu/index.html?x=" + x + "&y=" + y + "&z=" + z + "&sBasemap=" + selectedBasemap.id + "&URLLayers=" + n;
 			shortenUrl(urllink);
 			$('#detailedURLLink').val(urllink).select();
 			
@@ -3129,8 +3071,8 @@ function initNavButtons() {
 			//var leglyrs = layersin[lyr].replace('_', '/');  
 			if (layersin[lyr].id !== "layer1"){
 				esri.request({
-					url:'http://maps.indiana.edu/arcgis/rest/services/' + layersin[lyr].id + '/mapserver/legend',
-					content:{f:"pjson"},
+					url:'https://maps.indiana.edu/arcgis/rest/services/' + layersin[lyr].id + '/mapserver/legend',
+					content:{f:"json"},
 					callbackParamName:"callback",
 					load: function(data) {
 						if (data.layers) { 
@@ -3459,7 +3401,7 @@ function filterDetail(tt,id) {
     var lyr = map.getLayer(id); 
     esri.request({
 	url:lyr.url+'/0',
-	content:{f:"pjson"},
+	content:{f:"json"},
 	callbackParamName:"callback",
 	load: function(data) {
 	    var query = new esri.tasks.Query(), 
@@ -3615,7 +3557,7 @@ function filterDetail(tt,id) {
 function setupDropZone() {
   if (!window.File || !window.FileReader) {
     /*
-    var msg = "This browser does not support HTML5 APIs required to read files from your desktop." + "<br/><a href='http://caniuse.com/' target='_blank'>When can I use?</a>";
+    var msg = "This browser does not support HTML5 APIs required to read files from your desktop." + "<br/><a href='//caniuse.com/' target='_blank'>When can I use?</a>";
 
     console.error(msg);
     var dialogBox = new dijit.Dialog({
@@ -3820,7 +3762,7 @@ function handleMapServer(url) {
 	}
 
     } else { 
-	// var layer = new esri.layers.ArcGISDynamicMapServiceLayer(http://gis.uits.iu.edu/arcgis/rest/services/ISDP/las_tiles/MapServer, { opacity: 0.75 });
+	// var layer = new esri.layers.ArcGISDynamicMapServiceLayer(url, { opacity: 0.75 });
 	// var layer = new esri.layers.ArcGISTiledMapServiceLayer(url);
 	// map.addLayer(layer);
 	var myreg = /^http:\/\/(.*)\/ArcGIS\/rest\/services\/(.*)\/MapServer/i; 
@@ -3832,7 +3774,7 @@ function handleMapServer(url) {
 	    // We get a url, and make assumption its a mapserver. 
 	    esri.request({
 		url:url+'/0',
-		content:{f:"pjson"},
+		content:{f:"json"},
 		callbackParamName:"callback",
 		load: function(data) {	
 		    var opt = {}; 
@@ -3997,7 +3939,7 @@ function identifyClick(evt) {
 			var ie8var = idArray[j];
 			var ie8var2 = ie8var.toString(); 
 			//alert(idArray);
-			var url = 'http://maps.indiana.edu/arcgis/rest/services/' + ie8var2 + '/MapServer'
+			var url = 'https://maps.indiana.edu/arcgis/rest/services/' + ie8var2 + '/MapServer'
 			//alert(url);
 			find[j] = new esri.tasks.IdentifyTask(url);
 	
@@ -4245,7 +4187,7 @@ function logger(options) {
 }
 
 
-// http://diveintohtml5.org/storage.html
+// //diveintohtml5.org/storage.html
 function supportsLocalStorage() { 
     try { 
 	return ('localStorage' in window && window['localStorage'] !== null); 
@@ -4477,7 +4419,7 @@ function resetMyMap() {
        "baseMap":{
           "title":"Shaded Relief - Basemaps",
           "baseMapLayers": [{ 
-	     "url":"http://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Shaded_Relief/MapServer",
+	     "url":"https://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Shaded_Relief/MapServer",
              "opacity":1,
              "visibility":true,
              "type":"Raster",
@@ -4593,22 +4535,22 @@ function initMenuButtons() {
     	wm = convertWebMap(wm);
  	    dto = { "title": titleText, "map": JSON.stringify(wm), "mapid": guid}; 
       esri.request({
-				"url":"http://bl-geoy-crinoid.ads.iu.edu:8888/",
+				"url":"https://bl-geoy-crinoid.ads.iu.edu:8888/",
 				"content": dto,
 				"load":function(data) { logger(data); }
 			},{usePost:true}); 
 	  
-			$("#exportResultClipBoard").val("http://maps.indiana.edu/?mapid="+guid).focus();
+			$("#exportResultClipBoard").val("https://maps.indiana.edu/?mapid="+guid).focus();
     	$("#exportMenu, #exportResult").toggle(); 
 		} else if (exportchoice === "embeddable") { 
     	wm = convertWebMap(wm);
 	    dto = { "title": titleText, "map": JSON.stringify(wm), "mapid": guid}; 
       esri.request({
-      	"url":"http://bl-geoy-crinoid.ads.iu.edu:8888/",
+      	"url":"https://bl-geoy-crinoid.ads.iu.edu:8888/",
 		    "content": dto,
 		    "load":function(data) { logger(data); }
       },{usePost:true}); 
-      var embedurl = "http://maps.indiana.edu/embeddedViewer.html?mapid="+guid;
+      var embedurl = "https://maps.indiana.edu/embeddedViewer.html?mapid="+guid;
       embedurl += "&extent="+ wm.mapOptions.extent.xmin+","+ wm.mapOptions.extent.ymin 
       embedurl += ","+ wm.mapOptions.extent.xmax +","+ wm.mapOptions.extent.ymax; 
       var iframe = '<iframe frameborder="0" scrolling="no" width="500" height="700" src="'+embedurl+'"></iframe>';
@@ -4617,7 +4559,7 @@ function initMenuButtons() {
     } else if (exportchoice === "kml") { 
 	    /* build a string that is a basic kml file of network links */ 
 			var kml = '<?xml version="1.0" encoding="utf-8"?>'; 
-					kml += '<kml xmlns:atom="http://www.w3.org/2005/Atom" xmlns="http://www.opengis.net/kml/2.2">'
+					kml += '<kml xmlns:atom="https://www.w3.org/2005/Atom" xmlns="https://www.opengis.net/kml/2.2">'
 					kml += '<Document>';
 					kml += '<name>IndianaMap.kml</name>';
 					kml += '<open>1</open>';
@@ -4684,7 +4626,7 @@ function initMenuButtons() {
 
 
   $("#site-menu-layer-gallery").click(function() { window.open("layers.html"); });  
-  $("#site-menu-map-gallery").click(function() { window.open("http://maps.indiana.edu/gallery/index.html"); });  
+  $("#site-menu-map-gallery").click(function() { window.open("https://maps.indiana.edu/gallery/index.html"); });  
 
   $(".esriPrintout")
       .live("click", 
@@ -4787,8 +4729,8 @@ function initMenuButtons() {
                 "dpi": 72
               }
             }; 
-    // var tsk = new esri.tasks.PrintTask("http://bl-geoy-.ads.iu.edu/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task");
-    var tsk = new esri.tasks.PrintTask("http://maps.indiana.edu/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task");
+    // var tsk = new esri.tasks.PrintTask("https://bl-geoy-.ads.iu.edu/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task");
+    var tsk = new esri.tasks.PrintTask("https://maps.indiana.edu/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task");
     var params = new esri.tasks.PrintParameters();
 
     params.map = map; 
@@ -4797,7 +4739,7 @@ function initMenuButtons() {
     $("#printPrepare").toggle();
 		$("#printDijit")
     .empty()
-    .html("<img id='printloading' src='http://maps.indiana.edu/images/IndianaMap/ajax-loader.gif' />")
+    .html("<img id='printloading' src='//maps.indiana.edu/images/IndianaMap/ajax-loader.gif' />")
     .show(); 
 
     tsk.execute(params, 
@@ -5015,8 +4957,8 @@ function initMenuButtons() {
               lgndIds.push(idArray[i]); 
            }
         }
-        // var tsk = new esri.tasks.PrintTask("http://bl-geoy-crinoid.ads.iu.edu/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task");
-        var tsk = new esri.tasks.PrintTask("http://maps.indiana.edu/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task");
+        // var tsk = new esri.tasks.PrintTask("https://bl-geoy-crinoid.ads.iu.edu/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task");
+        var tsk = new esri.tasks.PrintTask("https://maps.indiana.edu/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task");
         var params = new esri.tasks.PrintParameters();
 
         var template = pt[layoutchoice]; 
@@ -5029,7 +4971,7 @@ function initMenuButtons() {
         
 				$("#printPrepare")
            .empty()
-           .html("<img id='printloading' src='http://maps.indiana.edu/images/IndianaMap/ajax-loader.gif'/>")
+           .html("<img id='printloading' src='//maps.indiana.edu/images/IndianaMap/ajax-loader.gif'/>")
            .show(); 
 
         $("#printDownload").live("click", function() { $("#printMenuForm").dialog('close'); });           
@@ -5476,7 +5418,7 @@ function doAfterBuildList() {
 
 
 // Beautiful rfc4122 version 4 compliant solution 
-// http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
+// //stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
 function generateMapKey() { 
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
@@ -5718,113 +5660,113 @@ function createBasemapGallery() {
 	var basemaps = [];
 	
 	var Streets = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/arcgis/rest/services/Basemaps/Streets/MapServer"
+		 url: "https://maps.indiana.edu/arcgis/rest/services/Basemaps/Streets/MapServer"
 	});
 	var StreetsBasemap = new esri.dijit.Basemap({
 		 layers: [Streets],
 		 title: "Streets",
 		  id: "bm1",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/Streets_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/Streets_rectangle.png"
 	});
 	basemaps.push(StreetsBasemap);
 	
 	var ShadedRelief = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/arcgis/rest/services/Basemaps/Shaded_Relief/MapServer"
+		 url: "https://maps.indiana.edu/arcgis/rest/services/Basemaps/Shaded_Relief/MapServer"
 	});
 	var ShadedReliefBasemap = new esri.dijit.Basemap({
 		 layers: [ShadedRelief],
 		 title: "Streets and Shaded Relief",
 		  id: "bm6",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/Shaded_Relief_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/Shaded_Relief_rectangle.png"
 	});
 	basemaps.push(ShadedReliefBasemap);
 	
 	var darkColShaRel = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/arcgis/rest/services/Basemaps/Dark_Color_Shaded_Relief/MapServer"
+		 url: "https://maps.indiana.edu/arcgis/rest/services/Basemaps/Dark_Color_Shaded_Relief/MapServer"
 	});
 	var darkColShaRelBasemap = new esri.dijit.Basemap({
 		 layers: [darkColShaRel],
 		 title: "Dark Color Shaded Relief",
 		  id: "bm2",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/Dark-Color-Shaded-Relief_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/Dark-Color-Shaded-Relief_rectangle.png"
 	});
 	basemaps.push(darkColShaRelBasemap);
 	
 	var Light = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Light_Color_Shaded_Relief/MapServer"
+		 url: "https://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Light_Color_Shaded_Relief/MapServer"
 	});
 	var LightBasemap = new esri.dijit.Basemap({
 		 layers: [Light],
 		 title: "Light Color Shaded Relief",
 		
 		  id: "bm11",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/Light-Color-Shaded-Relief_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/Light-Color-Shaded-Relief_rectangle.png"
 	});
 	basemaps.push(LightBasemap);
 	
 	var ImgHyb2005 = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/arcgis/rest/services/Basemaps/Imagery_2005/MapServer"
+		 url: "https://maps.indiana.edu/arcgis/rest/services/Basemaps/Imagery_2005/MapServer"
 	});
 	var ImgHyb2005Basemap = new esri.dijit.Basemap({
 		 layers: [ImgHyb2005],
 		 title: "Imagery Hybrid 2005",
 		 id: "bm3",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/imagery_hybrid_2005_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/imagery_hybrid_2005_rectangle.png"
 	});
 	basemaps.push(ImgHyb2005Basemap);
 	
-	var Imagery = new esri.dijit.BasemapLayer({url:"http://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Imagery_2005/MapServer"});
+	var Imagery = new esri.dijit.BasemapLayer({url:"https://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Imagery_2005/MapServer"});
 	var ImageryHybridBasemap = new esri.dijit.Basemap({
 		 layers: [Imagery],
 		 title: "2005 Imagery",
 		  id: "bm8",
-		 thumbnailUrl: "http://maps.indiana.edu/images/Basemaps/imagery_rectangle.png"
+		 thumbnailUrl: "./images/Basemaps/imagery_rectangle.png"
 	});
 	basemaps.push(ImageryHybridBasemap);
 	
 	var NAIP2010 = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/arcgis/rest/services/Basemaps/NAIP_2010/MapServer"
+		 url: "https://maps.indiana.edu/arcgis/rest/services/Basemaps/NAIP_2010/MapServer"
 	});
 	var NAIP2010Basemap = new esri.dijit.Basemap({
 		 layers: [NAIP2010],
 		 title: "NAIP 2010",
 		  id: "bm4",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/NAIP-2010_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/NAIP-2010_rectangle.png"
 	});
 	basemaps.push(NAIP2010Basemap);
 	
 	
 	var Image2011 = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/ArcGIS/rest/services/Imagery/Best_Available_Imagery_2011/MapServer"
+		 url: "https://maps.indiana.edu/ArcGIS/rest/services/Imagery/Best_Available_Imagery_2011/MapServer"
 	});
 	var ImageryBasemap = new esri.dijit.Basemap({
 		 layers: [Image2011],
 		 title: "2011 Imagery",
 		  id: "bm9",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/imagery_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/imagery_rectangle.png"
 	});
 	basemaps.push(ImageryBasemap);
 	
 	var BestAvailImHybrid = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/arcgis/rest/services/Basemaps/Best_Available_Imagery_Hybrid/MapServer"
+		 url: "https://maps.indiana.edu/arcgis/rest/services/Basemaps/Best_Available_Imagery_Hybrid/MapServer"
 	});
 	var BestAvailImHybridBasemap = new esri.dijit.Basemap({
 		 layers: [BestAvailImHybrid],
 		 title: "Best Availaible Imagery Hybrid",
 		 id: "bm7",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/Best_Available_Imagery_Hybrid_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/Best_Available_Imagery_Hybrid_rectangle.png"
 	});
 	basemaps.push(BestAvailImHybridBasemap);
 	
 	
 	var PLSS = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/arcgis/rest/services/Basemaps/PLSS/MapServer"
+		 url: "https://maps.indiana.edu/arcgis/rest/services/Basemaps/PLSS/MapServer"
 	});
 	var PLSSBasemap = new esri.dijit.Basemap({
 		 layers: [PLSS],
 		 title: "PLSS",
 		  id: "bm5",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/PLSS_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/PLSS_rectangle.png"
 	});
 	basemaps.push(PLSSBasemap);
 	
@@ -5839,13 +5781,13 @@ function createBasemapGallery() {
 
 
 	var Topo = new esri.dijit.BasemapLayer({
-		 url: "http://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Topos/MapServer"
+		 url: "https://maps.indiana.edu/ArcGIS/rest/services/Basemaps/Topos/MapServer"
 	});
 	var TopoBasemap = new esri.dijit.Basemap({
 		 layers: [Topo],
 		 title: "USGS Topographic",
 		  id: "bm10",
-		 thumbnailUrl:"http://maps.indiana.edu/images/Basemaps/Topos_rectangle.png"
+		 thumbnailUrl:"./images/Basemaps/Topos_rectangle.png"
 	});
 	basemaps.push(TopoBasemap);
 
@@ -5866,7 +5808,7 @@ function cAndZ (Lat,Lon){
 			[location ], outSR, function(projectedPoints) {
 				pt = projectedPoints[0];
 			map.centerAndZoom(pt,6);	
-			var highlightPin = new esri.symbol.PictureMarkerSymbol({"angle":0,"xoffset":0,"yoffset":0,"type":"esriPMS","url":"http://gis.indiana.edu/arcgis_js_v33_api/library/3.3/jsapi/js/esri/dijit/images/flag.png","contentType":"image/png","width":24,"height":24});
+			var highlightPin = new esri.symbol.PictureMarkerSymbol({"angle":0,"xoffset":0,"yoffset":0,"type":"esriPMS","url":"https://gis.indiana.edu/arcgis_js_v33_api/library/3.3/jsapi/js/esri/dijit/images/flag.png","contentType":"image/png","width":24,"height":24});
 			
 			
 			//var markerSymbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255, 0, 0]), 1), new dojo.Color([0, 255, 0, 0.25]));
@@ -5902,12 +5844,12 @@ clearDelay();
 		
         var mi = new esri.layers.MapImage({
           'extent': { 'xmin': 397640.802575523, 'ymin': 4163110.209799754, 'xmax': 702761.452816819, 'ymax': 4640442.442464224, 'spatialReference': { 'wkid': 26916 }},
-        //  'href': 'http://hdds.usgs.gov/hdds2/view/overlay_file/AM01N33_269827W079_1773002011082800000000MS00'
-		    'href': 'http://maps.indiana.edu/house/' + q + '.svg'
+        //  'href': '//hdds.usgs.gov/hdds2/view/overlay_file/AM01N33_269827W079_1773002011082800000000MS00'
+		    'href': '//maps.indiana.edu/house/' + q + '.svg'
         });
         mil.addImage(mi);
 		
-		  var queryTask = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/Government/General_Assembly_118th_House/MapServer/0");
+		  var queryTask = new esri.tasks.QueryTask("https://maps.indiana.edu/arcgis/rest/services/Government/General_Assembly_118th_House/MapServer/0");
 	var dirty = (new Date()).getTime();	  
 	var query = new esri.tasks.Query();
 	query.returnGeometry = true;
@@ -6031,12 +5973,12 @@ function zoomSID(q) {
 		
         var mi = new esri.layers.MapImage({
           'extent': { 'xmin': 397640.802575523, 'ymin': 4163110.209799754, 'xmax': 702761.452816819, 'ymax': 4640442.442464224, 'spatialReference': { 'wkid': 26916 }},
-        //  'href': 'http://hdds.usgs.gov/hdds2/view/overlay_file/AM01N33_269827W079_1773002011082800000000MS00'
-		    'href': 'http://maps.indiana.edu/senate/' + q + '.svg'
+        //  'href': '//hdds.usgs.gov/hdds2/view/overlay_file/AM01N33_269827W079_1773002011082800000000MS00'
+		    'href': '//maps.indiana.edu/senate/' + q + '.svg'
         });
         mil.addImage(mi);
 		
-		  var queryTask = new esri.tasks.QueryTask("http://maps.indiana.edu/ArcGIS/rest/services/Government/General_Assembly_118th_Senate/MapServer/0");
+		  var queryTask = new esri.tasks.QueryTask("https://maps.indiana.edu/ArcGIS/rest/services/Government/General_Assembly_118th_Senate/MapServer/0");
 	var dirty = (new Date()).getTime();	  
 	var query = new esri.tasks.Query();
 	query.returnGeometry = true;
@@ -6156,12 +6098,12 @@ function zoomCID(q) {
 		
         var mi = new esri.layers.MapImage({
           'extent': { 'xmin': 397640.802575523, 'ymin': 4163110.209799754, 'xmax': 702761.452816819, 'ymax': 4640442.442464224, 'spatialReference': { 'wkid': 26916 }},
-        //  'href': 'http://hdds.usgs.gov/hdds2/view/overlay_file/AM01N33_269827W079_1773002011082800000000MS00'
-		    'href': 'http://maps.indiana.edu/congress/' + q + '.svg'
+        //  'href': '//hdds.usgs.gov/hdds2/view/overlay_file/AM01N33_269827W079_1773002011082800000000MS00'
+		    'href': '//maps.indiana.edu/congress/' + q + '.svg'
         });
         mil.addImage(mi);
 		
-		  var queryTask = new esri.tasks.QueryTask("http://maps.indiana.edu/arcgis/rest/services/Government/Congress_113th_Districts/MapServer/0");
+		  var queryTask = new esri.tasks.QueryTask("https://maps.indiana.edu/arcgis/rest/services/Government/Congress_113th_Districts/MapServer/0");
 	var dirty = (new Date()).getTime();	  
 	var query = new esri.tasks.Query();
 	query.returnGeometry = true;
@@ -6292,7 +6234,7 @@ function zoomSIDold(q) {
   
   
   
-  var queryTask = new esri.tasks.QueryTask("http://maps.indiana.edu/ArcGIS/rest/services/Government/General_Assembly_118th_Senate/MapServer/0");
+  var queryTask = new esri.tasks.QueryTask("https://maps.indiana.edu/ArcGIS/rest/services/Government/General_Assembly_118th_Senate/MapServer/0");
 	var dirty = (new Date()).getTime();	  
 	var query = new esri.tasks.Query();
 	query.returnGeometry = true;
@@ -6330,7 +6272,7 @@ function zoomSIDold(q) {
 		});
 		
 		
-			var queryTask2 = new esri.tasks.QueryTask("http://maps.indiana.edu/ArcGIS/rest/services/Government/General_Assembly_118th_Senate/MapServer/0");
+			var queryTask2 = new esri.tasks.QueryTask("https://maps.indiana.edu/ArcGIS/rest/services/Government/General_Assembly_118th_Senate/MapServer/0");
 	var dirty2 = (new Date()).getTime();
 			var query2 = new esri.tasks.Query();
 	query2.returnGeometry = true;
@@ -6403,7 +6345,7 @@ function cAndZ (Lat,Lon){
 			[location ], outSR, function(projectedPoints) {
 				pt = projectedPoints[0];
 			map.centerAndZoom(pt,6);	
-			var highlightPin = new esri.symbol.PictureMarkerSymbol({"angle":0,"xoffset":0,"yoffset":0,"type":"esriPMS","url":"http://gis.indiana.edu/arcgis_js_v33_api/library/3.3/jsapi/js/esri/dijit/images/flag.png","contentType":"image/png","width":24,"height":24});
+			var highlightPin = new esri.symbol.PictureMarkerSymbol({"angle":0,"xoffset":0,"yoffset":0,"type":"esriPMS","url":"https://gis.indiana.edu/arcgis_js_v33_api/library/3.3/jsapi/js/esri/dijit/images/flag.png","contentType":"image/png","width":24,"height":24});
 			
 			
 			//var markerSymbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255, 0, 0]), 1), new dojo.Color([0, 255, 0, 0.25]));
