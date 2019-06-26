@@ -56,15 +56,15 @@
         "color": "#73c476",
         "chartFields": [
           {
-            "name": "EPL_POV",
+            "name": "Theme1",
             "alias": "Percentile Percentage of persons below poverty estimate"
           },
           {
-            "name": "EPL_UNEMP",
+            "name": "Theme2",
             "alias": "Percentile Percentage of civilian (age 16+) unemployed estimate"
           },
           {
-            "name": "EPL_PCI",
+            "name": "Theme3",
             "alias": "Percentile per capita income estimate"
           },
           {
