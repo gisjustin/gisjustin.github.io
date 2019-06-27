@@ -798,9 +798,9 @@ define([
 
 
       dom.byId("selected-item-label").innerHTML = feature.getAttribute("NAME_L");
-      dom.byId("selected-item-score").innerHTML = feature.getAttribute("Theme1").toFixed(3);
+      dom.byId("selected-item-score").innerHTML = feature.getAttribute("Total").toFixed(3);
 
-      dom.byId("selected-item-pop").innerHTML = number.format(+feature.getAttribute("Theme1"));
+      dom.byId("selected-item-pop").innerHTML = number.format(+feature.getAttribute("Total"));
       dom.byId("selected-item-day-pop").innerHTML = number.format(+feature.getAttribute("Theme2"));
       dom.byId("selected-item-hu").innerHTML = number.format(+feature.getAttribute("Theme3"));
       dom.byId("selected-item-hh").innerHTML = number.format(+feature.getAttribute("Theme4"));
@@ -810,7 +810,7 @@ define([
         return (themeName !== "THEMES");
       }).map((themeName) => {
         const theme = this.SVIThemeInfos[themeName];
-        const value = +feature.getAttribute("Theme1");
+        const value = +feature.getAttribute("Total");
         //const flags = +feature.getAttribute("F_" + themeName);
         return {
           y: value,
