@@ -56,19 +56,19 @@
         "color": "#73c476",
         "chartFields": [
           {
-            "name": "EPL_POV",
+            "name": "Theme1",
             "alias": "Percentile Percentage of persons below poverty estimate"
           },
           {
-            "name": "EPL_UNEMP",
+            "name": "Theme2",
             "alias": "Percentile Percentage of civilian (age 16+) unemployed estimate"
           },
           {
-            "name": "EPL_PCI",
+            "name": "Theme3",
             "alias": "Percentile per capita income estimate"
           },
           {
-            "name": "EPL_NOHSDP",
+            "name": "Theme1",
             "alias": "Percentile Percentage of persons with no high school diploma (age 25+) estimate"
           }
         ],
@@ -182,7 +182,7 @@
             "visible": false,
             "theme": "THEME1",
             "portalItem": {
-              "id": "ecb87d1b0e8e41ddb55c153e5c2d6db1"
+              "id": "73c5ab2465b04dcebe87f8fd5d6ad5b1"
             }
           },
           {
