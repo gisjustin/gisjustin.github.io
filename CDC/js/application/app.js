@@ -740,7 +740,7 @@ define([
       const mostVulnerableQuery = overallLayer.createQuery();
       mostVulnerableQuery.geometry = searchArea;
       //mostVulnerableQuery.spatialRelationship = "contains";
-      mostVulnerableQuery.orderByFields = [searchField + " DESC"];
+      mostVulnerableQuery.orderByFields = [searchField];
       mostVulnerableQuery.num = 10;
 
       return overallLayer.queryFeatures(mostVulnerableQuery).then((nearbyFeatureSet) => {
