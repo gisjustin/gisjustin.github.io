@@ -44,7 +44,7 @@
             "alias": "Percentile ranking for Minority Status/Language theme"
           },
           {
-            "name": "RPL_THEME4",
+            "name": "Theme1",
             "alias": "Percentile ranking for Housing/Transportation theme"
           }
         ],
@@ -68,7 +68,7 @@
             "alias": "Percentile per capita income estimate"
           },
           {
-            "name": "EPL_NOHSDP",
+            "name": "Theme1",
             "alias": "Percentile Percentage of persons with no high school diploma (age 25+) estimate"
           }
         ],
@@ -80,15 +80,15 @@
         "color": "#fe9929",
         "chartFields": [
           {
-            "name": "EPL_AGE65",
+            "name": "Theme1",
             "alias": "Percentile percentage of persons aged 65 and older estimate"
           },
           {
-            "name": "EPL_AGE17",
+            "name": "Theme1",
             "alias": "Percentile percentage of persons aged 17 and younger estimate"
           },
           {
-            "name": "EPL_DISABL",
+            "name": "Theme1",
             "alias": "Percentile percentage of civilian noninstitutionalize d population with a disability estimate"
           },
           {
@@ -104,11 +104,11 @@
         "color": "#9e9ac8",
         "chartFields": [
           {
-            "name": "EPL_MINRTY",
+            "name": "Theme1",
             "alias": "Percentile percentage minority (all persons except white, non-Hispanic) estimate"
           },
           {
-            "name": "EPL_LIMENG",
+            "name": "Theme1",
             "alias": "Percentile percentage of persons (age 5+) who speak English 'less than well' estimate"
           }
         ],
@@ -120,23 +120,23 @@
         "color": "#6baed6",
         "chartFields": [
           {
-            "name": "EPL_MUNIT",
+            "name": "Theme1",
             "alias": "Percentile percentage housing in structures with 10 or more units estimate"
           },
           {
-            "name": "EPL_MOBILE",
+            "name": "Theme1",
             "alias": "Percentile percentage mobile homes estimate"
           },
           {
-            "name": "EPL_CROWD",
+            "name": "Theme1",
             "alias": "Percentile percentage households with more people than rooms estimate"
           },
           {
-            "name": "EPL_NOVEH",
+            "name": "Theme1",
             "alias": "Percentile percentage households with no vehicle available estimate"
           },
           {
-            "name": "EPL_GROUPQ",
+            "name": "Theme1",
             "alias": "Percentile percentage of persons in institutionalized group quarters estimate"
           }
         ],
