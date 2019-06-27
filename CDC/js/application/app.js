@@ -499,8 +499,8 @@ define([
             type: "oid"
           },
           {
-            name: "value",
-            alias: "value",
+            name: "rank",
+            alias: "rank",
             type: "integer"
           }
         ],
