@@ -810,7 +810,7 @@ define([
         return (themeName !== "THEMES");
       }).map((themeName) => {
         const theme = this.SVIThemeInfos[themeName];
-        const value = +feature.getAttribute("value");
+        const value = +feature.getAttribute("Total");
         //const flags = +feature.getAttribute("F_" + themeName);
         return {
           y: value,
