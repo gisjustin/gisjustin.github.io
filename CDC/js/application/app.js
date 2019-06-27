@@ -432,7 +432,7 @@ define([
                 this.displayDetails(feature);
                 query(".vulnerable-item").removeClass("is-active");
                 query(lang.replace(".theme-list.is-active .vulnerable-item[data-id='{id}']", {
-                  id: feature.getAttribute("AFFGEOID")
+                  id: feature.getAttribute("NAME_L")
                 })).addClass("is-active");
               }
             });
