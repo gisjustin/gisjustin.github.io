@@ -519,7 +519,7 @@ define([
         top10Layer.source.remove(selectedGraphic);
         selectedGraphic = selectedGraphic.clone();
         selectedGraphic.geometry = feature.geometry.clone();
-        top10Layer.source.add(selectedGraphic);
+        //top10Layer.source.add(selectedGraphic);
 
         /*const addIndex = 0; //top10Layer.source.length;
         top10Layer.source.add(selectedGraphic, addIndex);
