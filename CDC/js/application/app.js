@@ -776,7 +776,7 @@ define([
         });
 
         if(isActive && selectFirst) {
-          vulnerableItemNodes[0].click();
+          //vulnerableItemNodes[0].click();
         }
 
       });
