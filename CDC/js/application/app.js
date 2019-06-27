@@ -485,13 +485,13 @@ define([
       // TOP 10 LAYER //
       const top10Layer = new FeatureLayer({
         title: "Top 10 Most Vulnerable",
-        objectIdField: "OBJECTID",
+        objectIdField: "FID",
         geometryType: "polygon",
         spatialReference: view.spatialReference,
         fields: [
           {
-            name: "OBJECTID",
-            alias: "OBJECTID",
+            name: "FID",
+            alias: "FID",
             type: "oid"
           },
           {
