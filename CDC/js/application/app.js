@@ -499,8 +499,8 @@ define([
             type: "oid"
           },
           {
-            name: "rank",
-            alias: "Rank",
+            name: "Total",
+            alias: "Total",
             type: "integer"
           }
         ],
@@ -537,7 +537,7 @@ define([
 
       };
       this.addHighlightedGraphic = (feature, rank) => {
-        const highlightedGraphic = new Graphic({ geometry: feature.geometry.clone(), attributes: { rank: rank } });
+        const highlightedGraphic = new Graphic({ geometry: feature.geometry.clone(), attributes: { Total: Total } });
         top10Layer.source.add(highlightedGraphic);
       };
       this.clearGraphics = () => {
