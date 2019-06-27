@@ -793,13 +793,13 @@ define([
       //}, "selected-item-node", "only");
 
 
-      dom.byId("selected-item-label").innerHTML = feature.getAttribute("LOCATION");
+      dom.byId("selected-item-label").innerHTML = feature.getAttribute("NAME_L");
       dom.byId("selected-item-score").innerHTML = feature.getAttribute("Theme1").toFixed(3);
 
-      dom.byId("selected-item-pop").innerHTML = number.format(+feature.getAttribute("E_TOTPOP"));
-      dom.byId("selected-item-day-pop").innerHTML = number.format(+feature.getAttribute("E_DAYPOP"));
-      dom.byId("selected-item-hu").innerHTML = number.format(+feature.getAttribute("E_HU"));
-      dom.byId("selected-item-hh").innerHTML = number.format(+feature.getAttribute("E_HH"));
+      dom.byId("selected-item-pop").innerHTML = number.format(+feature.getAttribute("Theme1"));
+      dom.byId("selected-item-day-pop").innerHTML = number.format(+feature.getAttribute("Theme2"));
+      dom.byId("selected-item-hu").innerHTML = number.format(+feature.getAttribute("Theme3"));
+      dom.byId("selected-item-hh").innerHTML = number.format(+feature.getAttribute("Theme4"));
 
 
       const themeData = Object.keys(this.SVIThemeInfos).filter((themeName) => {
