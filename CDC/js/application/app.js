@@ -500,7 +500,7 @@ define([
           },
           {
             name: "rank",
-            alias: "rank",
+            alias: "Rank",
             type: "integer"
           }
         ],
@@ -537,7 +537,7 @@ define([
 
       };
       this.addHighlightedGraphic = (feature, rank) => {
-        const highlightedGraphic = new Graphic({ geometry: feature.geometry.clone(), attributes: { value: value } });
+        const highlightedGraphic = new Graphic({ geometry: feature.geometry.clone(), attributes: { rank: rank } });
         top10Layer.source.add(highlightedGraphic);
       };
       this.clearGraphics = () => {
