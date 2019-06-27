@@ -432,7 +432,7 @@ define([
                 this.displayDetails(feature);
                 query(".vulnerable-item").removeClass("is-active");
                 query(lang.replace(".theme-list.is-active .vulnerable-item[data-id='{id}']", {
-                  id: feature.getAttribute("NAME_L")
+                  id: feature.getAttribute("FID")
                 })).addClass("is-active");
               }
             });
@@ -752,8 +752,8 @@ define([
           const vulnerableItemNode = domConstruct.create("li", {
             className: "vulnerable-item",
             "data-theme": themeName,
-            "data-id": feature.getAttribute("AFFGEOID"),
-            innerHTML: feature.getAttribute("LOCATION"),
+            "data-id": feature.getAttribute("FID"),
+            innerHTML: feature.getAttribute("NAME_L"),
             title: feature.getAttribute(searchField).toFixed(3)
           }, listNode);
 
