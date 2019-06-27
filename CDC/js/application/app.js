@@ -732,7 +732,8 @@ define([
      */
     updateVulnerableList: function (view, overallLayer, searchArea, themeName, selectFirst) {
 
-      const searchField = "RPL_" + themeName;
+     // const searchField = "RPL_" + themeName;
+      const searchField = "Theme1";
       const listNode = themeName + "-list";
       const isActive = domClass.contains(dom.byId(themeName + "-btn"), "is-active");
 
@@ -793,7 +794,7 @@ define([
 
 
       dom.byId("selected-item-label").innerHTML = feature.getAttribute("LOCATION");
-      dom.byId("selected-item-score").innerHTML = feature.getAttribute("RPL_THEMES").toFixed(3);
+      dom.byId("selected-item-score").innerHTML = feature.getAttribute("Theme1").toFixed(3);
 
       dom.byId("selected-item-pop").innerHTML = number.format(+feature.getAttribute("E_TOTPOP"));
       dom.byId("selected-item-day-pop").innerHTML = number.format(+feature.getAttribute("E_DAYPOP"));
@@ -805,7 +806,7 @@ define([
         return (themeName !== "THEMES");
       }).map((themeName) => {
         const theme = this.SVIThemeInfos[themeName];
-        const value = +feature.getAttribute("RPL_" + themeName);
+        const value = +feature.getAttribute("Theme1");
         //const flags = +feature.getAttribute("F_" + themeName);
         return {
           y: value,
