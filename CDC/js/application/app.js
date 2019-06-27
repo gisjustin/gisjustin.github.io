@@ -424,6 +424,9 @@ define([
           // MAP CLICK //
           view.on("click", (evt) => {
             view.hitTest({ x: evt.x, y: evt.y }).then((response) => {
+              console.log(evt.y);
+              console.log(evt.x);
+              
               const visibleLayerResult = response.results.find((result) => {
                 return (result.graphic.layer && result.graphic.layer.visible && !result.graphic.layer.title.startsWith("Top 10"));
               });
