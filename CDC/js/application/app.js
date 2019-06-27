@@ -499,8 +499,8 @@ define([
             type: "oid"
           },
           {
-            name: "Total",
-            alias: "Total",
+            name: "value",
+            alias: "value",
             type: "integer"
           }
         ],
@@ -537,7 +537,7 @@ define([
 
       };
       this.addHighlightedGraphic = (feature, rank) => {
-        const highlightedGraphic = new Graphic({ geometry: feature.geometry.clone(), attributes: { Total: Total } });
+        const highlightedGraphic = new Graphic({ geometry: feature.geometry.clone(), attributes: { value: value } });
         top10Layer.source.add(highlightedGraphic);
       };
       this.clearGraphics = () => {
@@ -737,7 +737,7 @@ define([
     updateVulnerableList: function (view, overallLayer, searchArea, themeName, selectFirst) {
 
      // const searchField = "RPL_" + themeName;
-      const searchField = "Total";
+      const searchField = "value";
       const listNode = themeName + "-list";
       const isActive = domClass.contains(dom.byId(themeName + "-btn"), "is-active");
 
