@@ -2,7 +2,7 @@
   "appid": "",
   "group": "",
   "title": "CDC's Social Vulnerability Index 2014",
-  "webmap": "38bf700f3fa640afb4084594fe601c42",
+  "webmap": "ec5cafc98d7d464cabbef58437d13b25",
   "webscene": "",
   "portalUrl": "https://www.arcgis.com",
   "oauthappid": null,
@@ -32,19 +32,19 @@
         "color": "#fff",
         "chart_fields": [
           {
-            "name": "Theme1",
+            "name": "RPL_THEME1",
             "alias": "Percentile ranking for Socioeconomic theme summary"
           },
           {
-            "name": "Theme2",
+            "name": "RPL_THEME2",
             "alias": "Percentile ranking for Household Composition theme summary"
           },
           {
-            "name": "Theme3",
+            "name": "RPL_THEME3",
             "alias": "Percentile ranking for Minority Status/Language theme"
           },
           {
-            "name": "Theme1",
+            "name": "RPL_THEME4",
             "alias": "Percentile ranking for Housing/Transportation theme"
           }
         ],
@@ -56,19 +56,19 @@
         "color": "#73c476",
         "chartFields": [
           {
-            "name": "Theme1",
+            "name": "EPL_POV",
             "alias": "Percentile Percentage of persons below poverty estimate"
           },
           {
-            "name": "Theme2",
+            "name": "EPL_UNEMP",
             "alias": "Percentile Percentage of civilian (age 16+) unemployed estimate"
           },
           {
-            "name": "Theme3",
+            "name": "EPL_PCI",
             "alias": "Percentile per capita income estimate"
           },
           {
-            "name": "Theme1",
+            "name": "EPL_NOHSDP",
             "alias": "Percentile Percentage of persons with no high school diploma (age 25+) estimate"
           }
         ],
@@ -80,15 +80,15 @@
         "color": "#fe9929",
         "chartFields": [
           {
-            "name": "Theme1",
+            "name": "EPL_AGE65",
             "alias": "Percentile percentage of persons aged 65 and older estimate"
           },
           {
-            "name": "Theme1",
+            "name": "EPL_AGE17",
             "alias": "Percentile percentage of persons aged 17 and younger estimate"
           },
           {
-            "name": "Theme1",
+            "name": "EPL_DISABL",
             "alias": "Percentile percentage of civilian noninstitutionalize d population with a disability estimate"
           },
           {
@@ -104,11 +104,11 @@
         "color": "#9e9ac8",
         "chartFields": [
           {
-            "name": "Theme1",
+            "name": "EPL_MINRTY",
             "alias": "Percentile percentage minority (all persons except white, non-Hispanic) estimate"
           },
           {
-            "name": "Theme1",
+            "name": "EPL_LIMENG",
             "alias": "Percentile percentage of persons (age 5+) who speak English 'less than well' estimate"
           }
         ],
@@ -120,23 +120,23 @@
         "color": "#6baed6",
         "chartFields": [
           {
-            "name": "Theme1",
+            "name": "EPL_MUNIT",
             "alias": "Percentile percentage housing in structures with 10 or more units estimate"
           },
           {
-            "name": "Theme1",
+            "name": "EPL_MOBILE",
             "alias": "Percentile percentage mobile homes estimate"
           },
           {
-            "name": "Theme1",
+            "name": "EPL_CROWD",
             "alias": "Percentile percentage households with more people than rooms estimate"
           },
           {
-            "name": "Theme1",
+            "name": "EPL_NOVEH",
             "alias": "Percentile percentage households with no vehicle available estimate"
           },
           {
-            "name": "Theme1",
+            "name": "EPL_GROUPQ",
             "alias": "Percentile percentage of persons in institutionalized group quarters estimate"
           }
         ],
@@ -155,7 +155,7 @@
             "visible": false,
             "theme": "THEME4",
             "portalItem": {
-              "id": "73c5ab2465b04dcebe87f8fd5d6ad5b1"
+              "id": "73fa54443394494990c1d25e933bede7"
             }
           },
           {
@@ -164,7 +164,7 @@
             "visible": false,
             "theme": "THEME3",
             "portalItem": {
-              "id": "73c5ab2465b04dcebe87f8fd5d6ad5b1"
+              "id": "95a505a9056e4a21902ac8da592d7f04"
             }
           },
           {
@@ -173,7 +173,7 @@
             "visible": false,
             "theme": "THEME2",
             "portalItem": {
-              "id": "73c5ab2465b04dcebe87f8fd5d6ad5b1"
+              "id": "e2bf99511b2f4311868c758cef763d52"
             }
           },
           {
@@ -182,7 +182,7 @@
             "visible": false,
             "theme": "THEME1",
             "portalItem": {
-              "id": "73c5ab2465b04dcebe87f8fd5d6ad5b1"
+              "id": "ecb87d1b0e8e41ddb55c153e5c2d6db1"
             }
           },
           {
@@ -191,12 +191,12 @@
             "visible": true,
             "theme": "THEMES",
             "portalItem": {
-              "id": "73c5ab2465b04dcebe87f8fd5d6ad5b1"
+              "id": "0a3f80ab213642df848c50db5a0594aa"
             }
           }
         ]
       },
-   {
+      {
         "title": "Census Tracts",
         "maxScale": 0,
         "minScale": 600000,
