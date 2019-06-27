@@ -32,19 +32,19 @@
         "color": "#fff",
         "chart_fields": [
           {
-            "name": "RPL_THEME1",
+            "name": "Theme1",
             "alias": "Percentile ranking for Socioeconomic theme summary"
           },
           {
-            "name": "RPL_THEME2",
+            "name": "Theme2",
             "alias": "Percentile ranking for Household Composition theme summary"
           },
           {
-            "name": "RPL_THEME3",
+            "name": "Theme3",
             "alias": "Percentile ranking for Minority Status/Language theme"
           },
           {
-            "name": "RPL_THEME4",
+            "name": "theme1",
             "alias": "Percentile ranking for Housing/Transportation theme"
           }
         ],
@@ -191,7 +191,7 @@
             "visible": true,
             "theme": "THEMES",
             "portalItem": {
-              "id": "0a3f80ab213642df848c50db5a0594aa"
+              "id": "73c5ab2465b04dcebe87f8fd5d6ad5b1"
             }
           }
         ]
