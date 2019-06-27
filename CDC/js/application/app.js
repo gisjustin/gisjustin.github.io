@@ -423,6 +423,7 @@ define([
 
           // MAP CLICK //
           view.on("click", (evt) => {
+            console.log("here");
             view.hitTest({ x: evt.x, y: evt.y }).then((response) => {
               console.log(evt.y);
               console.log(evt.x);
