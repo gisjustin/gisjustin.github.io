@@ -737,7 +737,7 @@ define([
     updateVulnerableList: function (view, overallLayer, searchArea, themeName, selectFirst) {
 
      // const searchField = "RPL_" + themeName;
-      const searchField = "Total";
+      const searchField = "value";
       const listNode = themeName + "-list";
       const isActive = domClass.contains(dom.byId(themeName + "-btn"), "is-active");
 
