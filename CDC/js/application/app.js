@@ -481,7 +481,7 @@ define([
         }
       });
       const top10Renderer = new UniqueValueRenderer({
-        field: "rank",
+        field: "Total",
         //defaultSymbol: selectedSymbol,
         uniqueValueInfos: top10UniqueValueInfos
       });
@@ -499,7 +499,7 @@ define([
             type: "oid"
           },
           {
-            name: "value",
+            name: "Total",
             alias: "value",
             type: "integer"
           }
