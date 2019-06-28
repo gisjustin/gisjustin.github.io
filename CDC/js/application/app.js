@@ -737,7 +737,7 @@ define([
     updateVulnerableList: function (view, overallLayer, searchArea, themeName, selectFirst) {
 
      // const searchField = "RPL_" + themeName;
-      const searchField = "value";
+      const searchField = "Total";
       const listNode = themeName + "-list";
       const isActive = domClass.contains(dom.byId(themeName + "-btn"), "is-active");
 
@@ -810,7 +810,7 @@ define([
         return (themeName !== "THEMES");
       }).map((themeName) => {
         const theme = this.SVIThemeInfos[themeName];
-        const value = +feature.getAttribute("value");
+        const value = +feature.getAttribute("Total");
         //const flags = +feature.getAttribute("F_" + themeName);
         return {
           y: value,
