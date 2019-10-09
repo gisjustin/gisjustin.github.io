@@ -1,0 +1,740 @@
+
+
+<!DOCTYPE HTML><html class="no-js ie9" itemscope="itemscope" itemtype="http://schema.org/WebSite" lang="en-US"><head prefix="og: http://ogp.me/ns# profile: http://ogp.me/ns/profile# article: http://ogp.me/ns/article#"><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Hoosier Resilience Index Part of the Prepared for Environmental Change Grand Challenge: Indiana University</title><meta content="-" name="description"/><meta content="IE=edge" http-equiv="X-UA-Compatible"/><link href="https://assets.iu.edu/favicon.ico" rel="shortcut icon" type="image/x-icon"/><!-- Canonical URL --><link href="https://hri.eri.iu.edu/index.html" itemprop="url" rel="canonical"/><meta content="Hoosier Resilience Index Part of the Prepared for Environmental Change Grand Challenge" property="og:title"/><meta content="-" property="og:description"/><meta content="https://hri.eri.iu.edu/index.html" property="og:url"/><meta content="Hoosier Resilience Index Part of the Prepared for Environmental Change Grand Challenge" property="og:site_name"/><meta content="en_US" property="og:locale"/><meta content="website" property="og:type"/><meta content="Hoosier Resilience Index Part of the Prepared for Environmental Change Grand Challenge" name="twitter:title"/><meta content="-" name="twitter:description"/><meta content="@IndianaUniv" name="twitter:site"/><meta content="@IndianaUniv" name="twitter:creator"/><meta content="summary_large_image" name="twitter:card"/><meta content="Hoosier Resilience Index Part of the Prepared for Environmental Change Grand Challenge" itemprop="name"/><meta content="-" itemprop="description"/>
+            
+               
+            
+                                                       <link rel="stylesheet" type="text/css" href="//fonts.iu.edu/style.css?family=BentonSans:regular,bold|BentonSansCond:regular,bold|GeorgiaPro:regular|BentonSansLight:regular">
+
+<link rel="stylesheet" href="//assets.iu.edu/web/fonts/icon-font.css" media="screen">
+
+<link rel="stylesheet" href="//assets.iu.edu/web/3.2.x/css/iu-framework.min.css?2019-05-02">
+<link rel="stylesheet" href="//assets.iu.edu/brand/3.2.x/brand.css?2019-08-22">
+<link rel="stylesheet" href="//assets.iu.edu/search/3.2.x/search.css?2019-02-06">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <!-- Include Javascript -->
+
+<script src="https://assets.iu.edu/web/3.2.x/js/iu-framework.min.js"></script>
+<script src="https://assets.iu.edu/search/3.2.x/search.min.js"></script>
+<script src="https://hriws.webtest.iu.edu/_assets/js/site.js"></script>
+
+
+
+                                                      <!-- Include Javascript -->
+
+               
+
+ <script>var dojoConfig = { parseOnLoad: true };</script>
+    <script src="https://js.arcgis.com/3.28/"></script>
+
+<script src="//assets.iu.edu/web/1.5/libs/modernizr.min.js"></script>
+               
+                            
+        
+            
+            
+                                                       <link href="https://hriws.webtest.iu.edu/_assets/css/site.css" rel="stylesheet" type="text/css">
+               
+                            
+        <script src="https://assets.iu.edu/web/1.5/libs/modernizr.min.js"></script>
+            
+            
+                                                       <script>// 
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '#', 'auto');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+// </script>
+               
+<script>
+  
+  
+  
+
+  </script>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/3.28/esri/css/esri.css">
+    <style>
+      html, body, #map {
+		  
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+	  
+   
+   .round {
+  position: relative;
+}
+
+.round label {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 28px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 28px;
+}
+
+.round label:after {
+  border: 2px solid #fff;
+  border-top: none;
+  border-right: none;
+  content: "";
+  height: 6px;
+  left: 7px;
+  opacity: 0;
+  position: absolute;
+  top: 8px;
+  transform: rotate(-45deg);
+  width: 12px;
+}
+
+.round input[type="checkbox"] {
+  visibility: hidden;
+}
+
+.round input[type="checkbox"]:checked + label {
+  background-color: #66bb6a;
+  border-color: #66bb6a;
+}
+
+.round input[type="checkbox"]:checked + label:after {
+  opacity: 1;
+}
+
+   
+   
+    </style>
+
+
+
+
+
+   
+    <script>
+      var map;
+      var parcels;
+	  var county;
+      require(["esri/arcgis/utils","esri/dijit/LayerList",  "dojo/on",    "dojo/_base/lang", "dojo/_base/array",      
+      "dojo/ready",     "dojo/on",      "dojo/_base/connect",      "dojo/dom",      "dijit/registry",      "dojo/dom-construct",      "dojo/parser",
+      "dijit/layout/BorderContainer",      "dijit/layout/ContentPane","esri/map",
+      
+      "esri/domUtils",      "esri/dijit/Popup",	  "dojo/_base/array",	  "esri/dijit/Legend",
+         "esri/layers/FeatureLayer", 
+        "esri/layers/ArcGISDynamicMapServiceLayer", "esri/tasks/QueryTask", "esri/tasks/query",
+        "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol",
+        "esri/graphic", "esri/dijit/PopupTemplate",
+        "esri/urlUtils", "esri/graphicsUtils",  "esri/layers/GraphicsLayer",
+        "esri/Color", 
+         "dojo/query", "dojo/parser", "dojo/dom-construct", "dijit/form/CheckBox", "esri/geometry/Extent",
+
+        "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dojo/domReady!"
+      ], function(
+	  arcgisUtils,
+            LayerList,
+            on,
+            lang,
+            array,
+	  ready,      on,      connect,      dom,      registry,      domConstruct,      parser,      BorderContainer,      ContentPane,      Map,     
+      domUtils,      Popup,	  arrayUtils,	  Legend,
+         FeatureLayer, 
+        ArcGISDynamicMapServiceLayer, QueryTask, Query,
+        SimpleFillSymbol, SimpleLineSymbol,
+        Graphic, PopupTemplate,
+        urlUtils, graphicsUtils, GraphicsLayer,
+        Color, 
+        query, parser, domConstruct, CheckBox, Extent
+      ){
+        var map = new Map("map", {
+       
+		extent: new Extent({xmin:235308,ymin:4180000,xmax:980000,ymax:4583385,spatialReference:{wkid:26916}}),
+		logo:false
+        //zoom: 10
+        
+      });
+      //Add a home button
+     map.infoWindow.set("popupWindow", false);
+      //Add Feature Layers
+
+      var drops = new FeatureLayer(
+          "https://services.arcgis.com/tKsJAIiLjd90D5q2/arcgis/rest/services/hri2var/FeatureServer/0", {
+          mode: FeatureLayer.MODE_ONDEMAND,
+          outFields: ["*"]
+      });
+      var heat = new FeatureLayer(
+          "https://services.arcgis.com/tKsJAIiLjd90D5q2/arcgis/rest/services/hri2var/FeatureServer/1", {
+          mode: FeatureLayer.MODE_ONDEMAND,
+          outFields: ["*"]
+      });
+      var decadal = new FeatureLayer(
+          "https://services.arcgis.com/tKsJAIiLjd90D5q2/ArcGIS/rest/services/HRI_Landing_Page_Counties_with_Decadal_Precipitation/FeatureServer/0", {
+          mode: FeatureLayer.MODE_ONDEMAND,
+         
+          outFields: ["*"]
+      });
+	  
+	  
+	 
+		  
+		  var lidar = new ArcGISDynamicMapServiceLayer("https://maps.indiana.edu/arcgis/rest/services/Reference/LiDAR_Color_Hillshade/MapServer", {
+    "showAttribution": false,
+    "opacity": 0.5
+  });
+	    map.addLayer(lidar);
+ var resultsLayer = new GraphicsLayer();
+            //add the legend
+      map.on("layers-add-result", function (evt) {
+          var layerInfo = array.map(evt.layers, function (layer,
+          index) {
+              return {
+                  layer: layer.layer,
+                  title: layer.layer.name
+              };
+          });
+          if (layerInfo.length > 0) {
+              
+          }
+                //add check boxes
+        //  array.forEach(layerInfo,
+//
+//          function (layer) {
+//              var layerName = layer.title;
+//              if(layerName != 'Cities'){
+//              var checkBox = new CheckBox({
+//                  name: "checkBox" + layer.layer.id,
+//				  id: "cb"+ layer.layer.id,
+//                  value: layer.layer.id,
+//                  checked: layer.layer.visible,
+//                  onChange: function (evt) {
+//                      var clayer = map.getLayer(this.value);
+//                      clayer.setVisibility(!clayer.visible);
+//                      this.checked = clayer.visible;
+//                  }
+//              });
+//                    //add the check box and label to the TOC
+//              domConstruct.place(checkBox.domNode, "layers",
+//                  "after");
+//              var checkLabel = domConstruct.create('label', {
+//                  id: "lb"+layer.layer.id,
+//				  'for': checkBox.name,
+//                  innerHTML: layerName
+//              }, checkBox.domNode, "after");
+//              domConstruct.place("<br />", checkLabel,
+//                  "after");
+//           }
+//          });
+      });
+      map.addLayers([decadal, heat, drops]);
+      //Create the Basemap
+
+
+
+$.getJSON('https:/' + '/' + 'services.arcgis.com/tKsJAIiLjd90D5q2/ArcGIS/rest/services/Indiana_Places_HRI/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=NAME&returnHiddenFields=false&returnGeometry=false&returnCentroid=false&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnQueryGeometry=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=pjson', function(data) {
+	  
+
+	//  var data = JQUERY4U.DASHBOARD.data['widgets'];
+//var newdata = $.parseJSON(data.features);
+   //var newdata = data.features['attributes'];//data is the JSON string
+   //y1=data.geometries[0]['y'];
+   console.log(data);
+   console.log(data.features);
+   
+   var jsonObj = [];
+for(var i=0; i<data.features.length; i++){
+    jsonObj.push(data.features[i].attributes['NAME']);
+	
+	  function selectParcel(event, ui) {
+          if (1==1) {
+            var query = new Query();
+            query.where = "NAME = '" + ui.item.label + "'";
+            var deferred = parcels.selectFeatures(query, FeatureLayer.SELECTION_NEW, function (selection) {
+              var center = graphicsUtils.graphicsExtent(selection).getCenter();
+              //var extHandler = map.on("extent-change", function () {
+                //extHandler.remove();
+                //zoom to the center then display the popup 
+                
+              //});
+			  map.infoWindow.setFeatures(selection);
+                map.infoWindow.show(center);
+             // map.centerAt(center);
+            });
+          }
+        }
+	
+	
+	 $( "#tags" ).autocomplete({
+      source: jsonObj,
+	  select: selectParcel
+    });
+	
+	
+}
+
+
+
+   
+});     
+   $.getJSON('https:/' + '/' + 'services.arcgis.com/tKsJAIiLjd90D5q2/arcgis/rest/services/hri_socio_dummy/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=NAME_U&returnGeometry=false&returnCentroid=false&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnQueryGeometry=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=pjson&token=', function(data) {
+	  
+	//  var data = JQUERY4U.DASHBOARD.data['widgets'];
+//var newdata = $.parseJSON(data.features);
+   //var newdata = data.features['attributes'];//data is the JSON string
+   //y1=data.geometries[0]['y'];
+   console.log(data);
+   console.log(data.features);     
+   var jsonObj2 = [];
+for(var i=0; i<data.features.length; i++){
+    jsonObj2.push(data.features[i].attributes['NAME_U']);
+	
+	
+	 $( "#tags2" ).autocomplete({
+      source: jsonObj2,
+	  
+	  select: function( event , ui ) {
+		  console.log(ui.item.label)
+    selectCounty(ui.item.label);
+    
+}
+    });
+}
+});
+
+		  
+		  parcels = new FeatureLayer("https://services.arcgis.com/tKsJAIiLjd90D5q2/ArcGIS/rest/services/Indiana_Places_HRI/FeatureServer/0", {
+          mode: FeatureLayer.MODE_SNAPSHOT,
+          outFields: ["NAME_U"],
+          //infoTemplate: popupTemplate,
+          
+        });
+		counties = new FeatureLayer("https://services.arcgis.com/tKsJAIiLjd90D5q2/ArcGIS/rest/services/HRI_Landing_Page_Counties_with_Decadal_Precipitation/FeatureServer/0/", {
+          mode: FeatureLayer.MODE_SNAPSHOT,
+          outFields: ["NAME_U","NAME_L","Total_Hist_Rd","HDUN_RCP45","FD_Area_Rd","FDCN_ac_Dv_Rd","HD_Hist","Pct_FDCN_Rd","Pct_FDCNWk_Rd","Pct_FDCN_P_Rd","Pct_FDCN_W_Rd","FDCN_ac_Wt_Rd","FDCN_ac_Wk_Rd","Pct_FDCNWk_Rd","FDCN_ac_Pr_Rd","Pct_FDCN_P_Rd","Pct_FDCN_D_Rd","Hist_Deca_Rd","Total_RCP45_Rd","RCP45_Deca_Rd","Total_RCP85_Rd","RCP85_Deca_Rd"],
+          //infoTemplate: popupTemplate,
+          
+		  
+	
+        });
+
+connect.connect(map, "onClick", function(e) {
+	queryTask = new QueryTask("https://services.arcgis.com/tKsJAIiLjd90D5q2/ArcGIS/rest/services/HRI_Landing_Page_Counties_with_Decadal_Precipitation/FeatureServer/0");
+
+          var query = new Query();
+		  query.where = "1=1";
+          query.geometry = e.mapPoint;
+		  query.returnGeometry = true;
+  //query.outFields = ["NAME_U", "NAME_L"];
+  query.outFields = ["*"];
+         // var deferred = counties.selectFeatures(query, FeatureLayer.SELECTION_NEW, function (selection) {
+           queryTask.execute(query,displayResults);
+		    //update the url param if a parcel was located
+			//displayResults(selection)
+            //if (selection.length > 0) {
+//				console.log(selection);
+//              var countyid = selection[0].attributes["NAME_U"];
+//              //Refresh the URL with the currently selected parcel
+//              if (typeof history.pushState !== "undefined") {
+//                window.history.pushState(null, null, "?countyid=" + selection[0].attributes.NAME_U);
+//				createTable(selection);
+//              }
+           // }
+          //});
+         // map.infoWindow.setFeatures([deferred]);
+         // map.infoWindow.show(e.mapPoint);
+        });
+		
+		$( "#layerList_checkbox_0" ).click(function() {
+  
+  $( "#layerList_checkbox_1").prop('checked', false);
+   map.removeLayer(decadal);
+    map.removeLayer(heat);
+  // map.addLayer(drops);
+  
+});
+
+function displayResults(featureSet) {
+         map.graphics.clear();
+          
+          var symbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255,255,255,0.35]), 1),new dojo.Color([125,125,125,0.35]));
+          
+         // map.graphics.clear();
+console.log("here");
+console.log(featureSet);
+  //Performance enhancer - assign featureSet array to a single variable.
+  var resultFeatures = featureSet.features;
+
+  //Loop through each feature returned
+  for (var i=0, il=resultFeatures.length; i<il; i++) {
+    //Get the current feature from the featureSet.
+    //Feature is a graphic
+    var graphic = resultFeatures[i];
+    graphic.setSymbol(symbol);
+
+    //Set the infoTemplate.
+   // graphic.setInfoTemplate(infoTemplate);
+
+    //Add graphic to the map graphics layer.
+    map.graphics.add(graphic);
+	createTable(featureSet.features);
+  }
+        }
+function createTable(response){
+	console.log(response);
+	$('#Hist_Deca').html(response[0].attributes.Hist_Deca);
+	$('#countylabel').html(response[0].attributes.NAME_L + " County, IN");
+	$('#2name').html(response[0].attributes.NAME_L + " County, IN");
+	
+	//var c = $('#table1 #1capt').text();
+		//	c.text="replaced text with" + feature.attributes.NAME_L; 
+			//$('#1capt').html(feature.attributes.NAME_U + " County Details");
+			$('#che').html(response[0].attributes.Total_Hist_Rd);
+			$('#hhdn').html(response[0].attributes.HDUN_RCP45);
+			$('#afarea').html(response[0].attributes.FD_Area_Rd);
+			
+			
+			$('#afdv').html(response[0].attributes.FDCN_ac_Dv_Rd);
+			$('#tdhhe').html(response[0].attributes.HD_Hist);
+			$('#Pct_FDCN_D').html(response[0].attributes.Pct_FDCN_Rd);
+			$('#Pct_FDCN_W').html(response[0].attributes.Pct_FDCN_W_Rd);
+			$('#Pct_FDCNWk').html(response[0].attributes.Pct_FDCNWk_Rd);
+			$('#Pct_FDCN_P').html(response[0].attributes.Pct_FDCN_P_Rd);
+			$('#pafwt').html(response[0].attributes.Pct_FDCN_W_Rd + "%");
+			$('#afwt').html(response[0].attributes.FDCN_ac_Wt_Rd);
+			$('#afwk').html(response[0].attributes.FDCN_ac_Wk_Rd);
+			$('#pafwk').html(response[0].attributes.Pct_FDCNWk_Rd + "%");
+			$('#afpr').html(response[0].attributes.FDCN_ac_Pr_Rd);
+			$('#pafpr').html(response[0].attributes.Pct_FDCN_P_Rd + "%");
+$('#pafdv').html(response[0].attributes.Pct_FDCN_D_Rd + "%");
+			$('#cpd').html(response[0].attributes.Hist_Deca_Rd);
+			$('#mhe').html(response[0].attributes.Total_RCP45_Rd);
+			$('#mpd').html(response[0].attributes.RCP45_Deca_Rd);
+			$('#hhe').html(response[0].attributes.Total_RCP85_Rd);
+			$('#hpd').html(response[0].attributes.RCP85_Deca_Rd);
+}
+  });
+
+	  </script>
+    
+    <style> 
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+</style> 
+
+               
+                            
+        </head><body class="mahogany no-banner has-page-title landmarks" id="home">
+            
+            
+                                                       <!--<noscript><iframe height="0" src="https://www.googletagmanager.com/ns.html?id=#" width="0"></iframe></noscript>
+<script>// <![CDATA[
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','#');
+// ]]></script>-->
+               
+                            
+        <header id="header">
+            
+            
+                                                       <div id="skipnav">
+<ul>
+<li><a href="#content">Skip to Content</a></li>
+<li><a href="#nav-main">Skip to Main Navigation</a></li>
+<li><a href="#search">Skip to Search</a></li>
+</ul>
+<hr>
+</div>
+               
+                            
+        
+            
+            
+                                  <div id="branding-bar" class="iu" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity">
+	<div class="row pad">
+			<img src="//assets.iu.edu/brand/3.2.x/trident-large.png" alt="" />
+			<p id="iu-campus">
+				<a href="https://www.iu.edu" title="Indiana University">
+					<span id="campus-name" class="show-on-desktop" itemprop="name">Indiana University</span>
+					<span class="show-on-tablet" itemprop="name">Indiana University</span>
+					<span class="show-on-mobile" itemprop="name">IU</span>
+				</a>
+			</p>
+	</div>
+</div>
+       
+                       
+        
+            
+            
+                                  <div id="toggles">
+    <div class="row pad">
+        <a class="button search-toggle" href="/search" aria-controls="search" aria-expanded="false"><img src="//assets.iu.edu/search/3.2.x/search.png" alt="Open Search" /></a>
+    </div>
+</div>
+
+<div id="search" class="search-box" role="search" aria-hidden="true"></div>
+       
+                       
+        
+                                
+          
+    
+                    
+        
+    
+        <div id="offCanvas" class="hide-for-large" role="navigation" aria-label="Mobile">
+<button class="menu-toggle button hide-for-large" data-toggle="iu-menu">Menu</button><div id="iu-menu" class="off-canvas position-right off-canvas-items" data-off-canvas="" data-position="right">
+<div class="mobile off-canvas-list" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement"><ul>
+<li class="has-children">
+<a href="https://hriws.webtest.iu.edu/climate-vulnerability/index.html" itemprop="url"><span itemprop="name">Climate Vulnerability</span></a><ul class="children"><li><a href="https://hriws.webtest.iu.edu/climate-vulnerability/vulnerability-assessment.html" itemprop="url"><span itemprop="name">Vulnerability Assessment</span></a></li></ul>
+</li>
+<li class="has-children">
+<a href="https://hriws.webtest.iu.edu/community-readiness/index.html" itemprop="url"><span itemprop="name">Community Readiness</span></a><ul class="children">
+<li><a href="https://hriws.webtest.iu.edu/community-readiness/_readiness-scores/index.html" itemprop="url"><span itemprop="name">Events - Manual</span></a></li>
+<li><a href="https://hriws.webtest.iu.edu/community-readiness/_understand-readiness/index.html" itemprop="url"><span itemprop="name">News - Manual</span></a></li>
+</ul>
+</li>
+<li class="has-children">
+<a href="https://hriws.webtest.iu.edu/about/index.html" itemprop="url"><span itemprop="name">About the Index</span></a><ul class="children">
+<li><a href="https://hriws.webtest.iu.edu/about/methodology.html" itemprop="url"><span itemprop="name">Methodology</span></a></li>
+<li><a href="https://hriws.webtest.iu.edu/about/overview.html" itemprop="url"><span itemprop="name">Overview</span></a></li>
+</ul>
+</li>
+</ul></div>
+<div class="mobile off-canvas-list" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement"><ul><li><a href="https://hriws.webtest.iu.edu/sample-secondary/index.html" itemprop="url"><span itemprop="name">Sample Secondary Navigation</span></a></li></ul></div>
+</div>
+</div>
+    
+                    
+        
+        
+                                               <div class="site-header" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity">
+        <div class="row pad">
+            <h1><a class="title" href="https://hriws.webtest.iu.edu/index.html" itemprop="department">Hoosier Resilience <span>Index</span><br><span><div class="sub-site">Part of the Prepared for Environmental Change Grand Challenge</div></span></a></h1>
+        </div>
+    </div>
+               
+                    
+    
+                                
+          
+    
+                    
+        
+    
+        <nav aria-label="Main" id="nav-main" role="navigation" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement" class="main show-for-large dropdown"><ul class="row pad"><li class="show-on-sticky home"><a href="/" aria-label="Home">Home</a></li><li class="first"><a href="https://hriws.webtest.iu.edu/climate-vulnerability/index.html" itemprop="url"><span itemprop="name">Climate Vulnerability</span></a><ul class="children"><li><a href="https://hriws.webtest.iu.edu/climate-vulnerability/vulnerability-assessment.html" itemprop="url"><span itemprop="name">Vulnerability Assessment</span></a></li></ul></li><li><a href="https://hriws.webtest.iu.edu/community-readiness/index.html" itemprop="url"><span itemprop="name">Community Readiness</span></a><ul class="children"><li><a href="https://hriws.webtest.iu.edu/community-readiness/_readiness-scores/index.html" itemprop="url"><span itemprop="name">Events - Manual</span></a></li><li><a href="https://hriws.webtest.iu.edu/community-readiness/_understand-readiness/index.html" itemprop="url"><span itemprop="name">News - Manual</span></a></li></ul></li><li class="last"><a href="https://hriws.webtest.iu.edu/about/index.html" itemprop="url"><span itemprop="name">About the Index</span></a><ul class="children"><li><a href="https://hriws.webtest.iu.edu/about/methodology.html" itemprop="url"><span itemprop="name">Methodology</span></a></li><li><a href="https://hriws.webtest.iu.edu/about/overview.html" itemprop="url"><span itemprop="name">Overview</span></a></li></ul></li><li class="show-on-sticky search search-img"><a class="search-toggle" href="/search"><img src="https://assets.iu.edu/web/3.x/css/img/search.png" alt="Search"/></a></li></ul></nav><div class="nav-secondary show-for-large" role="navigation" aria-label="Secondary"><div class="row pad"><ul class="inline separators" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement"><li class="last"><a href="https://hriws.webtest.iu.edu/sample-secondary/index.html" itemprop="url"><span itemprop="name">Sample Secondary Navigation</span></a></li></ul></div></div>
+    
+                    
+    
+                        
+                
+        
+            
+    
+            </header><main class="wide no-section-nav"><div class="content-top"></div><div id="main-content"><div class="breakout collapsed bg-none section" id="content"><div class="row"><div class="layout"><h2 class="section-title">Main Header</h2><div class="text"><p>One sentence on the HRI. Explanation of map at left and how to use it.&#160;</p><p>&#160;</p></div><div class="float-left one-third"><div id="layerListPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'left'" class="dijitContentPane" lang="en-US" widgetid="layerListPane">
+            <div class="esriLayerList" role="presentation" id="layerList" widgetid="layerList" style="display: block;">
+  <div role="menu" data-dojo-attach-point="_container" class="esriContainer">
+    <ul role="group" class="esriList" data-dojo-attach-point="_layersNode"><li><a href="/"><span class="tab">Extreme Precipitation</span></a></li><li role="menuitem" class="esriLayer"><div class="esriTitle"><div class="esriTitleContainer"><input type="checkbox" id="layerList_checkbox_6" data-layer-index="6" class="esriCheckbox" style="-webkit-appearance: radio; --moz-appearance:radio; margin-left: 50px;"><div tabindex="0" role="button" data-layer-index="6" title="Expand" class="esriToggleButton esri-icon-right"></div><label class="esriLabel" for="layerList_checkbox_6">Extreme Precipitation Events, 2050 High Emissions</label><div class="esriClear"></div></div></div><div class="esriTabContainer"><ul role="tablist" class="esriTabMenu esriClearFix"><li><a href="/"><span class="tab">Extreme Precipitation</span></a></li></ul><div class="esriTabs"></div></div></li><li role="menuitem" class="esriLayer"><div class="esriTitle"><div class="esriTitleContainer"><input type="checkbox" id="layerList_checkbox_5" data-layer-index="5" class="esriCheckbox" style="-webkit-appearance: radio; --moz-appearance:radio; margin-left: 50px;"><div tabindex="0" role="button" data-layer-index="5" title="Expand" class="esriToggleButton esri-icon-right"></div><label class="esriLabel" for="layerList_checkbox_5">Extreme Precipitation Events, 2050 Medium Emissons</label><div class="esriClear"></div></div></div><div class="esriTabContainer"><ul role="tablist" class="esriTabMenu esriClearFix"><li><a href="/"><span class="tab">Extreme Precipitation</span></a></li></ul><div class="esriTabs"></div></div></li><li role="menuitem" class="esriLayer esriListVisible"><div class="esriTitle"><div class="esriTitleContainer"><input type="checkbox" id="layerList_checkbox_4" data-layer-index="4" class="esriCheckbox round" style="-webkit-appearance: radio; --moz-appearance:radio; margin-left: 50px;"><div tabindex="0" role="button" data-layer-index="4" title="Expand" class="esriToggleButton esri-icon-right"></div><label class="esriLabel" for="layerList_checkbox_4">Extreme Precipitation Events, 1984-2013 Historic</label><div class="esriClear"></div></div></div><div class="esriTabContainer"><ul role="tablist" class="esriTabMenu esriClearFix"><li><a href="/"><span class="tab">Extreme Precipitation</span></a></li></ul><div class="esriTabs"></div></div><li><a href="/"><span class="tab">Extreme Heat</span></a></li></li><li role="menuitem" class="esriLayer"><div class="esriTitle"><div class="esriTitleContainer"><input type="checkbox" id="layerList_checkbox_3" data-layer-index="3" class="esriCheckbox" style="-webkit-appearance: radio; --moz-appearance:radio; margin-left: 50px;"><div tabindex="0" role="button" data-layer-index="3" title="Expand" class="esriToggleButton esri-icon-right"></div><label class="esriLabel" for="layerList_checkbox_3">Extreme Heat Events, 2050 High Emissions</label><div class="esriClear"></div></div></div><div class="esriTabContainer"><ul role="tablist" class="esriTabMenu esriClearFix"><li><a href="/"><span class="tab">Extreme Precipitation</span></a></li></ul><div class="esriTabs"></div></div></li><li role="menuitem" class="esriLayer"><div class="esriTitle"><div class="esriTitleContainer"><input type="checkbox" id="layerList_checkbox_2" data-layer-index="2" class="esriCheckbox circle" style="-webkit-appearance: radio; --moz-appearance:radio; margin-left: 50px;"><div tabindex="0" role="button" data-layer-index="2" title="Expand" class="esriToggleButton esri-icon-right"></div><a href="https://google.com" target="_blank"><label class="esriLabel" for="layerList_checkbox_2">Extreme Heat Events, 2050 Medium Emissions</label></a><div class="esriClear"></div></div></div><div class="esriTabContainer"><ul role="tablist" class="esriTabMenu esriClearFix"><li><a href="/"><span class="tab">Extreme Precipitation</span></a></li></ul><div class="esriTabs"></div></div></li><li role="menuitem" class="esriLayer esriListVisible"><div class="esriTitle"><div class="esriTitleContainer"><input type="checkbox" id="layerList_checkbox_1" data-layer-index="1" class="esriCheckbox" style="-webkit-appearance: radio; --moz-appearance:radio; margin-left: 50px;"><div tabindex="0" role="button" data-layer-index="1" title="Expand" class="esriToggleButton esri-icon-right"></div><label class="esriLabel" for="layerList_checkbox_1">Extreme Heat Events, 1984-2013 Historic</label><div class="esriClear"></div></div></div><div class="esriTabContainer"><ul role="tablist" class="esriTabMenu esriClearFix"><li><a href="/"><span class="tab">Extreme Precipitation</span></a></li></ul><div class="esriTabs"></div></div></li><li role="menuitem" class="esriLayer"><div class="esriTitle"><div class="esriTitleContainer"><input type="checkbox" id="layerList_checkbox_0" data-layer-index="0" class="esriCheckbox"><div tabindex="0" role="button" data-layer-index="0" title="Expand" class="esriToggleButton esri-icon-right"></div><label class="esriLabel" for="layerList_checkbox_0">Developed Land Acreage in Floodplains, 2010 Historic</label><div class="esriClear"></div></div></div><div class="esriTabContainer"><ul role="tablist" class="esriTabMenu esriClearFix"><li><a href="/"><span class="tab">Extreme Precipitation</span></a></li></ul><div class="esriTabs"></div></div></li></ul>
+    <div class="esriNoLayersText" data-dojo-attach-point="_noLayersNode"></div>
+  </div>
+</div>
+        </div></div>
+        
+        
+        
+        
+        
+        <div class="float-center one-third"> <div id="map" style="height:568px" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'"></div><div id="leftPane" style="display:none; data-dojo-type="dijit/layout/ContentPane" 
+        data-dojo-props="region:'center'"></div><div class="float-right one-third" id="featureCount" style="display:none; style="margin-bottom:5px;">Click on a County to see HRI scoring.</div>
+        <div id="pager" style="display:none;"> 
+          <a href='javascript:void(0);' id ="previous" class='nav' style="text-decoration: none;">
+              &lt; Prev
+          </a> &nbsp; 
+          <a href='javascript:void(0);' id="next" class='nav'  style="text-decoration: none;">
+              Next &gt;
+          </a>
+        </div></div><div class="float-right one-third"><figure class="media image" itemscope="itemscope" itemtype="http://schema.org/ImageObject"><img alt="" src="http://www.indiana.edu/~eridata/legend.png"/></figure></div><!-- /.layout --><div class="layout">
+                        
+                        
+                        
+        
+                
+                                        
+                
+        
+        
+            
+           
+            
+        <table class="mobile-labels"><caption>Climate Exposure<p id="2name">{NAME_U} County</p></caption><thead><tr><th scope="col">Timeframe</th><th scope="col">Number of Extreme Heat Events per Year</th><th scope="col">Number of Extreme Precipitation Events per Decade</th></tr></thead><tbody><tr><td data-label="Timeframe"><b>Current</b></td><td data-label="Number of Extreme Heat Events per Year" id="che">{Total_Hist_Rd}</td><td data-label="Number of Extreme Precipitation Events per Decade" id="cpd">{Hist_Deca_Rd}</td></tr><tr><td data-label="Timeframe"><b>2050 - Medium Emissions Scenario</b></td><td data-label="Number of Extreme Heat Events per Year" id="mhe">{Total_RCP4_Rd}</td><td data-label="Number of Extreme Precipitation Events per Decade" id="mpd">{RCP45_Deca_Rd}</td></tr><tr><td data-label="Timeframe"><b>2050 - High Emissions Scenario</b></td><td data-label="Number of Extreme Heat Events per Year" id="hhe">{Total_RCP8_Rd}</td><td data-label="Number of Extreme Precipitation Events per Decade" id="hpd">{RCP85_Deca_Rd}</td></tr></tbody></table>
+        
+        
+                        
+                
+            
+                                
+                                
+            
+                
+                
+                                
+                
+                
+                
+                                        
+                
+        
+        
+            
+        <table class="mobile-labels"><caption>Land Use in the Floodplain (2010)<p id="countylabel">{NAME_U} County</p></caption><thead><tr><th scope="col">Land Use Type</th><th scope="col">Acres in the Floodplain</th><th scope="col">Percent of Total Acres in the Floodplain</th></tr></thead><tbody><tr><td data-label="Land Use Type"><b>Developed</b></td><td data-label="Acres in the Floodplain" id="afdv">{FDCN_ac_Dv_Rd}</td><td data-label="Percent of Total Acres in the Floodplain" id="pafdv">{Pct_FDCN_D_Rd}%</td></tr><tr><td data-label="Land Use Type"><b>Wetland</b></td><td data-label="Acres in the Floodplain" id="afwt">{FDCN_ac_Wt_Rd}</td><td data-label="Percent of Total Acres in the Floodplain" id="pafwt">{Pct_FDCN_W_Rd}%</td></tr><tr><td data-label="Land Use Type"><b>Agriculture</b></td><td data-label="Acres in the Floodplain" id="afwk">{FDCN_ac_Wk_Rd}</td><td data-label="Percent of Total Acres in the Floodplain" id="pafwk">{Pct_FDCNWk_Rd}%</td></tr><tr><td data-label="Land Use Type"><b>Forest and Vegetation</b></td><td data-label="Acres in the Floodplain" id="afpr">{FDCN_ac_Pr_Rd}</td><td data-label="Percent of Total Acres in the Floodplain" id="pafpr">{Pct_FDCN_P_Rd}%</td></tr><tr><td data-label="Land Use Type"><b>Total Acres in the Floodplain</b></td><td data-label="Acres in the Floodplain" id="afarea">{FD_Area_Rd}</td><td data-label="Percent of Total Acres in the Floodplain">100%</td></tr></tbody></table></div><!-- /.layout --></div></div><div class="breakout bg-none section"><div class="row"><div class="layout"><div class="text"><h3>What can I learn from this map?</h3><span style="font-family: inherit; font-size: 1.25rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div></div><!-- /.layout --></div></div><div class="breakout bg-gray section"><div class="row"><div class="layout"><h3 class="section-title">Select your Indiana city, town, or county</h3>
+                        
+                        
+        
+                     
+        
+                
+                                        
+                
+        
+        
+            
+        
+        
+                        
+                
+            
+                                
+                                
+            
+                
+                
+                                
+                
+                
+                
+                                        
+                
+        
+        
+        
+    <div class="text">
+                            Select your Indiana city, town, or county to understand your community's current and anticipated exposure to climate change impacts, and your community's sensititivites to those impacts.
+            <div class="ui-widget">
+  <label for="tags2">County Search: </label>
+  <input id="tags2" style="color:#000">
+  <label for="tags">City/Town Search: </label>
+  <input id="tags" style="color:#000">
+  <table id="tableDiv"></table>
+</div>   </div></div><!-- /.layout --></div></div><div class="breakout collapsed bg-none section"><div class="row"><div class="layout"><h3 class="section-title">Readiness Score</h3><div class="text"><p>Click here to better understand your community's preparedness for climate impacts.</p><p>Eventually, this wil contain a chart of communities and their scores.</p></div></div><!-- /.layout --></div></div></div>
+                                
+          
+    
+                    
+        
+    
+            
+                    </main>
+        
+        
+                                               <div aria-label="Hoosier Resilience Index Part of the Prepared for Environmental Change Grand Challenge resources and social media channels" class="section bg-mahogany dark belt" role="complementary">
+            <div class="row pad">
+                <h2 class="visually-hidden">Hoosier Resilience Index Part of the Prepared for Environmental Change Grand Challenge resources and social media channels</h2>                                                                                <div class="belt-nav one-half">
+                            <ul>
+                                                                                                             <li><a href="http://www.amazon.com/">External Belt Link</a></li>
+                                                                                                                                                    				</ul>
+            			</div>
+                                                                                                <div class="one-half invert border">
+                                                <ul class="social">
+                                
+                                                                    <li><a aria-label="Twitter" class="icon-twitter" href="https://www.twitter.com/IndianaUniv">Twitter</a></li>
+                                                                
+                                                                    <li><a aria-label="Facebook" class="icon-facebook" href="https://www.facebook.com/IndianaUniversity">Facebook</a></li>
+                                                                
+                                                                
+                                                                                                                                            <li><a aria-label="YouTube" class="icon-youtube" href="https://www.youtube.com/user/iu">YouTube</a></li>
+                                                                
+                                                                
+                                                                                                                                            <li><a aria-label="LinkedIn" class="icon-linkedin" href="https://www.linkedin.com/company/indiana-university">LinkedIn</a></li>
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                            </ul>
+                        </div>
+                            </div>
+        </div>
+               
+                    
+            
+            
+            
+                                  <footer id="footer" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/CollegeOrUniversity">
+    <div class="row pad">
+
+    <p class="tagline bicentennial celebration"><a href="https://200.iu.edu"><svg width="223" height="25" viewBox="0 0 223 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5.32813 18.196C7.49813 18.196 8.81413 16.88 9.31813 14.836L8.15613 14.57C7.72213 16.25 6.81213 17.076 5.34213 17.076C3.41013 17.076 2.17813 15.508 2.17813 12.764C2.17813 10.202 3.38213 8.57797 5.31413 8.57797C6.82613 8.57797 7.54013 9.37597 7.98813 10.944L9.16413 10.622C8.68813 8.71797 7.52613 7.44397 5.32813 7.44397C2.73813 7.44397 0.932129 9.54397 0.932129 12.778C0.932129 16.166 2.69613 18.196 5.32813 18.196Z" fill="white"/>
+    <path d="M18.6572 18V16.88H13.2392V13.114H17.0472V12.008H13.2392V8.77397H18.3632V7.63997H12.0072V18H18.6572Z" fill="white"/>
+    <path d="M27.4545 18V16.88H22.4705V7.63997H21.2385V18H27.4545Z" fill="white"/>
+    <path d="M36.5592 18V16.88H31.1412V13.114H34.9492V12.008H31.1412V8.77397H36.2652V7.63997H29.9092V18H36.5592Z" fill="white"/>
+    <path d="M43.1444 18C45.4404 18 46.7284 16.908 46.7284 15.172C46.7284 13.66 45.7484 12.89 44.4744 12.652V12.624C45.5384 12.4 46.3924 11.644 46.3924 10.23C46.3924 8.50797 45.1044 7.63997 42.8504 7.63997H39.1404V18H43.1444ZM40.3584 13.226H42.8084C44.4744 13.226 45.5104 13.786 45.5104 15.088C45.5104 16.278 44.7544 16.922 43.0604 16.922H40.3584V13.226ZM40.3584 8.73197H42.7664C44.4464 8.73197 45.1884 9.23597 45.1884 10.426C45.1884 11.616 44.2924 12.162 42.7384 12.162H40.3584V8.73197Z" fill="white"/>
+    <path d="M50.7381 18V13.534H53.0761L55.5541 18H56.8981L54.3501 13.38C55.8201 13.072 56.7581 12.204 56.7581 10.538C56.7581 8.63397 55.4281 7.63997 53.0761 7.63997H49.5201V18H50.7381ZM50.7381 8.75997H52.9921C54.6441 8.75997 55.5401 9.22197 55.5401 10.58C55.5401 11.994 54.6301 12.442 53.0061 12.442H50.7381V8.75997Z" fill="white"/>
+    <path d="M59.922 18L60.944 15.032H65.06L66.082 18H67.356L63.688 7.59797H62.4L58.732 18H59.922ZM63.002 9.09597H63.03L64.682 13.954H61.322L63.002 9.09597Z" fill="white"/>
+    <path d="M72.2118 18V8.77397H75.5158V7.63997H67.6898V8.77397H70.9798V18H72.2118Z" fill="white"/>
+    <path d="M79.3105 18V7.63997H78.0785V18H79.3105Z" fill="white"/>
+    <path d="M83.861 18V9.58597H83.889L89.531 18H90.637V7.63997H89.475V15.83H89.447L84.001 7.63997H82.699V18H83.861Z" fill="white"/>
+    <path d="M97.7074 18.196C99.3174 18.196 100.227 17.3 100.633 16.446H100.661V18H101.739V13.044H98.1693V14.08H100.549C100.521 15.998 99.4294 17.09 97.8194 17.09C95.9854 17.09 94.6273 15.634 94.6273 12.736C94.6273 9.82397 96.1534 8.57797 97.7774 8.57797C99.2194 8.57797 99.9894 9.27797 100.479 10.944L101.627 10.65C101.081 8.47997 99.7514 7.44397 97.7914 7.44397C95.2014 7.44397 93.3813 9.48797 93.3813 12.778C93.3813 15.914 94.9074 18.196 97.7074 18.196Z" fill="white"/>
+    <path d="M180.417 18V13.464L183.917 7.63997H182.629L179.829 12.414L177.015 7.63997H175.699L179.185 13.464V18H180.417Z" fill="white"/>
+    <path d="M192.847 18V16.88H187.429V13.114H191.237V12.008H187.429V8.77397H192.553V7.63997H186.197V18H192.847Z" fill="white"/>
+    <path d="M195.792 18L196.814 15.032H200.93L201.952 18H203.226L199.558 7.59797H198.27L194.602 18H195.792ZM198.872 9.09597H198.9L200.552 13.954H197.192L198.872 9.09597Z" fill="white"/>
+    <path d="M206.862 18V13.534H209.2L211.678 18H213.022L210.474 13.38C211.944 13.072 212.882 12.204 212.882 10.538C212.882 8.63397 211.552 7.63997 209.2 7.63997H205.644V18H206.862ZM206.862 8.75997H209.116C210.768 8.75997 211.664 9.22197 211.664 10.58C211.664 11.994 210.754 12.442 209.13 12.442H206.862V8.75997Z" fill="white"/>
+    <path d="M219.084 18.196C221.282 18.196 222.78 17.02 222.78 15.312C222.78 13.548 221.548 12.848 219.462 12.204C217.432 11.56 216.732 11.196 216.732 10.09C216.732 9.20797 217.516 8.56397 218.832 8.56397C220.064 8.56397 220.96 9.06797 221.52 10.314L222.5 9.76797C221.968 8.45197 220.82 7.44397 218.846 7.44397C216.872 7.44397 215.514 8.60597 215.514 10.188C215.514 11.98 216.802 12.568 218.958 13.226C221.002 13.87 221.562 14.374 221.562 15.396C221.562 16.488 220.596 17.104 219.14 17.104C217.74 17.104 216.718 16.418 216.2 15.032L215.164 15.494C215.71 17.132 217.11 18.196 219.084 18.196Z" fill="white"/>
+    <path d="M124.83 24.4462H109L109.558 22.1815C110.06 21.3669 110.631 20.5966 111.265 19.8792C112.371 18.4944 114.389 16.7642 117.318 14.6885C119.978 12.8317 121.713 11.2 122.523 9.7933C123.32 8.43571 123.741 6.88989 123.742 5.31536C123.798 4.30106 123.462 3.30399 122.804 2.53013C122.492 2.19358 122.111 1.92812 121.687 1.75175C121.263 1.57539 120.806 1.49224 120.347 1.50795C118.628 1.50795 117.378 2.01123 116.596 3.01778C116.643 3.51169 116.666 4.03685 116.666 4.59327C116.666 6.51573 115.838 7.47696 114.181 7.47696C113.087 7.47696 112.54 6.99713 112.54 6.03746C112.54 4.537 113.387 3.18971 115.081 1.99559C116.697 0.824119 118.642 0.195337 120.638 0.19973C122.729 0.19973 124.37 0.706137 125.561 1.71895C126.154 2.23019 126.622 2.86948 126.93 3.58843C127.239 4.30737 127.38 5.08713 127.343 5.86866C127.352 7.6216 126.787 9.32935 125.735 10.7311C124.659 12.194 122.39 13.882 118.926 15.7951C115.463 17.7082 113.118 19.6197 111.893 21.5297H125.528L124.83 24.4462Z" fill="white"/>
+    <path d="M136.585 25C134.444 25 132.792 24.3155 131.629 22.9463C130.466 21.5771 129.891 19.6375 129.903 17.1273C129.871 13.0379 130.956 9.01734 133.04 5.49875C135.131 1.95704 137.898 0.187755 141.34 0.190881C142.23 0.15022 143.118 0.318592 143.933 0.682534C144.747 1.04648 145.465 1.59589 146.028 2.28684C147.157 3.69039 147.721 5.60504 147.721 8.03078C147.728 12.0429 146.751 15.9955 144.875 19.5421C142.981 23.1807 140.217 25 136.585 25ZM144.148 6.6241C144.148 3.18555 143.176 1.46627 141.232 1.46627C138.884 1.46627 137.009 3.54503 135.605 7.70255C134.201 11.8601 133.493 15.3877 133.481 18.2855C133.481 20.308 133.74 21.7147 134.259 22.5055C134.525 22.9029 134.89 23.2232 135.319 23.434C135.748 23.6447 136.225 23.7385 136.702 23.7059C139.003 23.7059 140.822 21.5396 142.16 17.207C143.498 12.8744 144.161 9.34681 144.148 6.6241Z" fill="white"/>
+    <path d="M157.151 25C155.006 25 153.354 24.3155 152.194 22.9463C151.035 21.5771 150.456 19.6375 150.46 17.1273C150.425 13.0376 151.51 9.01641 153.596 5.49875C155.688 1.95704 158.454 0.187755 161.896 0.190881C162.787 0.15022 163.675 0.318592 164.489 0.682534C165.303 1.04648 166.021 1.59589 166.585 2.28684C167.726 3.68414 168.296 5.59566 168.296 8.0214C168.302 12.0329 167.327 15.9849 165.455 19.5327C163.551 23.1776 160.783 25 157.151 25ZM164.714 6.6241C164.714 3.18555 163.742 1.46627 161.797 1.46627C159.447 1.46627 157.571 3.54503 156.171 7.70255C154.77 11.8601 154.062 15.3877 154.047 18.2855C154.047 20.308 154.308 21.7147 154.83 22.5055C155.094 22.9032 155.458 23.2239 155.887 23.4347C156.315 23.6456 156.792 23.7392 157.268 23.7059C159.569 23.7059 161.388 21.5396 162.726 17.207C164.064 12.8744 164.726 9.34681 164.714 6.6241Z" fill="white"/>
+    </svg>
+    <span class="visually-hidden">Celebrating 200 years</span>
+    </a>
+    </p>
+
+        <p class="signature">
+            <a href="https://www.iu.edu" class="signature-link signature-img"><img src="//assets.iu.edu/brand/3.2.x/iu-sig-formal.svg" alt="Indiana University" /></a>
+        </p>
+
+        <p class="copyright">
+        <span class="line-break"><a href="https://accessibility.iu.edu/assistance" id="accessibility-link" title="Having trouble accessing this web page content? Please visit this page for assistance.">Accessibility</a> | <a href="/privacy" id="privacy-policy-link">Privacy Notice</a></span>
+        <span class="hide-on-mobile"> | </span>
+        <a href="https://www.iu.edu/copyright/index.html">Copyright</a> &#169; 2019 <span class="line-break-small">The Trustees of <a href="https://www.iu.edu/" itemprop="url"><span itemprop="name">Indiana University</span></a></span>
+        </p>
+    </div>
+</footer>
+       
+                       
+        
+            
+            
+                                                       
+               
+                            
+        
+    
+    
+    </body></html>
